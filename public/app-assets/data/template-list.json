@@ -1,0 +1,12 @@
+{
+  "listItems": [
+    {"name":"Dashboard", "url":"home","icon":"feather icon-home"},
+    {"name":"Order", "url":"order","icon":"feather icon-shopping-cart"},
+    {"name":"Product", "url":"product","icon":"feather icon-package"},
+    {"name":"Promo", "url":"promo","icon":"feather icon-percent"},
+    {"name":"Banner", "url":"banner","icon":"feather icon-layout"},
+    {"name":"Category", "url":"category","icon":"feather icon-sidebar"},
+    {"name":"Customer", "url":"customer","icon":"feather icon-users"},
+    {"name":"Administrator", "url":"admin","icon":"feather icon-user"}
+  ]
+}
