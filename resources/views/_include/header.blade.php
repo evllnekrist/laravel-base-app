@@ -20,7 +20,7 @@
                     </ul>
                 </div>
                 <div class="mr-auto ml-auto justify-content-center text-center d-none d-lg-block">
-                    <a class="nav-link text-bold-700">{{env('APP_NAME')}}</a>
+                    <a class="nav-link text-bold-700">@lang('app.name')</a>
                 </div>
                 <ul class="nav navbar-nav float-right">
                     <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">

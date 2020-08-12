@@ -6,15 +6,16 @@
 <!--<![endif]-->
 <head>
   @include('_include.head')
+  @include('_include.asset_top_slim')
 </head>
-<body class="vertical-layout vertical-menu-modern 1-columns navbar-floating footer-staticbg-full-screen-image menu-collapsed blank-page blank-page ekkr-template-slim" 
+<body class="vertical-layout vertical-menu-modern 1-columns navbar-floating footer-static bg-full-screen-image menu-collapsed blank-page blank-page ekkr-template-slim" 
       data-open="click" data-menu="vertical-menu-modern" data-col="1-columns">
   
   @include('_include.alert')
   @yield('content')
   <!-- include('script.general') -->
   <!-- include('script.page') -->
-  @include('_include.head_bottom')
+  @include('_include.asset_bottom_slim')
     
 </body>
 </html>

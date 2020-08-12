@@ -17,6 +17,9 @@ Route::get('/laravel', function () {
 Route::get('/', function () {
     return view('_page._main.dashboard');
 });
+Route::get('/home', function () {
+    return view('_page._main.dashboard');
+});
 Route::get('/login', function () {
     return view('_page._auth.login');
 });
@@ -24,14 +27,6 @@ Route::get('/login', function () {
 /*--------------------------------------------------------------------------START--*/ 
     Route::group(['prefix' => 'master'], function()
     {
-        Route::prefix('lead-time')->group(function(){
-            Route::get('/','Master\LeadTimeController@index');
-            Route::get('add','Master\LeadTimeController@add');
-            Route::post('doAdd','Master\LeadTimeController@doAdd');
-            Route::post('doEdit','Master\LeadTimeController@doEdit');
-            Route::post('delete','Master\LeadTimeController@delete');
-            Route::get('detail/{id}','Master\LeadTimeController@detail');
-        });
         Route::prefix('users')->group(function(){
             Route::get('/','Master\UsersController@index');
             Route::get('add','Master\UsersController@add');
@@ -68,8 +63,24 @@ Route::get('/login', function () {
     
     Route::group(['prefix' => 'statistics'], function()
     {
-        Route::get('/sample', function () {
-            return view('_page._statistics.sample');
+    });
+
+    Route::group(['prefix' => 'sample'], function()
+    {
+        Route::get('/charts', function () {
+            return view('_page.samplePage.sample-charts');
+        });
+        Route::get('/product', function () {
+            return view('_page.samplePage.sample-product');
+        });
+        Route::get('/category', function () {
+            return view('_page.samplePage.sample-category');
+        });
+        Route::get('/list', function () {
+            return view('_page.samplePage.sample-list');
+        });
+        Route::get('/list-datatable', function () {
+            return view('_page.samplePage.sample-list-datatable');
         });
     });
 /*--------------------------------------------------------------------------END----*/ 

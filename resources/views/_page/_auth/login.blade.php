@@ -19,7 +19,7 @@
                                     <div class="card rounded-0 mb-0 px-2 pb-2">
                                         <div class="card-header pb-1">
                                             <div class="card-title">
-                                                <h4 class="mb-0">{{env('APP_NAME_2ND_LONGER')}}</h4>
+                                                <h4 class="mb-0">@lang('app.2nd_name_longer')</h4>
                                             </div>
                                         </div>
                                         <div class="card-content">
@@ -55,4 +55,14 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function(){
+            @if(!empty($error))
+                toastr.error('{{ $error }}', 'Login Failed!', { "progressBar": true })
+            @endif
+        });
+    </script>
+@endsection

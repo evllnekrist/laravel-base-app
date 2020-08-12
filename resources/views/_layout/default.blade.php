@@ -6,6 +6,7 @@
 <!--<![endif]-->
 <head>
   @include('_include.head')
+  @include('_include.asset_top')
 </head>
 <body class="vertical-layout vertical-menu-modern 2-columns navbar-floating footer-static menu-collapsed ekkr-template-default" 
       data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
@@ -19,7 +20,7 @@
   @include('_include.footer')
   <!-- include('script.general') -->
   <!-- include('script.page') -->
-  @include('_include.head_bottom')
+  @include('_include.asset_bottom')
     
 </body>
 </html>
