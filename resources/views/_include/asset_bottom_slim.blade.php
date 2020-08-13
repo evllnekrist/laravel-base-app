@@ -15,4 +15,5 @@
     <!-- END: Page JS-->
     <!-- BEGIN: Global JS-->
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <script src="{{ asset('../resources/js/helper.js') }}"></script> <!-- embed to every page -->
     <!-- END: Global JS-->

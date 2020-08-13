@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\Company;
-use App\Models\Active;
+use App\Http\Models\User;
+use App\Http\Models\Role;
+use App\Http\Models\Company;
+use App\Http\Models\Active;
 use DB;
 
 class UsersController extends Controller

@@ -14,14 +14,12 @@
 Route::get('/laravel', function () {
     return view('welcome');
 });
-Route::get('/', function () {
-    return view('_page._main.dashboard');
-});
+Route::get('/', 'Auth\LoginController@index');
+Route::get('/login', 'Auth\LoginController@index')->name('login');
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::post('/login/do', 'Auth\LoginController@ajax_doLogin')->name('doLogin');
 Route::get('/home', function () {
     return view('_page._main.dashboard');
-});
-Route::get('/login', function () {
-    return view('_page._auth.login');
 });
 
 /*--------------------------------------------------------------------------START--*/ 

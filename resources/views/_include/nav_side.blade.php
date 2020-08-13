@@ -1,4 +1,9 @@
 <!-- BEGIN: Main Menu-->
+    <?php   
+        if(!(Session::get('_user') && array_key_exists('_menu',Session::get('_user')))){
+            header('Location: '.route('login'));
+        }
+    ?>
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
@@ -12,13 +17,35 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class=" navigation-header"><span>Home</span></li>
-                <li class="nav-item {{ (request()->segment(1) == 'home') ? 'active' : '' }}">
-                    <a href="{{ url('home') }}">
-                        <i class="feather icon-home"></i>
-                        <span class="menu-title" data-i18n="Dashboard">Dashboard</span>
-                    </a>
-                </li>
+
+            @foreach(Session::get('_user')['_menu'] as $key => $value)
+            @if(is_array($value) || is_object($value))
+                @if(!isset($value['detail']->name))
+                    <li class="navigation-header"><span>{{ $value['title'] }}</span></li>
+                    @foreach($value['detail'] as $key2 => $value2)
+                        <li class="nav-item {{ (request()->segment(1) == url($value2->slug)) ? 'active' : '' }}">
+                            <a href="{{ url($value2->slug) }}">
+                                <i class="{{ $value2->icon }}"></i>
+                                <span class="menu-title" data-i18n="{{ $value2->name }}">
+                                    {{ $value2->name }}
+                                </span>
+                            </a>
+                        </li>
+                    @endforeach
+                @else
+                    <li class="navigation-header"><span></span></li>
+                    <li class="nav-item {{ (request()->segment(1) == url($value['detail']->slug)) ? 'active' : '' }}">
+                        <a href="{{ url($value['detail']->slug) }}">
+                            <i class="{{ $value['detail']->icon }}"></i>
+                            <span class="menu-title" data-i18n="{{ $value['detail']->name }}">
+                                {{ $value['detail']->name }}
+                            </span>
+                        </a>
+                    </li>
+                @endif
+            @endif
+            @endforeach
+
             </ul>
         </div>
     </div>

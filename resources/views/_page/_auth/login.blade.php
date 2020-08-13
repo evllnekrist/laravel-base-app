@@ -41,7 +41,8 @@
                                                         </div>
                                                         <label for="user-password">Password</label>
                                                     </fieldset>
-                                                    <button type="submit" class="btn btn-primary float-right">Login</button>
+                                                    <button type="submit" 
+                                                            class="btn btn-primary float-right">Login</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -59,10 +60,43 @@
 
 @section('script')
     <script>
-        $(document).ready(function(){
-            @if(!empty($error))
-                toastr.error('{{ $error }}', 'Login Failed!', { "progressBar": true })
-            @endif
+        // $(document).ready(function(){
+        //     @if(!empty($error))
+        //         toastr.error('{{ $error }}', 'Login Failed!', { "progressBar": true })
+        //     @endif
+        // });
+
+        $("form").submit(function(e){
+            e.preventDefault();
+            let username = $('input[name="username"]').val();
+            let password = $('input[name="password"]').val();
+            
+            if(username && password){
+                console.log(username,password);
+                $.ajax({
+                    type: "POST",
+                    url: "{{route('doLogin')}}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        username: username,
+                        password: password,
+                    },
+                    dataType: 'json',
+                    // headers: ajax_headers,
+                    success: function(result){        
+                        console.log('RESULT', result);
+                        if(result['status']){
+                            window.location.href = "{{url('/home')}}";
+                        }else{
+                            toastr.error(result['message'], 'Login Failed!', { "progressBar": true });
+                        }
+                    },
+                    error: function (err){
+                        toastr.error(err, 'Login Failed!', { "progressBar": true })
+                    }
+                });
+            }
+
         });
     </script>
 @endsection
