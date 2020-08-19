@@ -4,58 +4,102 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Role;
-use App\Models\Active;
+use App\Http\Models\Role;
+use App\Http\Models\Active;
 use DB;
 
 class RoleController extends Controller
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->data['header_data']['js'] = array('._app.role');
+    }
+    
     public function index(Request $request){
-        // $this->data = array(); // data tdk boleh direplace karena ada bawaan dari construct
-        $where = "1=1";
-        if(!empty($request->all())){
-            $active = $request->get('active');
-            if($active != "" && $active != "all") $where .= " AND active = ".$active;
-            $role_name = $request->get('role_name');
-            if($role_name != "") $where .= " AND role_name LIKE '%".$role_name."%'";
-        }
-
-        $this->data['role'] = Role::whereRaw($where)->get();
-        $this->data['active'] =  Active::getList();
-        $this->data['footer'] = 'include.role';
-
-        return view('pages.master.role.index',$this->data);
+        return view('_page._app.index-role',$this->data);
     }
 
-    public function add(){
-        $this->data['active'] =  Active::getList();
-        return view('pages.master.role.add',$this->data);
+    public function get(Request $request){
+
+        $columns = array(
+            0 =>'id',
+            1 =>'name',
+        );
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        $models =  Role::where('active','=',1);
+        if(!empty($request->input('search.value')))
+        {
+            $search = $request->input('search.value');
+            $models = $models->where(function($query) use ($search){
+                        $query->where('name','LIKE',"%{$search}%");
+                    });
+        }
+        $models = $models->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order,$dir)
+                    ->get();
+
+        $recordsFiltered = count(get_object_vars($models));        
+        $recordsTotal = Role::where('active','=',1)->count();
+
+        $data = array();
+        if(!empty($models)) {
+
+            foreach ($models as $model) {
+                $nestedData=array();
+                $nestedData[] = null;
+                $nestedData[] = $model->name;
+                $action= "
+                    <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
+                        <i class='feather icon-edit'></i>
+                    </span>
+                    <span class='action-delete' data-hash='".md5($model->id)."' data-title=''>
+                        <i class='feather icon-trash'></i>
+                    </span>
+                ";
+                $nestedData[] = $action;
+                $data[] = $nestedData;
+            }
+        }
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($recordsTotal),
+            "recordsFiltered" => intval($recordsFiltered),
+            "data"            => $data
+        );
+
+        return json_encode($json_data);
+    }
+
+    public function detailAdd(){ // currently not used
+        // $data = array();
+        // return response()->json($data);
     }
 
     public function doAdd(Request $request){
         unset($request['_token']);
-        $item = $request->all();
-        $status = 'success';
-        $msg = 'to add new role '.$item['role_name'];
+        $item = $request->get('params');
+        $msg = 'to add new role <b>'.$item['name'].'</b>';
 
         try{
-            DB::table('ms_roles')->insertGetId($item);
+            Role::insertGetId($item);
+            return json_encode(array('status'=>true, 'message'=>'Success '.$msg));
         }catch(\Exception $e){
-            $status = 'fail';
+            return json_encode(array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->errorInfo[2]));
         }
-
-        $request->session()->flash($status,$msg);
-        
-        return redirect('_admin/master/role');
     }
 
-    public function detail($id){
-        $item = Role::where('id','=',$id)->first();
+    public function detailEdit($id){ // the id in hash
+        $item = Role::where(DB::raw('md5(id)'),'=',$id)->first();
 
         $data = array(
-            "id"=>$item->id,
-            "role_name"=>$item->role_name,
-            "active"=>$item->active,
+            "detail"=>$item,
         );
         
         return response()->json($data);
@@ -63,42 +107,38 @@ class RoleController extends Controller
 
     public function doEdit(Request $request){
         unset($request['_token']);
-        $item = $request->all();
+        $item = $request->get('params');
+        $id = $item['id'];
         unset($item['id']);
-        $data = array(
-            'status' => 'success',
-            'msg' => 'Success to edit new role '.$item['role_name']
-        );
+        $msg = 'to edit role <b>'.$item['name'].'</b>';
 
         try{
-            DB::table('ms_roles')->where('id',$request['id'])->update($item);
+            Role::where(DB::raw('md5(id)'),'=',$id)->update($item);
+            return json_encode(array('status'=>true, 'message'=>'Success '.$msg));
         }catch(Exception $e){
-            $data['status'] = 'fail';
-            $data['msg'] = 'Fail to edit new role '.$item['role_name'];
+            return json_encode(array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->errorInfo[2]));
         }
-        
-        return response()->json($data);
     }
 
-    public function delete(Request $request){
-        $id = $request['id'];
-        $data = array();
-        $data = array(
-            'status' => 'fail',
-            'msg' => "Internal Server Error"
-        );
-        $deleteRows = 0;
+    public function delete($ids){ // the id in hash 
+        $array_id = explode(",",$ids);
+        $msg = 'to delete role';
+        $deletedRows = 0;
+        
         try{
-            $deletedRows = Role::where('id','=',$id)->delete();
+            foreach ($array_id as $id) {
+                Role::where(DB::raw('md5(id)'),'=',$id)->delete();
+                $deletedRows++;
+            }
         }catch(Exception $e){
-            $msg = $e->getData();
+            return json_encode(array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData()));
         }
         
-        if($deletedRows == 1){
-            $data['status'] = 'success';
-            $data['msg'] = 'Success to delete role';
+        if($deletedRows >= 1){
+            $s = ($deletedRows > 1) ? "'s" : "";
+            return json_encode(array('status'=>true, 'message'=>'Success '.$msg.$s.' ['.$deletedRows.' row'.$s.']'));
+        }else{
+            return json_encode(array('status'=>false, 'message'=>'Selected data unavailable in database', 'detail'=>''));
         }
-
-        return response()->json($data);
     }
 }

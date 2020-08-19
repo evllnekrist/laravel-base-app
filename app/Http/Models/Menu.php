@@ -11,4 +11,15 @@ class Menu extends Model
     public function role(){
         return $this->belongsTo('App\Models\Role');
     }
+
+    // public function parent()
+    // {
+    //     return $this->belongsTo(self::class, 'parent');
+    // }
+
+    // public function children()
+    // {
+    //     return $this->hasMany(self::class, 'parent');
+    // }
+
 }

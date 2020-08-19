@@ -97,7 +97,7 @@ class LoginController extends Controller
         }else{
 			return json_encode(array('status'=>false, 'message'=>'user with filled username & password does not exist'));
         }
-        dd(session()->all());
+        // dd(session()->all());
     }
     
     public function menuReady($role_id){

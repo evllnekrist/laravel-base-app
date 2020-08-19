@@ -2,6 +2,19 @@ let ajax_headers = {
     'X-CSRF-TOKEN': "{{ csrf_token() }}" 
 };
 
+$(document).on("keypress",".no-space", function(e){ 
+    if (e.which == 32){
+        alert('no SPACES allowed in this input');
+        return false;
+    }
+});
+
+function arrayColumn(array, columnName) {
+    return array.map(function(value,index) {
+        return value[columnName];
+    })
+}
+
 function triggerModal(id, params = null){
     $("#"+id+"_form")[0].reset();
     if(params){

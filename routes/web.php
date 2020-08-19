@@ -26,36 +26,39 @@ Route::get('/home', function () {
     Route::group(['prefix' => 'master'], function()
     {
         Route::prefix('users')->group(function(){
-            Route::get('/','Master\UsersController@index');
-            Route::get('add','Master\UsersController@add');
+            Route::get('/','Master\UsersController@index')->name('master-users');
+            Route::get('get','Master\UsersController@get');
             Route::post('doAdd','Master\UsersController@doAdd');
             Route::post('doEdit','Master\UsersController@doEdit');
-            Route::post('delete','Master\UsersController@delete');
-            Route::get('detail/{id}','Master\UsersController@detail');
+            Route::delete('{id}/delete','Master\UsersController@delete');
+            Route::get('detailAdd','Master\UsersController@detailAdd');
+            Route::get('{id}/detailEdit','Master\UsersController@detailEdit');
         });
         Route::prefix('role-menu')->group(function(){
-            Route::get('/','Master\RoleMenuController@index');
-            Route::get('mapping/{id}','Master\RoleMenuController@mapping');
+            Route::get('/','Master\RoleMenuController@index')->name('master-role-menu');
+            Route::get('get','Master\RoleMenuController@get');
+            Route::get('{id}/mapping','Master\RoleMenuController@mapping');
             Route::post('doMap','Master\RoleMenuController@doMap');
             Route::post('doEdit','Master\RoleMenuController@doEdit');
-            Route::post('delete','Master\RoleMenuController@delete');
-            Route::get('detail/{id}','Master\RoleMenuController@detail');
+            Route::get('{id}/detailEdit','Master\RoleMenuController@detailEdit');
         });
         Route::prefix('role')->group(function(){
-            Route::get('/','Master\RoleController@index');
-            Route::get('add','Master\RoleController@add');
+            Route::get('/','Master\RoleController@index')->name('master-role');
+            Route::get('get','Master\RoleController@get');
             Route::post('doAdd','Master\RoleController@doAdd');
             Route::post('doEdit','Master\RoleController@doEdit');
-            Route::post('delete','Master\RoleController@delete');
-            Route::get('detail/{id}','Master\RoleController@detail');
+            Route::delete('{id}/delete','Master\RoleController@delete');
+            Route::get('detailAdd','Master\RoleController@detailAdd');
+            Route::get('{id}/detailEdit','Master\RoleController@detailEdit');
         });
         Route::prefix('menu')->group(function(){
-            Route::get('/','Master\MenuController@index');
-            Route::get('add','Master\MenuController@add');
+            Route::get('/','Master\MenuController@index')->name('master-menu');
+            Route::get('get','Master\MenuController@get');
             Route::post('doAdd','Master\MenuController@doAdd');
             Route::post('doEdit','Master\MenuController@doEdit');
-            Route::post('delete','Master\MenuController@delete');
-            Route::get('detail/{id}','Master\MenuController@detail');
+            Route::delete('{id}/delete','Master\MenuController@delete');
+            Route::get('detailAdd','Master\MenuController@detailAdd');
+            Route::get('{id}/detailEdit','Master\MenuController@detailEdit');
         });
     });
     

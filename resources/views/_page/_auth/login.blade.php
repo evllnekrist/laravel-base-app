@@ -60,11 +60,6 @@
 
 @section('script')
     <script>
-        // $(document).ready(function(){
-        //     @if(!empty($error))
-        //         toastr.error('{{ $error }}', 'Login Failed!', { "progressBar": true })
-        //     @endif
-        // });
 
         $("form").submit(function(e){
             e.preventDefault();
@@ -96,7 +91,6 @@
                     }
                 });
             }
-
         });
     </script>
 @endsection

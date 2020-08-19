@@ -31,7 +31,7 @@ $(document).ready(function() {
     serverSide: true,
     responsive: false,
     ajax: {
-      url: '/banner/create',
+      url: "{{ url('/banner/create') }}",
       type: 'GET',
       error:function(xhr, status, error){
 

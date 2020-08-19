@@ -4,34 +4,98 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\RoleMenu;
-use App\Models\Role;
-use App\Models\Menu;
-use App\Models\Active;
+use App\Http\Models\RoleMenu;
+use App\Http\Models\Role;
+use App\Http\Models\Menu;
+use App\Http\Models\Active;
 use DB;
 
 class RoleMenuController extends Controller
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->data['header_data']['js'] = array('._app.role-menu');
+    }
+    
     public function index(Request $request){
-        // $this->data = array(); // data tdk boleh direplace karena ada bawaan dari construct
-        $where = "1=1";
-        if(!empty($request->all())){
-            $role_id = $request->get('role_id');
-            if($role_id != "" && $role_id != "all") $where .= " AND role_id LIKE '%".$role_id."%'";
-            $menu_id = $request->get('menu_id');
-            if($menu_id != "" && $role_id != "all") $where .= " AND menu_id LIKE '%".$menu_id."%'";
-        }
+        // $where = "1=1";
+        // if(!empty($request->all())){
+        //     $role_id = $request->get('role_id');
+        //     if($role_id != "" && $role_id != "all") $where .= " AND role_id LIKE '%".$role_id."%'";
+        //     $menu_id = $request->get('menu_id');
+        //     if($menu_id != "" && $role_id != "all") $where .= " AND menu_id LIKE '%".$menu_id."%'";
+        // }
 
         // $this->data['role_menu'] = RoleMenu::select('ms_role_menu.id','role_id','role_name','menu_id','ms_menus.name as menu_name','create','edit','view','delete')
         //                             ->leftJoin('ms_roles','ms_roles.id','=','role_id')
         //                             ->leftJoin('ms_menus','ms_menus.id','=','menu_id')
         //                             ->whereRaw($where)->get();
-        $this->data['role'] = Role::where('active','=','1')->get();
+        // $this->data['role'] = Role::where('active','=','1')->get();
         // $this->data['menu'] = Menu::where('active','=','1')->get();
-        $this->data['active'] =  Active::getList();
-        $this->data['footer'] = 'include.role-menu';
+        // $this->data['active'] =  Active::getList();
+        // $this->data['footer'] = 'include.role-menu';
 
-        return view('pages.master.role-menu.index',$this->data);
+        return view('_page._app.index-role-menu',$this->data);
+    }
+
+    public function get(Request $request){
+
+        $columns = array(
+            0 =>'id',
+            1 =>'name',
+        );
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        // DB::enableQueryLog(); // Enable query log
+        $models =  Role::where('active','=',1);
+        if(!empty($request->input('search.value')))
+        {
+            $search = $request->input('search.value');
+            $models = $models->where(function($query) use ($search){
+                        $query->where('name','LIKE',"%{$search}%");
+                    });
+        }
+        $models = $models->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order,$dir)
+                    ->get();
+        // dd(DB::getQueryLog()); // Show results of log
+
+        $recordsFiltered = count(get_object_vars($models));        
+        $recordsTotal = Role::where('active','=',1)->count();
+
+        $data = array();
+        if(!empty($models)) {
+            
+            foreach ($models as $model) {
+                $nestedData=array();
+                $nestedData[] = null;
+                $nestedData[] = $model->name;
+                $action= "
+                    <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
+                        <i class='feather icon-edit'></i>
+                    </span>
+                    <span class='action-delete' data-hash='".md5($model->id)."' data-title=''>
+                        <i class='feather icon-trash'></i>
+                    </span>
+                ";
+                $nestedData[] = $action;
+                $data[] = $nestedData;
+            }
+        }
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($recordsTotal),
+            "recordsFiltered" => intval($recordsFiltered),
+            "data"            => $data
+        );
+
+        return json_encode($json_data);
     }
 
     public function mapping($role_id){

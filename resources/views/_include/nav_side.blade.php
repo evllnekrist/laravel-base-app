@@ -1,7 +1,8 @@
 <!-- BEGIN: Main Menu-->
     <?php   
-        if(!(Session::get('_user') && array_key_exists('_menu',Session::get('_user')))){
+        if(!(Session::get('_user') || (Session::get('_user') && array_key_exists('_menu',Session::get('_user'))))){
             header('Location: '.route('login'));
+            die();
         }
     ?>
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
