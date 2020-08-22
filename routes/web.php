@@ -34,14 +34,6 @@ Route::get('/home', function () {
             Route::get('detailAdd','Master\UsersController@detailAdd');
             Route::get('{id}/detailEdit','Master\UsersController@detailEdit');
         });
-        Route::prefix('role-menu')->group(function(){
-            Route::get('/','Master\RoleMenuController@index')->name('master-role-menu');
-            Route::get('get','Master\RoleMenuController@get');
-            Route::get('{id}/mapping','Master\RoleMenuController@mapping');
-            Route::post('doMap','Master\RoleMenuController@doMap');
-            Route::post('doEdit','Master\RoleMenuController@doEdit');
-            Route::get('{id}/detailEdit','Master\RoleMenuController@detailEdit');
-        });
         Route::prefix('role')->group(function(){
             Route::get('/','Master\RoleController@index')->name('master-role');
             Route::get('get','Master\RoleController@get');
@@ -59,6 +51,12 @@ Route::get('/home', function () {
             Route::delete('{id}/delete','Master\MenuController@delete');
             Route::get('detailAdd','Master\MenuController@detailAdd');
             Route::get('{id}/detailEdit','Master\MenuController@detailEdit');
+        });
+        Route::prefix('role-menu')->group(function(){
+            Route::get('/','Master\RoleMenuController@index')->name('master-role-menu');
+            Route::get('get','Master\RoleMenuController@get');
+            Route::post('doEdit','Master\RoleMenuController@doEdit');
+            Route::get('{id}/detailEdit','Master\RoleMenuController@detailEdit');
         });
     });
     

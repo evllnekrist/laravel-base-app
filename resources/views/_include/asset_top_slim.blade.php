@@ -17,7 +17,7 @@
     @yield('style')
     <!-- END: Page CSS-->
     <!-- BEGIN: Global CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}?var=00002">
     <!-- END: Global CSS-->
     
     @if(env('APP_ENV') == 'local' || env('APP_ENV') == 'development')

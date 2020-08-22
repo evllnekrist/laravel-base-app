@@ -82,7 +82,7 @@
 
 .data-list-view-header .add-new-data-sidebar .add-new-data,
 .data-thumb-view-header .add-new-data-sidebar .add-new-data {
-  width: 35.77rem;
+  width: 40.10rem;
   max-width: 90vw;
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);

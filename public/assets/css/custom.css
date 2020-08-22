@@ -1,3 +1,14 @@
 .ft-blue-band{
     color: #1b70de;
 }
+
+.ft-sm{
+    font-size: smaller;
+}
+
+.col-fit-right-sm{
+    width:5px;
+    /* overflow-x: scroll; */
+    white-space: nowrap;
+    text-align: right !important;
+}

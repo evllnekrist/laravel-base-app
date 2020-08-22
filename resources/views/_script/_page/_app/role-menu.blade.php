@@ -50,7 +50,7 @@
                     orderable: false,
                 }
             ],
-            dom: '<"top"<"actions action-btns"B><"action-filters"lf>><"clear">rt<"bottom"<"actions">p>',
+            // dom: '<"top"<"actions action-btns"B><"action-filters"lf>><"clear">rt<"bottom"<"actions">p>', // disable bulk delete
             oLanguage: {
                 sLengthMenu: "_MENU_",
                 sSearch: "",
@@ -65,13 +65,13 @@
             pageLength: 10,
             buttons: [
                 {
-                    text: "<i class='feather icon-plus'></i> Add New",
-                    action: function() {
-                    $(this).removeClass("btn-secondary")
-                    $(".add-new-data-create").addClass("show")
-                    $(".overlay-bg-create").addClass("show")
-                    },
-                    className: "btn-outline-primary"
+                    // text: "<i class='feather icon-plus'></i> Add New", // disable add new
+                    // action: function() {
+                    // $(this).removeClass("btn-secondary")
+                    // $(".add-new-data-create").addClass("show")
+                    // $(".overlay-bg-create").addClass("show")
+                    // },
+                    // className: "btn-outline-primary"
                 }
             ],
             initComplete: function(settings, json) {
@@ -113,12 +113,6 @@
         })
         
         // ------------------------------------------- BEGIN :: CRUD
-        // On Add (UI)
-        $(".dt-buttons").on('click', function(event){
-            let action = 'add';
-            $("#add_body").html(createForm(action));
-        });
-
         // On Edit (UI)
         $('div').on("click","span.action-edit",function(e){
             e.stopPropagation();
@@ -135,10 +129,9 @@
                 success:(function(data){
                     console.log(data);
                     let action = 'edit';
-                    $("#update_body").html(createForm(action));
-
-                    $("#"+action+"-id").val(hash); 
-                    $("#"+action+"-name").val(data.detail.name); 
+                    $("#update_body").html(createForm(action,data));
+                    // $("#"+action+"-id").val(hash); 
+                    $("#"+action+"-id").val(data.detail.id); 
                 }),error:function(xhr,status,error) {
                     Swal.fire({
                         icon: 'error',
@@ -152,166 +145,9 @@
             });
         });
 
-        // On Delete (UI and DO)
-        $('div').on("click","span.action-delete", function(e){
-            e.stopPropagation();
-            var that = $(this);
-            var hashs = [$(this).data("hash")];
-            var title = $(this).data("title");
-            Swal.fire({
-                title: 'Are you sure to delete '+title+'?',
-                text: "You won't be able to revert this",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                confirmButtonClass: 'btn btn-primary',
-                cancelButtonClass: 'btn btn-outline-primary ml-1',
-                buttonsStyling: false,
-            }).then(function (result) {
-                if (result.value) {
-                    $.ajax({
-                        type:"DELETE",
-                        url: 'role-menu/'+hashs+'/delete',
-                        headers: {
-                            'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
-                        },
-                        dataType: 'json',
-                        success: function(result){    
-                            if(result['status']){
-                                that.closest('td').parent('tr').fadeOut();
-                                Swal.fire(
-                                    {
-                                        type: "success",
-                                        title: "success",
-                                        text: result['message']+'.',
-                                        confirmButtonClass: 'btn btn-primary',
-                                    }
-                                )
-                                dataListView.ajax.reload();
-                            }else{
-                                Swal.fire({
-                                    title: "Opps.. Error!",
-                                    html: result['message']+'<br><br>'+result['detail'],
-                                    type: "error",
-                                    confirmButtonClass: 'btn btn-primary',
-                                    buttonsStyling: false,
-                                });
-                            }
-                        },
-                        error: function (err){
-                            toastr.error(err, 'Delete Failed!', { "progressBar": true })
-                        }
-                    });
-                }
-            })
-        });
-
-        //on Bulk Delete (UI and DO)
-        $(document).on("click","#bulk_delete", function(){
-            var checked_rows = $('input.dt-checkboxes:checkbox:checked').parents("tr");
-            var hashs = [];
-            if(checked_rows.length) {
-                $.each(checked_rows, function (key, val) {
-                    hashs.push($(this).find(".action-delete").data("hash"))
-                });
-                console.log(hashs);
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "Are you sure you want to delete all selected items? You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, delete it!',
-                    confirmButtonClass: 'btn btn-primary',
-                    cancelButtonClass: 'btn btn-outline-primary ml-1',
-                    buttonsStyling: false,
-                }).then(function (result) {
-                    if (result.value) {
-                        $.ajax({
-                            type:"DELETE",
-                            url: 'role-menu/'+hashs+'/delete',
-                            headers: {
-                                'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
-                            },
-                            dataType: 'json',
-                            success: function(result){    
-                                if(result['status']){
-                                    Swal.fire(
-                                        {
-                                            type: "success",
-                                            title: "success",
-                                            text: result['message']+'.',
-                                            confirmButtonClass: 'btn btn-primary',
-                                        }
-                                    )
-                                    dataListView.ajax.reload();
-                                }else{
-                                    Swal.fire({
-                                        title: "Opps.. Error!",
-                                        html: result['message']+'<br><br>'+result['detail'],
-                                        type: "error",
-                                        confirmButtonClass: 'btn btn-primary',
-                                        buttonsStyling: false,
-                                    });
-                                }
-                            },
-                            error: function (err){
-                                toastr.error(err, 'Delete Failed!', { "progressBar": true })
-                            }
-                        });
-                    }
-                });
-            }else{
-                Swal.fire(
-                    {
-                        type: "error",
-                        title: 'Opps..!',
-                        text: 'No items selected, select items to be bulk delete!',
-                        confirmButtonClass: 'btn btn-primary',
-                    }
-                )
-            }
-        });
-
         // On Blank
         $('div').on("click","a.action_blank", function(e){
             e.stopPropagation();
-        });
-
-        // On Add (DO)
-        $("#add_data").on("click",function (){
-            let action = 'add';
-            let action_for_msg = 'Add';
-            let params = getFormData(action);
-
-            $.ajax({
-                type: "POST",
-                url: "role-menu/doAdd",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    params: params,
-                },
-                dataType: 'json',
-                success: function(result){        
-                    if(result['status']){
-                        Swal.fire(
-                            {
-                                type: "success",
-                                title: "success",
-                                text: page_title+' has been '+action+'ed.',
-                                confirmButtonClass: 'btn btn-primary',
-                            }
-                        )
-                        dataListView.ajax.reload();
-                        $(".add-new-data-create").removeClass("show")
-                        $(".overlay-bg").removeClass("show")
-                    }else{
-                        toastr.error(result['message']+'<br><br>'+result['detail'], action_for_msg+' Failed!', { "progressBar": true });
-                    }
-                },
-                error: function (err){
-                    toastr.error(err, action_for_msg+' Failed!', { "progressBar": true })
-                }
-            });
         });
 
         // On Update (DO)
@@ -319,7 +155,7 @@
             let action = 'edit';
             let action_for_msg = 'Edit';
             let params = getFormData(action);
-
+            // console.log('doEdit', params);
             $.ajax({
                 type: "POST",
                 url: "role-menu/doEdit",
@@ -379,27 +215,90 @@
             };
         }
 
-        function createForm(action){
-            return '<!-- '+action+' form : BEGIN -->\
-                    <div class="col-sm-12 data-field-col">\
-                        <div class="form-group" style="display:none">\
-                            <label for="'+action+'-id"><b>Id</b></label>\
-                            <input type="text" class="form-control" id="'+action+'-id">\
+        function createForm(action,data){
+            console.log(data);
+            let str =   '<!-- '+action+' form : BEGIN -->\
+                        <div class="col-sm-12 data-field-col">\
+                            <div class="form-group">\
+                                <input type="text" class="form-control" id="'+action+'-id" style="display:none">\
+                                Mapping Menu for Role <strong id="'+action+'-name">"'+data.detail.name+'"</strong>\
+                            </div>\
                         </div>\
-                        <div class="form-group">\
-                            <label for="'+action+'-name"><b>Name</b></label>\
-                            <input type="text" class="form-control" id="'+action+'-name" required>\
-                        </div>\
-                    </div>\
-                    <!-- '+action+' form : END   -->';
+                        <table class="table table-striped table-dark table-bordered ft-sm">\
+                            <thead>\
+                                <tr>\
+                                    <td scope="col">#</td>\
+                                    <td scope="col"><b>Menu Name</b></td>\
+                                    <td scope="col" class="col-fit-right-sm"><b>View</b></td>\
+                                    <td scope="col" class="col-fit-right-sm"><b>Create</b></td>\
+                                    <td scope="col" class="col-fit-right-sm"><b>Edit</b></td>\
+                                    <td scope="col" class="col-fit-right-sm"><b>Delete</b></td>\
+                                    <td scope="col" class="col-fit-right-sm"><b>Execute</b></td>\
+                                </tr>\
+                            </thead>\
+                            <tbody>';
+                for (let i = 0; i < (data.list_menu).length; ++i) {
+                    str +=      '<tr>\
+                                    <th scope="row">'+(i+1)+'</th>\
+                                    <td><input name="id[]" type="text" value="'+data.list_menu[i].id+'" style="display:none">\
+                                        '+data.list_menu[i].name+'\
+                                    </td>\
+                                    <td class="col-fit-right-sm"><input name="view[]" type="checkbox" value="1" '+(data.list_menu[i].view ? 'checked' : '')+'></td>\
+                                    <td class="col-fit-right-sm"><input name="create[]" type="checkbox" value="1" '+(data.list_menu[i].create ? 'checked' : '')+'></td>\
+                                    <td class="col-fit-right-sm"><input name="edit[]" type="checkbox" value="1" '+(data.list_menu[i].edit ? 'checked' : '')+'></td>\
+                                    <td class="col-fit-right-sm"><input name="delete[]" type="checkbox" value="1" '+(data.list_menu[i].delete ? 'checked' : '')+'></td>\
+                                    <td class="col-fit-right-sm"><input name="execute[]" type="checkbox" value="1" '+(data.list_menu[i].execute ? 'checked' : '')+'></td>\
+                                </tr>';
+                }
+            str +=          '</tbody>\
+                        </table>\
+                        <!-- '+action+' form : END   -->';
+            return str;
         }
 
         function getFormData(action){
-            let data = {
-                name    : $('#'+action+'-name').val(),
-            };
+            let data = {detail:{}};
+            let i = 0;
+            $("input[name=id\\[\\]").each(function() {
+                data.detail[i] = {};
+                data.detail[i].id = this.value; 
+                i++;
+            });
 
-            if(action == 'edit') data['id'] = $('#'+action+'-id').val();
+            i = 0;
+            $("input[name=view\\[\\]").each(function() {
+                data.detail[i].view = $(this).is(':checked')?this.value:0; 
+                i++;
+            });
+
+            i = 0;
+            $("input[name=create\\[\\]").each(function() {
+                data.detail[i].create = $(this).is(':checked')?this.value:0; 
+                i++;
+            });
+            
+            i = 0;
+            $("input[name=edit\\[\\]").each(function() {
+                data.detail[i].edit = $(this).is(':checked')?this.value:0; 
+                i++;
+            });
+            
+            i = 0;
+            $("input[name=delete\\[\\]").each(function() {
+                data.detail[i].delete = $(this).is(':checked')?this.value:0; 
+                i++;
+            });
+            
+            i = 0;
+            $("input[name=execute\\[\\]").each(function() {
+                data.detail[i].execute = $(this).is(':checked')?this.value:0; 
+                i++;
+            });
+
+            if(action == 'edit'){
+                 data.id = $('#'+action+'-id').val();
+                 data.name = $('#'+action+'-name').html();
+            }
             
             return data;
         }

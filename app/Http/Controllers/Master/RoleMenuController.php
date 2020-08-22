@@ -19,23 +19,6 @@ class RoleMenuController extends Controller
     }
     
     public function index(Request $request){
-        // $where = "1=1";
-        // if(!empty($request->all())){
-        //     $role_id = $request->get('role_id');
-        //     if($role_id != "" && $role_id != "all") $where .= " AND role_id LIKE '%".$role_id."%'";
-        //     $menu_id = $request->get('menu_id');
-        //     if($menu_id != "" && $role_id != "all") $where .= " AND menu_id LIKE '%".$menu_id."%'";
-        // }
-
-        // $this->data['role_menu'] = RoleMenu::select('ms_role_menu.id','role_id','role_name','menu_id','ms_menus.name as menu_name','create','edit','view','delete')
-        //                             ->leftJoin('ms_roles','ms_roles.id','=','role_id')
-        //                             ->leftJoin('ms_menus','ms_menus.id','=','menu_id')
-        //                             ->whereRaw($where)->get();
-        // $this->data['role'] = Role::where('active','=','1')->get();
-        // $this->data['menu'] = Menu::where('active','=','1')->get();
-        // $this->data['active'] =  Active::getList();
-        // $this->data['footer'] = 'include.role-menu';
-
         return view('_page._app.index-role-menu',$this->data);
     }
 
@@ -79,9 +62,6 @@ class RoleMenuController extends Controller
                     <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
                         <i class='feather icon-edit'></i>
                     </span>
-                    <span class='action-delete' data-hash='".md5($model->id)."' data-title=''>
-                        <i class='feather icon-trash'></i>
-                    </span>
                 ";
                 $nestedData[] = $action;
                 $data[] = $nestedData;
@@ -98,108 +78,57 @@ class RoleMenuController extends Controller
         return json_encode($json_data);
     }
 
-    public function mapping($role_id){
+    public function detailEdit($role_id){
         // DB::enableQueryLog();
-        $this->data['role'] = Role::where('id','=',$role_id)->get();
-        if (RoleMenu::where('role_id','=',$role_id)->exists()) {
-            $this->data['menu'] = Menu::select('ms_menus.id','ms_menus.name','create','edit','view','delete')
+        $item           =   Role::where(DB::raw('md5(id)'),'=',$role_id)->first();
+        if (RoleMenu::where(DB::raw('md5(role_id)'),'=',$role_id)->exists()) {
+            $list_menu  =   Menu::select('ms_menus.id','ms_menus.name','create','edit','view','delete','execute')
                                 ->leftJoin('ms_role_menu', function($join) use ($role_id) {
                                     $join->on('ms_role_menu.menu_id','=','ms_menus.id');
-                                    $join->on('ms_role_menu.role_id','=',DB::raw($role_id)); // db raw to prevent quotes
+                                    $join->on(DB::raw('md5(ms_role_menu.role_id)'),'=',DB::raw('"'.$role_id.'"')); // db raw to prevent quotes
                                 })
                                 ->where('type','=',null) // neither parent or sub-parent
                                 ->where('ms_menus.active','=','1')->get();
         }else{
-            $this->data['menu'] = Menu::where('type','=',null) // neither parent or sub-parent
+            $list_menu  =   Menu::where('type','=',null) // neither parent or sub-parent
                                 ->where('ms_menus.active','=','1')->get();
         }
+        // $list_active    =   Active::getList();
         // dd(DB::getQueryLog());
-        $this->data['active'] =  Active::getList();
-        return view('pages.master.role-menu.add',$this->data);
-    }
-
-    public function doMap(Request $request){
-        unset($request['_token']);
-        $item = $request->all();
-        $status = 'success';
-        $msg = 'to mapping role menu';
-        $status_detail = array();
-        try{
-            foreach($item['menu_id']  as $key => $value){
-                $status_detail[$key] = RoleMenu::updateOrCreate(
-                    [
-                        'role_id' => $item['role_id'], 
-                        'menu_id' => $value],
-                    [   
-                        'create' => (array_key_exists('create', $item) && array_key_exists($key, $item['create']) && $item['create'][$key] == 'on' ? 1 : 0),
-                        'edit' => (array_key_exists('edit', $item) && array_key_exists($key, $item['edit']) && $item['edit'][$key] == 'on' ? 1 : 0),
-                        'view' => (array_key_exists('view', $item) && array_key_exists($key, $item['view']) && $item['view'][$key] == 'on' ? 1 : 0),
-                        'delete' => (array_key_exists('delete', $item) && array_key_exists($key, $item['delete']) && $item['delete'][$key] == 'on' ? 1 : 0)]
-                );
-            }
-        }catch(\Exception $e){
-            $status = 'fail';
-        }
-        $request->session()->flash($status,$msg);
-        
-        return redirect('_admin/master/role-menu');
-    }
-
-    public function detail($id){
-        $item = RoleMenu::where('id','=',$id)->first();
 
         $data = array(
-            "id"=>$item->id,
-            "role_id"=>$item->role_id,
-            "menu_id"=>$item->menu_id,
-            "create"=>$item->create,
-            "edit"=>$item->edit,
-            "view"=>$item->view,
-            "delete"=>$item->delete,
-            "active"=>$item->active,
+            "detail"=>$item,
+            "list_menu"=>$list_menu,
+            // "list_active"=>$list_active,
         );
         
         return response()->json($data);
     }
 
     public function doEdit(Request $request){
-        unset($request['_token']);
-        $item = $request->all();
-        unset($item['id']);
-        $data = array(
-            'status' => 'success',
-            'msg' => 'Success to edit role menu'
-        );
+        $item = $request->get('params');
+        $msg = 'to map role <b>'.$item['name'].' with menus</b>';
+        // dump($request->get('params'));die;
 
         try{
-            DB::table('ms_role_menu')->where('id',$request['id'])->update($item);
-        }catch(Exception $e){
-            $data['status'] = 'fail';
-            $data['msg'] = 'Fail to edit role menu';
+            foreach($item['detail']  as $key => $value){
+                $status_detail[$key] = RoleMenu::updateOrCreate(
+                    [
+                        'role_id' => $item['id'], 
+                        'menu_id' => $value['id']
+                    ],
+                    [   
+                        'view' => $value['view'],
+                        'create' => $value['create'],
+                        'edit' => $value['edit'],
+                        'delete' => $value['delete'],
+                        'execute' => $value['execute']
+                    ]
+                );
+            }
+            return json_encode(array('status'=>true, 'message'=>'Success '.$msg));
+        }catch(\Exception $e){
+            return json_encode(array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->errorInfo[2]));
         }
-        
-        return response()->json($data);
-    }
-
-    public function delete(Request $request){
-        $id = $request['id'];
-        $data = array();
-        $data = array(
-            'status' => 'fail',
-            'msg' => "Internal Server Error"
-        );
-        $deleteRows = 0;
-        try{
-            $deletedRows = RoleMenu::where('id','=',$id)->delete();
-        }catch(Exception $e){
-            $msg = $e->getData();
-        }
-        
-        if($deletedRows == 1){
-            $data['status'] = 'success';
-            $data['msg'] = 'Success to delete role';
-        }
-
-        return response()->json($data);
     }
 }
