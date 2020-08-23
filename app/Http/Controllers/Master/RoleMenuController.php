@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Models\AppLog;
 use App\Http\Models\RoleMenu;
 use App\Http\Models\Role;
 use App\Http\Models\Menu;
@@ -126,9 +127,12 @@ class RoleMenuController extends Controller
                     ]
                 );
             }
-            return json_encode(array('status'=>true, 'message'=>'Success '.$msg));
+            $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
-            return json_encode(array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->errorInfo[2]));
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
         }
+
+        AppLog::createLog('mapping role-menu',$item,$output);
+        return json_encode($output);
     }
 }

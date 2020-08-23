@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Models\AppLog;
 use App\Http\Models\Role;
 use App\Http\Models\Active;
 use DB;
@@ -89,10 +90,13 @@ class RoleController extends Controller
 
         try{
             Role::insertGetId($item);
-            return json_encode(array('status'=>true, 'message'=>'Success '.$msg));
+            $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
-            return json_encode(array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->errorInfo[2]));
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
         }
+
+        AppLog::createLog('add role',$item,$output);
+        return json_encode($output);
     }
 
     public function detailEdit($id){ // the id in hash
@@ -114,10 +118,13 @@ class RoleController extends Controller
 
         try{
             Role::where(DB::raw('md5(id)'),'=',$id)->update($item);
-            return json_encode(array('status'=>true, 'message'=>'Success '.$msg));
-        }catch(Exception $e){
-            return json_encode(array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->errorInfo[2]));
+            $output = array('status'=>true, 'message'=>'Success '.$msg);
+        }catch(\Exception $e){
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
         }
+
+        AppLog::createLog('edit role',$item,$output);
+        return json_encode($output);
     }
 
     public function delete($ids){ // the id in hash 
@@ -130,15 +137,18 @@ class RoleController extends Controller
                 Role::where(DB::raw('md5(id)'),'=',$id)->delete();
                 $deletedRows++;
             }
+
+            if($deletedRows >= 1){
+                $s = ($deletedRows > 1) ? "'s" : "";
+                $output = array('status'=>true, 'message'=>'Success '.$msg.$s.' ['.$deletedRows.' row'.$s.']');
+            }else{
+                $output = array('status'=>false, 'message'=>'Selected data unavailable in database', 'detail'=>'');
+            }
         }catch(Exception $e){
-            return json_encode(array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData()));
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
         }
         
-        if($deletedRows >= 1){
-            $s = ($deletedRows > 1) ? "'s" : "";
-            return json_encode(array('status'=>true, 'message'=>'Success '.$msg.$s.' ['.$deletedRows.' row'.$s.']'));
-        }else{
-            return json_encode(array('status'=>false, 'message'=>'Selected data unavailable in database', 'detail'=>''));
-        }
+        AppLog::createLog('delete role',$ids,$output);
+        return json_encode($output);
     }
 }

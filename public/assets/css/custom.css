@@ -6,6 +6,29 @@
     font-size: smaller;
 }
 
+.nav-item-custom .nav-i-custom{
+    margin-left: 2.1rem;
+    margin-right: 1rem;
+    float: left;
+    font-size:1.3rem;
+}
+
+.expanded .nav-item-custom span{ /* expanded is class that added when hover on nav */
+    display: block !important;
+}
+
+.nav-item-custom.collapsed .chevron-up{
+    display: none !important;
+}
+
+.nav-item-custom.collapsed .chevron-down{
+    display: block !important;
+}
+
+.nav-item-collapse-custom{
+    font-weight:600;
+}
+
 .col-fit-right-sm{
     width:5px;
     /* overflow-x: scroll; */
