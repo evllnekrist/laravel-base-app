@@ -123,7 +123,8 @@ class RoleMenuController extends Controller
                         'create' => $value['create'],
                         'edit' => $value['edit'],
                         'delete' => $value['delete'],
-                        'execute' => $value['execute']
+                        'execute' => $value['execute'],
+                        'updated_by' => \Session::get('_user')['_id']
                     ]
                 );
             }

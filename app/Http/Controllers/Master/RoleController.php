@@ -86,6 +86,7 @@ class RoleController extends Controller
     public function doAdd(Request $request){
         unset($request['_token']);
         $item = $request->get('params');
+        $item['created_by'] = \Session::get('_user')['_id'];
         $msg = 'to add new role <b>'.$item['name'].'</b>';
 
         try{
@@ -112,6 +113,7 @@ class RoleController extends Controller
     public function doEdit(Request $request){
         unset($request['_token']);
         $item = $request->get('params');
+        $item['updated_by'] = \Session::get('_user')['_id'];
         $id = $item['id'];
         unset($item['id']);
         $msg = 'to edit role <b>'.$item['name'].'</b>';
