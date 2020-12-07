@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Master;
+namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 // use Illuminate\Support\Facades\Hash;
@@ -12,7 +12,7 @@ use App\Http\Models\Company;
 use App\Http\Models\Active;
 use DB;
 
-class UsersController extends Controller
+class MembershipController extends Controller
 {
 	public function __construct()
 	{
@@ -21,7 +21,7 @@ class UsersController extends Controller
     }
     
     public function index(Request $request){
-        return view('_page._app.index-users',$this->data);
+        return view('_page._main.index-membership',$this->data);
     }
     
     public function get(Request $request){

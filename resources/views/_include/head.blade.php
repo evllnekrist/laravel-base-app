@@ -7,6 +7,6 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@lang('app.name')</title>
     <!-- Google Font -->
-    <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/favicon.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/ico/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/fav-icon.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/ico/fav-icon.png') }}">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">

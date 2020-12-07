@@ -2,8 +2,10 @@
 
 return [
 
-    'name' => 'Laravel Base App',
-    '2nd_name' => 'BaseApp',
-    '2nd_name_longer' => 'Welcome to Laravel Base App',
+    'name' => 'Musclebound Membership',
+    '2nd_name' => 'Membership',
+    '2nd_name_longer' => 'Musclebound Membership',
+
+    'instruc_credential' => 'please enter your credential',
 
 ];

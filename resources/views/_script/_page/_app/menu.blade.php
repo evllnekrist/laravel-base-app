@@ -33,7 +33,7 @@
             serverSide: true,
             responsive: false,
             ajax: {
-            url: "{{ url('master/menu/get') }}",
+            url: "{{ url('master/app/menu/get') }}",
             type: 'GET',
                 error:function(xhr, status, error){
 

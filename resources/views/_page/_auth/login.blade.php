@@ -10,16 +10,16 @@
             
                 <section class="row flexbox-container">
                     <div class="col-xl-7 col-10 d-flex justify-content-center">
-                        <div class="card bg-authentication rounded-0 mb-0 w-100">
+                        <div class="card bg-dark rounded-0 mb-0 w-100"><!-- authentication -->
                             <div class="row m-0">
                                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
-                                    <img src="{{ asset('app-assets/svg/login.svg') }}" alt="branding logo" style="max-height: 200px">
+                                    <img src="{{ asset('app-assets/images/logo/logo.png') }}" alt="branding logo" style="max-height: 200px">
                                 </div>
                                 <div class="col-lg-6 col-12 p-0">
                                     <div class="card rounded-0 mb-0 px-2 pb-2">
                                         <div class="card-header pb-1">
                                             <div class="card-title">
-                                                <h4 class="mb-0">@lang('app.2nd_name_longer')</h4>
+                                                <h6 class="mb-0">Welcome to <strong>@lang('app.2nd_name')</strong></h6>
                                             </div>
                                         </div>
                                         <div class="card-content">

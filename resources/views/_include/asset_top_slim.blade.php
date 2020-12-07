@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap-extended.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/colors.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/components.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/custom.css') }}">
     <!-- END: Theme CSS-->
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
@@ -17,7 +18,7 @@
     @yield('style')
     <!-- END: Page CSS-->
     <!-- BEGIN: Global CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}?var=00003">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}?var=00004">
     <!-- END: Global CSS-->
     
     @if(env('APP_ENV') == 'local' || env('APP_ENV') == 'development')

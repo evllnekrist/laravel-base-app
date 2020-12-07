@@ -17,6 +17,7 @@
                                 </div>
                             </li>
                             <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
+                            <li class="nav-item d-none d-lg-block"><a class="nav-link"><i class="ficon feather icon-instagram"></i></a></li>
                         </ul>
                     </div>
                     <div class="mr-auto ml-auto justify-content-center text-center d-none d-lg-block">

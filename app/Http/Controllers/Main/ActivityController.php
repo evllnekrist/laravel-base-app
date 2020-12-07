@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Master;
+namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 // use Illuminate\Support\Facades\Hash;
@@ -12,7 +12,7 @@ use App\Http\Models\Company;
 use App\Http\Models\Active;
 use DB;
 
-class UsersController extends Controller
+class ActivityController extends Controller
 {
 	public function __construct()
 	{

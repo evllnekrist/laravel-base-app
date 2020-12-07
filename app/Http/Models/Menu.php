@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    protected $table = 'ms_menus';
+    protected $table = 'ms_menu';
 
     public function role(){
         return $this->belongsTo('App\Models\Role');

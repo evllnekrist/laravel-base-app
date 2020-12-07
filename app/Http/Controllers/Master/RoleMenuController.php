@@ -83,16 +83,16 @@ class RoleMenuController extends Controller
         // DB::enableQueryLog();
         $item           =   Role::where(DB::raw('md5(id)'),'=',$role_id)->first();
         if (RoleMenu::where(DB::raw('md5(role_id)'),'=',$role_id)->exists()) {
-            $list_menu  =   Menu::select('ms_menus.id','ms_menus.name','create','edit','view','delete','execute')
+            $list_menu  =   Menu::select('ms_menu.id','ms_menu.name','create','edit','view','delete','execute')
                                 ->leftJoin('ms_role_menu', function($join) use ($role_id) {
-                                    $join->on('ms_role_menu.menu_id','=','ms_menus.id');
+                                    $join->on('ms_role_menu.menu_id','=','ms_menu.id');
                                     $join->on(DB::raw('md5(ms_role_menu.role_id)'),'=',DB::raw('"'.$role_id.'"')); // db raw to prevent quotes
                                 })
                                 ->where('type','=',null) // neither parent or sub-parent
-                                ->where('ms_menus.active','=','1')->get();
+                                ->where('ms_menu.active','=','1')->get();
         }else{
             $list_menu  =   Menu::where('type','=',null) // neither parent or sub-parent
-                                ->where('ms_menus.active','=','1')->get();
+                                ->where('ms_menu.active','=','1')->get();
         }
         // $list_active    =   Active::getList();
         // dd(DB::getQueryLog());

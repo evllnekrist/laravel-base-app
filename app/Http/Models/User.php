@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    protected $table = 'ms_users';
+    protected $table = 'ms_user';
 
     public function role(){
         return $this->hasOne('App\Models\Role','foreign_key');

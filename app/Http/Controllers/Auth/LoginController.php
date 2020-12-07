@@ -102,7 +102,7 @@ class LoginController extends Controller
     
     public function menuReady($role_id){
         // DB::enableQueryLog();
-        $raw_role_menu = RoleMenu::join('ms_menus','menu_id','=','ms_menus.id')
+        $raw_role_menu = RoleMenu::join('ms_menu','menu_id','=','ms_menu.id')
                                 ->where('role_id','=',$role_id)->get();
         // dd(DB::getQueryLog());
         $cooked_role_menu = array();

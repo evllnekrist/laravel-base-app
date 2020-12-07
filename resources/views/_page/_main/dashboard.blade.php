@@ -8,7 +8,7 @@
             <div class="content-header row"></div>
             <div class="content-body">
                 <!-- example :: BEGIN -->
-                    <center>sample-dashboard-page</center>
+                    <center>--</center>
                 <!-- example :: END   -->
             </div>
         </div>

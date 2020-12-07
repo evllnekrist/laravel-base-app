@@ -19,47 +19,45 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-
-            @foreach(Session::get('_user')['_menu'] as $key => $value)
-            @if(is_array($value) || is_object($value))
-                @if(!isset($value['detail']->name))
-                <!-- IF : W/ PARENT -->
-                    <div class="nav-item">
-                        <a data-toggle="collapse" data-target="#nav-collapse-{{$key}}" class="nav-item-custom">
-                            <i class="feather icon-chevrons-down nav-i-custom chevron-down" style="display:none"></i>
-                            <i class="feather icon-chevrons-up nav-i-custom chevron-up"></i>
-                            <span class="menu-title" data-i18n="{{ $value['title'] }}" style="display: none;">
-                                {{ $value['title'] }}
-                            </span>
-                        </a>
-                        <ul class="collapse nav-item-collapse-custom bg-secondary" id="nav-collapse-{{$key}}">
-                        @foreach($value['detail'] as $key2 => $value2)
-                            <li class="nav-item {{ (request()->segment(1) == url($value2->slug)) ? 'active' : '' }}">
-                                <a href="{{ url($value2->slug) }}">
-                                    <i class="{{ $value2->icon }}"></i>
-                                    <span class="menu-title" data-i18n="{{ $value2->name }}">
-                                        {{ $value2->name }}
-                                    </span>
-                                </a>
-                            </li>
-                        @endforeach
-                        </ul>
-                    </div>
-                @else
-                <!-- IF : NO PARENT -->
-                    <li class="navigation-header"><span></span></li>
-                    <li class="nav-item {{ (request()->segment(1) == url($value['detail']->slug)) ? 'active' : '' }}">
-                        <a href="{{ url($value['detail']->slug) }}">
-                            <i class="{{ $value['detail']->icon }}"></i>
-                            <span class="menu-title" data-i18n="{{ $value['detail']->name }}">
-                                {{ $value['detail']->name }}
-                            </span>
-                        </a>
-                    </li>
+                <li>
+                    <span><br></span>
+                </li>
+                @foreach(Session::get('_user')['_menu'] as $key => $value)
+                @if(is_array($value) || is_object($value))
+                    @if(!isset($value['detail']->name))
+                    <!-- IF : W/ PARENT -->
+                        <div class="nav-item" style="padding-top:15px">
+                            <a data-toggle="collapse" data-target="#nav-collapse-{{$key}}" class="nav-item-custom">
+                                <i class="feather icon-chevrons-down nav-i-custom chevron-down" style="display:none"></i>
+                                <i class="feather icon-chevrons-up nav-i-custom chevron-up"></i>
+                                <span class="menu-title" data-i18n="{{ $value['title'] }}" style="display: none;">{{ $value['title'] }}</span>
+                            </a>
+                            <ul class="collapse nav-item-collapse-custom bg-dark" id="nav-collapse-{{$key}}">
+                                @foreach($value['detail'] as $key2 => $value2)
+                                    <li class="nav-item {{ (request()->segment(1) == url($value2->slug)) ? 'active' : '' }}">
+                                        <a href="{{ url($value2->slug) }}">
+                                            <i class="{{ $value2->icon }}"></i>
+                                            <span class="menu-title" data-i18n="{{ $value2->name }}">
+                                                {{ $value2->name }}
+                                            </span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @else
+                    <!-- IF : NO PARENT -->
+                        <li class="nav-item {{ (request()->segment(1) == url($value['detail']->slug)) ? 'active' : '' }}">
+                            <a href="{{ url($value['detail']->slug) }}">
+                                <i class="{{ $value['detail']->icon }}"></i>
+                                <span class="menu-title" data-i18n="{{ $value['detail']->name }}">
+                                    {{ $value['detail']->name }}
+                                </span>
+                            </a>
+                        </li>
+                    @endif
                 @endif
-            @endif
-            @endforeach
-
+                @endforeach
             </ul>
         </div>
     </div>
