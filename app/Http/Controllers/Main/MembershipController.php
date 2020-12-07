@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 // use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Models\AppLog;
+use App\Http\Models\Member;
 use App\Http\Models\User;
 use App\Http\Models\Role;
 use App\Http\Models\Company;
@@ -17,7 +18,7 @@ class MembershipController extends Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->data['header_data']['js'] = array('._app.users');
+		$this->data['header_data']['js'] = array('.membership');
     }
     
     public function index(Request $request){
@@ -25,6 +26,13 @@ class MembershipController extends Controller
     }
     
     public function get(Request $request){
+
+        $data = Member::get();
+        // dd($data);
+        // die;
+        return array(
+            "list_of_data" => $data
+        );
 
         $columns = array(
             0 =>'id',

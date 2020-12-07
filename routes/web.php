@@ -27,7 +27,7 @@ Route::get('/home', function () {
     // MEMBERSHIP
     Route::group(['prefix' => 'membership'], function()
     {
-        Route::get('/','Main\MembershipController@index');
+        Route::get('/','Main\MembershipController@index')->name('membership');
         Route::get('get','Main\MembershipController@get');
         Route::post('doAdd','Main\MembershipController@doAdd');
         Route::post('doEdit','Main\MembershipController@doEdit');
@@ -38,7 +38,7 @@ Route::get('/home', function () {
     // ACTIVITY
     Route::group(['prefix' => 'activity'], function()
     {
-        Route::get('/','Main\ActivityController@index');
+        Route::get('/','Main\ActivityController@index')->name('activity');
         Route::get('get','Main\ActivityController@get');
         Route::post('doAdd','Main\ActivityController@doAdd');
         Route::post('doEdit','Main\ActivityController@doEdit');
