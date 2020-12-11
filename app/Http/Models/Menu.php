@@ -9,7 +9,7 @@ class Menu extends Model
     protected $table = 'ms_menu';
 
     public function role(){
-        return $this->belongsTo('App\Models\Role');
+        return $this->belongsTo('App\Http\Models\Role');
     }
 
     // public function parent()

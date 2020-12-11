@@ -64,19 +64,129 @@
                     </div>
                 </section>
                 <!-- // Basic example section end -->
-
-                <div class="modal fade text-left" id="customer-details-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+                <div class="modal fade text-left" id="admin-add-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title text-capitalize" id="customer-details-modal-title">Customer Details</h4>
+                                <h4 class="modal-title text-capitalize" id="admin-add-modal-title">Add New Member</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body" id="customer-details-modal-body"></div>
+                            <form id="addForm" onsubmit="return false;">
+                                <div class="modal-body" id="admin-add-modal-body">
+                                    <div class="col-md-12 col-12 page-users-view">
+                                        <div class="row">
+                                            <div class="col-md-5 col-12 mt-1">
+                                                <span class="font-weight-bold">First Name</span>
+                                                <input type="text" class="form-control" placeholder="Enter First Name" name="first_name" maxlength="50" required>
+                                            </div>
+                                            <div class="col-md-7 col-12 mt-1">
+                                                <span class="font-weight-bold">Last Name</span>
+                                                <input type="text" class="form-control" placeholder="Enter Last Name" name="last_name" maxlength="50" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5 col-12 mt-1">
+                                                <span class="font-weight-bold">Role</span>
+                                                <select id="role_add_selector" name="member_role_id" class="select2 form-control" style="width: 100%" required>
+                                                    @foreach($list_role as $role)
+                                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-7 col-12 mt-1">
+                                                <span class="font-weight-bold">Status</span>
+                                                <select id="status_add_selector" name="status_code" class="select2 form-control" style="width: 100%" required>
+                                                    @foreach($list_status as $status)
+                                                        <option value="{{$status->code}}">{{$status->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5 col-12 mt-1">
+                                                <span class="font-weight-bold">KTP Number</span>
+                                                <input type="text" class="form-control" placeholder="Enter KTP Number" name="ktp_number" maxlength="16" required>
+                                            </div>
+                                            <div class="col-md-7 col-12 mt-1">
+                                                <br>
+                                                <input type="file" class="form-control" placeholder="Enter KTP File" name="ktp_file" style="border:none;" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5 col-12 mt-1">
+                                                <span class="font-weight-bold">Place of Birth</span>
+                                                <input type="text" class="form-control" placeholder="Enter PoB" name="pob" maxlength="20" required>
+                                            </div>
+                                            <div class="col-md-7 col-12 mt-1">
+                                                <span class="font-weight-bold">Date of Birth</span>
+                                                <input type="date" class="form-control" placeholder="Enter DoB" name="dob" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5 col-12 mt-1">
+                                                <span class="font-weight-bold">Email</span>
+                                                <input type="email" class="form-control" placeholder="Enter Email" name="email" maxlength="50" required>
+                                            </div>
+                                            <div class="col-md-4 col-12 mt-1">
+                                                <span class="font-weight-bold">Phone Number</span>
+                                                <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone" maxlength="20" required>
+                                            </div>
+                                            <div class="col-md-3 col-12 mt-1">
+                                                <span class="font-weight-bold">Gender</span>
+                                                <select id="gender_add_selector" name="gender_code" class="select2 form-control" style="width: 100%" required>
+                                                    @foreach($list_gender as $gender)
+                                                        <option value="{{$gender->code}}">{{$gender->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5 col-12 mt-1">
+                                                <span class="font-weight-bold">Province</span>
+                                                <input type="text" class="form-control" placeholder="Enter Province" name="province" maxlength="30" required>
+                                            </div>
+                                            <div class="col-md-4 col-12 mt-1">
+                                                <span class="font-weight-bold">City</span>
+                                                <input type="text" class="form-control" placeholder="Enter City" name="city" maxlength="30" required>
+                                            </div>
+                                            <div class="col-md-3 col-12 mt-1">
+                                                <span class="font-weight-bold">Post Code</span>
+                                                <input type="text" class="form-control" placeholder="Enter Post Code" name="post_code" maxlength="5" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 col-12 mt-1">
+                                                <span class="font-weight-bold">Address</span>
+                                                <textarea rows="4" class="form-control" placeholder="Enter Address" name="address" maxlength="200" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" id="button-add-save" class="btn btn-outline-primary" value="Save"/>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade text-left" id="admin-details-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title text-capitalize" id="admin-details-modal-title">Membership Detail</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="admin-details-modal-body"></div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                <button type="button" id="button-edit" class="btn btn-outline-primary">Edit</button>
+                                <button type="button" id="button-cancel" class="btn btn-outline-primary hidden">Cancel</button>
+                                <button type="button" id="button-close" class="btn btn-primary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>

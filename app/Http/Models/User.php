@@ -9,10 +9,10 @@ class User extends Model
     protected $table = 'ms_user';
 
     public function role(){
-        return $this->hasOne('App\Models\Role','foreign_key');
+        return $this->hasOne('App\Http\Models\Role','foreign_key');
     }
 
     public function company(){
-        return $this->hasOne('App\Models\Company');
+        return $this->hasOne('App\Http\Models\Company');
     }
 }

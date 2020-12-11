@@ -8,7 +8,7 @@ class MemberRole extends Model
 {
     protected $table = 'ms_member_role';
 
-    public function Member(){
-        return $this->belongsTo('App\Http\Models\Member');
+    public function member(){
+        return $this->belongsTo('App\Http\Models\Member', 'member_role_id');
     }
 }

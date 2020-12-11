@@ -23,7 +23,7 @@
             },
             {
                 headerName: "Status",
-                field: "status",
+                field: "status.name",
                 editable: false,
                 sortable: true,
                 filter: true,
@@ -31,7 +31,7 @@
             },
             {
                 headerName: "Gender",
-                field: "gender",
+                field: "gender.name",
                 editable: false,
                 sortable: true,
                 filter: true,
@@ -39,7 +39,7 @@
             },
             {
                 headerName: "Role",
-                field: "role",
+                field: "role.name",
                 editable: false,
                 sortable: true,
                 filter: true,
@@ -99,7 +99,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 250,
+                width: 200,
                 pinned: "left"
             },
             {
@@ -116,7 +116,8 @@
                 cellRenderer: 'btnCellRenderer',
                 cellRendererParams: {
                     clicked: function(data) {
-                        showadminDetail(data);
+                        // console.log(data);
+                        detailEdit(data);
                     }
                 },
                 width: 100,
@@ -137,50 +138,32 @@
             animateRows: true,
             resizable: true,
             onCellValueChanged:function(data){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: "You are not permitted to make this change, so changes that you make will not be updated in the database!",
-                    type: "error",
-                    buttonsStyling: false,
-                    confirmButtonClass: "btn btn-error"
-                });
+                showSweetAlert('error','','You are not permitted to make this change, so changes that you make will not be updated in the database!');
             },
             components: {
                 btnCellRenderer: BtnCellRenderer
             }
         };
 
-        function showadminDetail(data){
+        function detailEdit(data){
             $("#button-edit,#button-close").removeClass("hidden");
-            $("#button-update,#button-cancel,#button-edit").addClass("hidden");
+            $("#button-update,#button-delete,#button-cancel,#button-edit").addClass("hidden");
             $("#admin-details-modal").modal('show');
-            $("#admin-details-modal-title").text(data.name.toString()+' '+data.nik.toString());
+            $("#admin-details-modal-title").text(data.card_id.toString()+' - '+data.first_name.toString()+'  '+data.last_name.toString());
             $("#admin-details-modal-body").html($("#loading").html());
             $.ajax({
-                url: 'membership/' + data.username,
+                url: 'membership/' + data.id + '/detailEdit',
                 type: "GET",
-                data: {
-                    type: "show_admin_detail"
-                },
                 success: (function (view) {
-
                     $("#admin-details-modal-body").html(view);
                     $("#button-edit").removeClass("hidden");
-                    $("#site_code_selector,#privilege_selector,#division_selector,#is_enabled_selector").select2({
+                    $("#role_add_selector,#status_add_selector,#gender_add_selector").select2({
                         minimumResultsForSearch: -1,
                         tokenSeparators: [',', ' ', '.', '/', '\\','[',']',';','\'','{','}','_','+','=','|','"',":"]
                     });
 
                 }),error:function(xhr,status,error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: xhr.responseText,
-                        type: "error",
-                        buttonsStyling: false,
-                        confirmButtonClass: "btn btn-error"
-                    });
+                    showSweetAlert('error','',xhr.responseText);
                 }
             })
         }
@@ -255,7 +238,7 @@
         agGrid
             .simpleHttpRequest({ url: "{{ url('membership/get') }}" })
             .then(function(data) {
-                gridOptions.api.setRowData(data.list_of_data);
+                gridOptions.api.setRowData(data.list_data);
                 $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
             });
 
@@ -282,30 +265,30 @@
         /*** EXPORT AS CSV BTN ***/
         $(".ag-grid-export-btn").on("click", function(params) {
             if(getSelectedRows().length){
+                let date = new Date();
+                let date_str = date.getFullYear()+'_'+date.getMonth()+'_'+date.getDate()+'_'+date.getHours()+'_'+date.getMinutes()+'_'+date.getSeconds();
                 gridOptions.api.exportDataAsCsv({
                     columnKeys: [
-                        'nik',
-                        'name',
-                        'username',
-                        'is_enabled',
-                        'created_at'
+                        'first_name',
+                        'last_name',
+                        'email',
+                        'phone',
+                        'dob',
+                        'gender',
+                        'address',
+                        'city',
+                        'province',
+                        'post_code'
                     ],
                     onlySelected: true,
                     allColumns: false,
-                    fileName: 'admin Export at'+new Date()+'.csv',
+                    fileName: 'export_member__at__'+date_str+'.csv',
                     skipHeader: false,
                     // customHeader: 'admin List' + '\n',
                     // customFooter: '\n \n Total No.Of admins :' + gridOptions.api.getModel().getRowCount() + ' \n'
                 });
             }else{
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: "It seems that you have not selected the data to export!",
-                    type: "error",
-                    buttonsStyling: false,
-                    confirmButtonClass: "btn btn-error"
-                });
+                showSweetAlert('error','','It seems that you have not selected the data to export!');
             }
         });
 
@@ -333,123 +316,139 @@
 
         $(document).on("click","#add-data",function(){
             $("#admin-add-modal").modal('show');
-            $("#site_code_add_selector,#privilege_add_selector,#division_add_selector,#is_enabled_add_selector").select2({
+            $("#role_add_selector,#status_add_selector,#gender_add_selector").select2({
                 minimumResultsForSearch: -1,
                 tokenSeparators: [',', ' ', '.', '/', '\\','[',']',';','\'','{','}','_','+','=','|','"',":"]
             });
         }).on("click","#button-edit",function(){
-            $("#button-update,#button-cancel,.data-edit").removeClass("hidden");
+            $("#button-update,#button-delete,#button-cancel,.data-edit").removeClass("hidden");
             $("#button-edit,#button-close,.data-info").addClass("hidden");
         }).on("click","#button-cancel",function(){
             $("#button-edit,#button-close,.data-info").removeClass("hidden");
-            $("#button-update,#button-cancel,.data-edit").addClass("hidden");
-        }).on("click","#button-update",function () {
-            let hash = $(this).data("hash");
-            if($("#updateForm")[0].checkValidity()) {
-                $("#button-update").val("Updating...");
-                $("#updateForm").ajaxSubmit({
-                    url: 'membership/'+hash,
-                    headers: {
-                        'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
-                    },
-                    type: 'put',
-                    success:function(data){
-                        if($.trim(data)==="SUCCESS"){
-                            $("#admin-details-modal").modal("hide");
-                            agGrid
-                                .simpleHttpRequest({ url: "{{ url('membership/get') }}" })
-                                .then(function(data) {
-                                    gridOptions.api.setRowData(data.list_of_data);
-                                    $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
-                                });
-                            $('#updateForm')[0].reset();
-                            $("#button-update").val("Update");
-                            Swal.fire({
-                                title:"Success!",
-                                text: "Yeah, data was updated successfully",
-                                type: "success",
-                                buttonsStyling: false,
-                                confirmButtonClass: "btn btn-success"
-                            });
-                        }else{
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                html: data,
-                                type: "error",
-                                buttonsStyling: false,
-                                confirmButtonClass: "btn btn-error"
-                            });
-                            $("#button-update").val("Update");
-                            return false;
-                        }
-                    },
-                    error:function(xhr, status, error){
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: xhr.responseText,
-                            type: "error",
-                            buttonsStyling: false,
-                            confirmButtonClass: "btn btn-error"
-                        });
-                        $("#button-update").val("Update");
-                    }
-                });
-            }
+            $("#button-update,#button-delete,,#button-cancel,.data-edit").addClass("hidden");
         }).on("click","#button-add-save",function(){
             if($("#addForm")[0].checkValidity()) {
                 $("#button-add-save").val("Loading...");
                 $("#addForm").ajaxSubmit({
-                    url: 'admin',
+                    url: 'membership/doAdd',
                     headers: {
                         'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
                     },
                     type: 'post',
                     success:function(data){
-                        if($.trim(data)==="SUCCESS"){
+                        if(data.status){
                             $("#admin-add-modal").modal("hide");
                             agGrid
                                 .simpleHttpRequest({ url: "{{ url('membership/get') }}" })
                                 .then(function(data) {
-                                    gridOptions.api.setRowData(data.list_of_data);
+                                    gridOptions.api.setRowData(data.list_data);
                                     $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
                                 });
                             $('#addForm')[0].reset();
                             $("#button-add-save").val("Save");
-                            Swal.fire({
-                                title:"Success!",
-                                text: "Yeah, data was updated successfully",
-                                type: "success",
-                                buttonsStyling: false,
-                                confirmButtonClass: "btn btn-success"
-                            });
+                            showSweetAlert('success','',data.message);
                         }else{
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                html: data,
-                                type: "error",
-                                buttonsStyling: false,
-                                confirmButtonClass: "btn btn-error"
-                            });
                             $("#button-add-save").val("Save");
+                            showSweetAlert('error','',data.message);
                             return false;
                         }
                     },
                     error:function(xhr, status, error){
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: xhr.responseText,
-                            type: "error",
-                            buttonsStyling: false,
-                            confirmButtonClass: "btn btn-error"
-                        });
                         $("#button-add-save").val("Save");
+                        showSweetAlert('error','',xhr.responseText);
                     }
                 });
             }
+        }).on("click","#button-update",function () {
+            if($("#updateForm")[0].checkValidity()) {
+                $("#button-update").val("Updating...");
+                $("#updateForm").ajaxSubmit({
+                    url: 'membership/doEdit',
+                    headers: {
+                        'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    type: 'post',
+                    success:function(data){
+                        if(data.status){
+                            $("#admin-details-modal").modal("hide");
+                            agGrid
+                                .simpleHttpRequest({ url: "{{ url('membership/get') }}" })
+                                .then(function(data) {
+                                    gridOptions.api.setRowData(data.list_data);
+                                    $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
+                                });
+                            $('#updateForm')[0].reset();
+                            $("#button-update").val("Update");
+                            showSweetAlert('success','',data.message);
+                        }else{
+                            $("#button-update").val("Update");
+                            showSweetAlert('error','',data.message);
+                            return false;
+                        }
+                    },
+                    error:function(xhr, status, error){
+                        $("#button-update").val("Update");
+                        showSweetAlert('error','',xhr.responseText);
+                    }
+                });
+            }
+        }).on("click","#button-delete",function () {
+
+            if(confirm("This action will permanently remove the member, are you sure?")){
+                let hash = $(this).data("hash");
+                $("#button-update").val("Deleting...");
+                $("#updateForm").ajaxSubmit({
+                    url: 'membership/'+hash+'/delete',
+                    headers: {
+                        'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    type: 'post',
+                    success:function(data){
+                        if(data.status){
+                            $("#admin-details-modal").modal("hide");
+                            agGrid
+                                .simpleHttpRequest({ url: "{{ url('membership/get') }}" })
+                                .then(function(data) {
+                                    gridOptions.api.setRowData(data.list_data);
+                                    $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
+                                });
+                            $('#updateForm')[0].reset();
+                            $("#button-delete").val("Delete");
+                            showSweetAlert('success','',data.message);
+                        }else{
+                            $("#button-delete").val("Delete");
+                            showSweetAlert('error','',data.message);
+                            return false;
+                        }
+                    },
+                    error:function(xhr, status, error){
+                        $("#button-delete").val("Delete");
+                        showSweetAlert('error','',xhr.responseText);
+                    }
+                });
+            }else{}
+
         });
+
+        function showSweetAlert(type='success',title='',message){
+            if(type=='success'){
+                Swal.fire({
+                    title: (title?title:"Success!"),
+                    text: message,
+                    type: "success",
+                    buttonsStyling: false,
+                    confirmButtonClass: "btn btn-success"
+                });
+            }else if(type=='error'){
+                Swal.fire({
+                    icon: 'error',
+                    title: (title?title:"Oops..."),
+                    html: message,
+                    type: "error",
+                    buttonsStyling: false,
+                    confirmButtonClass: "btn btn-error"
+                });
+            }
+        }
     });
 </script>
