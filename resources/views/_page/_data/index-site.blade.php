@@ -9,14 +9,14 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-left mb-0">Company</h2>
+                            <h2 class="content-header-title float-left mb-0">Site</h2>
                             <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
-                                        Master Company
+                                        Master Site
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="{{ route('master-company') }}">Company</a>
+                                        <a href="{{ route('master-site') }}">Site</a>
                                     </li>
                                 </ol>
                             </div>
@@ -53,6 +53,10 @@
                                     <th>CODE</th>
                                     <th>NAME</th>
                                     <th>ACTIVE</th>
+                                    <th>COMPANY</th>
+                                    <th>EMAIL</th>
+                                    <th>PHONE</th>
+                                    <th>ADDRESS</th>
                                     <th class="no-sort">ACTION</th>
                                 </tr>
                             </thead> 
@@ -66,7 +70,7 @@
                         <div class="add-new-data add-new-data-create">
                             <div class="div mt-2 px-2 d-flex new-data-title justify-content-between">
                                 <div>
-                                    <h4 class="text-uppercase">Add Company</h4>
+                                    <h4 class="text-uppercase">Add Site</h4>
                                 </div>
                                 <div class="hide-data-sidebar">
                                     <i class="feather icon-x"></i>
@@ -81,7 +85,7 @@
                             </div>
                             <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
                                 <div class="add-data-btn">
-                                    <button class="btn btn-primary" id="add_data">Add Company</button>
+                                    <button class="btn btn-primary" id="add_data">Add Site</button>
                                 </div>
                                 <div class="cancel-data-btn">
                                     <button class="btn btn-outline-primary">Cancel</button>
@@ -97,7 +101,7 @@
                         <div class="add-new-data add-new-data-update">
                             <div class="div mt-2 px-2 d-flex new-data-title justify-content-between">
                                 <div>
-                                    <h4 id="update_title" class="text-uppercase">Update Company</h4>
+                                    <h4 id="update_title" class="text-uppercase">Update Site</h4>
                                 </div>
                                 <div class="hide-data-sidebar">
                                     <i class="feather icon-x"></i>
@@ -112,7 +116,7 @@
                             </div>
                             <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
                                 <div class="add-data-btn">
-                                    <button class="btn btn-primary" id="update_data">Update Company</button>
+                                    <button class="btn btn-primary" id="update_data">Update Site</button>
                                 </div>
                                 <div class="cancel-data-btn">
                                     <button class="btn btn-outline-primary">Cancel</button>

@@ -6,31 +6,34 @@ use App\Http\Controllers\Controller;
 // use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Models\AppLog;
-use App\Http\Models\User;
-use App\Http\Models\Role;
+use App\Http\Models\Site;
 use App\Http\Models\Company;
 use App\Http\Models\Active;
 use DB;
 
-class CompanyController extends Controller
+class SiteController extends Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->data['header_data']['js'] = array('._data.company');
+		$this->data['header_data']['js'] = array('._data.site');
     }
     
     public function index(Request $request){
-        return view('_page._data.index-company',$this->data);
+        return view('_page._data.index-site',$this->data);
     }
     
     public function get(Request $request){
 
         $columns = array(
-            0 =>'id',
+            0 =>'code',
             1 =>'code',
             2 =>'name',
             3 =>'active',
+            4 =>'company_name',
+            5 =>'email',
+            6 =>'phone',
+            7 =>'address'
         );
         $limit = $request->input('length');
         $start = $request->input('start');
@@ -38,16 +41,20 @@ class CompanyController extends Controller
         $dir = $request->input('order.0.dir');
 
         // DB::enableQueryLog(); // Enable query log
-        $models =  DB::table('ms_company')
-                        ->select('*');
-                        // ->leftJoin('ms_role as r', 'u.role_id', '=', 'r.id')
-                        // ->leftJoin('ms_company as c', 'u.company_id', '=', 'c.id');
+        $models =  DB::table('ms_site as s')
+                        ->select('s.code','s.name', 's.company_code', 's.email', 's.phone', 's.address', 's.active', 's.manager',
+                        'c.name as company_name')
+                        ->leftJoin('ms_company as c', 's.company_code', '=', 'c.code');
                         // ->where('u.active','=',1);
         if(!empty($request->input('search.value')))
         {
             $search = $request->input('search.value');
             $models = $models->where(function($query) use ($search){
-                        $query->where('name','LIKE',"%{$search}%");
+                        $query->where('name','LIKE',"%{$search}%")
+                                ->orWhere('email', 'LIKE',"%{$search}%")
+                                ->orWhere('phone', 'LIKE',"%{$search}%")
+                                ->orWhere('address', 'LIKE',"%{$search}%")
+                                ->orWhere('company_name', 'LIKE',"%{$search}%");
                     });
         }
         $models = $models->offset($start)
@@ -57,7 +64,7 @@ class CompanyController extends Controller
         // dd(DB::getQueryLog()); // Show results of log
 
         $recordsFiltered = count(get_object_vars($models));        
-        $recordsTotal = Company::count(); // where('active','=',1)
+        $recordsTotal = Site::count(); // where('active','=',1)
 
         $data = array();
         if(!empty($models)) {
@@ -68,11 +75,15 @@ class CompanyController extends Controller
                 $nestedData[] = $model->code;
                 $nestedData[] = $model->name;
                 $nestedData[] = ($model->active? '<i class="feather icon-check ft-blue-band"></i>':'');
+                $nestedData[] = $model->company_name; 
+                $nestedData[] = $model->email;
+                $nestedData[] = $model->phone;
+                $nestedData[] = $model->address;
                 $action= "
-                    <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
+                    <span class='action-edit' data-hash='".md5($model->code)."' data-title=''>
                         <i class='feather icon-edit'></i>
                     </span>
-                    <span class='action-delete' data-hash='".md5($model->id)."' data-title=''>
+                    <span class='action-delete' data-hash='".md5($model->code)."' data-title=''>
                         <i class='feather icon-trash'></i>
                     </span>
                 ";
@@ -91,40 +102,40 @@ class CompanyController extends Controller
         return json_encode($json_data);
     }
 
-    // public function detailAdd(){
-    //     $list_role = Role::where('active','=',1)->get();
-    //     $list_company = Company::where('active','=',1)->get();
+    public function detailAdd(){
+        $list_company = Company::where('active','=',1)->get();
 
-    //     $data = array(
-    //         "list_role"=>$list_role,
-    //         "list_company"=>$list_company,
-    //     );
+        $data = array(
+            "list_company"=>$list_company,
+        );
         
-    //     return response()->json($data);
-    // }
+        return response()->json($data);
+    }
 
     public function doAdd(Request $request){
         unset($request['_token']);
         $item = $request->get('params');
         $item['created_by'] = \Session::get('_user')['_id'];
-        $msg = 'to add company <b>'.$item['name'].'</b>';
-
+        $msg = 'to add site <b>'.$item['name'].'</b>';
+        
         try{
-            Company::insertGetId($item);
+            Site::insert($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
         }
 
-        AppLog::createLog('add company',$item,$output);
+        AppLog::createLog('add site',$item,$output);
         return json_encode($output);
     }
 
     public function detailEdit($id){
-        $item = Company::where(DB::raw('md5(id)'),'=',$id)->first();
+        $item = Site::where(DB::raw('md5(code)'),'=',$id)->first();
+        $list_company = Company::where('active','=',1)->get();
 
         $data = array(
             "detail"=>$item,
+            "list_company"=>$list_company,
         );
         
         return response()->json($data);
@@ -135,28 +146,29 @@ class CompanyController extends Controller
         $item = $request->get('params');
         $item['updated_by'] = \Session::get('_user')['_id'];
         $id = $item['id'];
+        // var_dump($item);exit;
         unset($item['id']);
-        $msg = 'to edit Company <b>'.$item['name'].'</b>';
+        $msg = 'to edit site <b>'.$item['name'].'</b>';
 
         try{
-            Company::where(DB::raw('md5(id)'),'=',$id)->update($item);
+            Site::where(DB::raw('md5(code)'),'=',$id)->update($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
         }
 
-        AppLog::createLog('edit company',$item,$output);
+        AppLog::createLog('edit site',$item,$output);
         return json_encode($output);
     }
 
     public function delete($ids){ // the id in hash 
         $array_id = explode(",",$ids);
-        $msg = 'to delete company';
+        $msg = 'to delete site';
         $deletedRows = 0;
         
         try{
             foreach ($array_id as $id) {
-                Company::where(DB::raw('md5(id)'),'=',$id)->delete();
+                Site::where(DB::raw('md5(code)'),'=',$id)->delete();
                 $deletedRows++;
             }
             
@@ -170,7 +182,7 @@ class CompanyController extends Controller
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
         }
         
-        AppLog::createLog('delete company',$ids,$output);
+        AppLog::createLog('delete site',$ids,$output);
         return json_encode($output);
     }
 }
