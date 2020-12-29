@@ -15,10 +15,6 @@ use App\Http\Models\Active;
 use Illuminate\Support\Facades\View;
 use DB;
 
-use App\Http\Models\User;
-use App\Http\Models\Role;
-use App\Http\Models\Company;
-
 class MembershipController extends Controller
 {
 	public function __construct()
@@ -124,12 +120,12 @@ class MembershipController extends Controller
 
     public function delete($ids){ // the id in hash 
         $array_id = explode(",",$ids);
-        $msg = 'to delete user';
+        $msg = 'to delete member';
         $deletedRows = 0;
         
         try{
             foreach ($array_id as $id) {
-                User::where(DB::raw('md5(id)'),'=',$id)->delete();
+                Member::where(DB::raw('md5(id)'),'=',$id)->delete();
                 $deletedRows++;
             }
             

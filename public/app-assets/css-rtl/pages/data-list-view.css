@@ -170,14 +170,14 @@ table.data-list-view.dataTable thead .sorting_asc, table.data-list-view.dataTabl
   padding-left : inherit;
 }
 table.data-list-view.dataTable thead .sorting_asc:before, table.data-list-view.dataTable thead .sorting_desc:before, table.data-list-view.dataTable thead .sorting:before, table.data-thumb-view.dataTable thead .sorting_asc:before, table.data-thumb-view.dataTable thead .sorting_desc:before, table.data-thumb-view.dataTable thead .sorting:before {
-  font-size : 0.7rem;
+  font-size : 0.6rem;
   right : 0.857rem;
-  top : 0.642rem;
+  top : 0.600rem;
 }
 table.data-list-view.dataTable thead .sorting_asc:after, table.data-list-view.dataTable thead .sorting_desc:after, table.data-list-view.dataTable thead .sorting:after, table.data-thumb-view.dataTable thead .sorting_asc:after, table.data-thumb-view.dataTable thead .sorting_desc:after, table.data-thumb-view.dataTable thead .sorting:after {
-  font-size : 0.7rem;
+  font-size : 0.6rem;
   right : 0.857rem;
-  top : 1.071rem;
+  top : 1.000rem;
 }
 table.data-list-view.dataTable thead .dt-checkboxes-select-all input, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input {
   width : 0;

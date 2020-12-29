@@ -46,6 +46,11 @@ Route::get('/home', function () {
         Route::get('detailAdd','Main\ActivityController@detailAdd');
         Route::get('{id}/detailEdit','Main\ActivityController@detailEdit');
     });
+    // SCAN
+    Route::group(['prefix' => 'scan'], function()
+    {
+        Route::get('/','Main\ScanController@index');
+    });
     // MASTER
     Route::group(['prefix' => 'master'], function()
     {

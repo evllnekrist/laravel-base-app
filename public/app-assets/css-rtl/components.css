@@ -730,7 +730,7 @@ body.fixed-footer footer.footer-dark {
   margin-top : 2.30rem;
 }
 .main-menu .navbar-header .navbar-brand .brand-logo {
-  background : url('../../app-assets/images/logo/logo-medium-red.png') no-repeat;
+  background : url('../../app-assets/images/logo/logo-mini.png') no-repeat;
   background-position : -65px -54px;
   height : 24px;
   width : 35px;
@@ -3507,7 +3507,7 @@ table.dataTable th, table.dataTable td {
   border-top : 0;
 }
 table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
-  font-size : 0.85rem;
+  font-size : 0.75rem;
   border : 0;
 }
 table.dataTable thead tr {

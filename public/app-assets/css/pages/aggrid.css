@@ -3,7 +3,7 @@
 =========================================================*/
 .aggrid {
   height: 500px;
-  font-size: 1rem;
+  font-size: 0.85rem;
   color: #626262;
   /*** TABLE BODY HEIGHT - FOOTER HEIGHT ***/
   /*** HEADER TEXT  ***/
@@ -15,7 +15,7 @@
   .aggrid .ag-root-wrapper-body {
     min-height: calc(100% - 56px); }
   .aggrid .ag-header-cell-text {
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-family: "Montserrat", Helvetica, Arial, serif; }
   .aggrid .ag-paging-panel {
     display: block !important;

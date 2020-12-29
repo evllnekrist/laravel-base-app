@@ -3,8 +3,8 @@
         /*** COLUMN DEFINE ***/
         var columnDefs = [
             {
-                headerName: "First Name",
-                field: "first_name",
+                headerName: "Time",
+                field: "created_at",
                 editable: true,
                 sortable: true,
                 width: 300,
@@ -14,112 +14,33 @@
                 headerCheckboxSelection: true
             },
             {
-                headerName: "Last Name",
-                field: "last_name",
+                headerName: "PIC",
+                field: "created_by",
                 editable: true,
                 sortable: true,
                 filter: true,
                 width: 300
             },
             {
-                headerName: "Status",
-                field: "status.name",
-                editable: false,
+                headerName: "Detail",
+                field: "detail",
+                editable: true,
                 sortable: true,
                 filter: true,
-                width: 200
-            },
-            {
-                headerName: "Gender",
-                field: "gender.name",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 200
-            },
-            {
-                headerName: "Role",
-                field: "role.name",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 200
-            },
-            {
-                headerName: "Email",
-                field: "email",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 325
-            },
-            {
-                headerName: "Phone",
-                field: "phone",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 250
-            },
-            {
-                headerName: "Address",
-                field: "address",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 325
-            },
-            {
-                headerName: "City",
-                field: "city",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 325
-            },
-            {
-                headerName: "Province",
-                field: "province",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 325
-            },
-            {
-                headerName: "POB",
-                field: "pob",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 250,
-            },
-            {
-                headerName: "DOB",
-                field: "dob",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 325,
-            },
-            {
-                headerName: "KTP",
-                field: "ktp_number",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 200
-            },
-            {
-                headerName: "Active",
-                field: "active",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 125
+                width: 300
             },
             {
                 headerName: "Card ID",
                 field: "card_id",
+                editable: false,
+                sortable: true,
+                filter: true,
+                width: 200,
+                pinned: "left"
+            },
+            {
+                headerName: "Transaction",
+                field: "transaction.name",
                 editable: false,
                 sortable: true,
                 filter: true,
@@ -168,7 +89,7 @@
             $("#admin-details-modal-title").text(data.card_id.toString()+' - '+data.first_name.toString()+'  '+data.last_name.toString());
             $("#admin-details-modal-body").html($("#loading").html());
             $.ajax({
-                url: 'membership/' + data.id + '/detailEdit',
+                url: 'activity/' + data.id + '/detailEdit',
                 type: "GET",
                 success: (function (view) {
                     $("#admin-details-modal-body").html(view);
@@ -252,7 +173,7 @@
         /*** GET TABLE DATA FROM URL ***/
 
         agGrid
-            .simpleHttpRequest({ url: "{{ url('membership/get') }}" })
+            .simpleHttpRequest({ url: "{{ url('activity/get') }}" })
             .then(function(data) {
                 gridOptions.api.setRowData(data.list_data);
                 $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
@@ -346,7 +267,7 @@
             if($("#addForm")[0].checkValidity()) {
                 $("#button-add-save").val("Loading...");
                 $("#addForm").ajaxSubmit({
-                    url: 'membership/doAdd',
+                    url: 'activity/doAdd',
                     headers: {
                         'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
                     },
@@ -355,7 +276,7 @@
                         if(data.status){
                             $("#admin-add-modal").modal("hide");
                             agGrid
-                                .simpleHttpRequest({ url: "{{ url('membership/get') }}" })
+                                .simpleHttpRequest({ url: "{{ url('activity/get') }}" })
                                 .then(function(data) {
                                     gridOptions.api.setRowData(data.list_data);
                                     $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
@@ -379,7 +300,7 @@
             if($("#updateForm")[0].checkValidity()) {
                 $("#button-update").val("Updating...");
                 $("#updateForm").ajaxSubmit({
-                    url: 'membership/doEdit',
+                    url: 'activity/doEdit',
                     headers: {
                         'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
                     },
@@ -388,7 +309,7 @@
                         if(data.status){
                             $("#admin-details-modal").modal("hide");
                             agGrid
-                                .simpleHttpRequest({ url: "{{ url('membership/get') }}" })
+                                .simpleHttpRequest({ url: "{{ url('activity/get') }}" })
                                 .then(function(data) {
                                     gridOptions.api.setRowData(data.list_data);
                                     $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
@@ -414,7 +335,7 @@
                 let hash = $(this).data("hash");
                 $("#button-delete").val("Deleting...");
                 $("#updateForm").ajaxSubmit({
-                    url: 'membership/'+hash+'/delete',
+                    url: 'activity/'+hash+'/delete',
                     headers: {
                         'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
                     },
@@ -423,7 +344,7 @@
                         if(data.status){
                             $("#admin-details-modal").modal("hide");
                             agGrid
-                                .simpleHttpRequest({ url: "{{ url('membership/get') }}" })
+                                .simpleHttpRequest({ url: "{{ url('activity/get') }}" })
                                 .then(function(data) {
                                     gridOptions.api.setRowData(data.list_data);
                                     $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());

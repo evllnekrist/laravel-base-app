@@ -10,7 +10,7 @@
             
                 <section class="row flexbox-container">
                     <div class="col-xl-7 col-10 d-flex justify-content-center">
-                        <div class="card bg-dark rounded-0 mb-0 w-100"><!-- authentication -->
+                        <div class="card bg-authentication rounded-0 mb-0 w-100"><!-- authentication | dark -->
                             <div class="row m-0">
                                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
                                     <img src="{{ asset('app-assets/images/logo/logo.png') }}" alt="branding logo" style="max-height: 200px">

@@ -6,6 +6,10 @@
     font-size: smaller;
 }
 
+.bg-dark-flat{
+    background-color: #1d1e22;
+}
+
 .nav-item-custom .nav-i-custom{
     margin-left: 2.1rem;
     margin-right: 1rem;
@@ -28,7 +32,7 @@
 .nav-item-collapse-custom{
     font-weight:600;
     margin-top: 15px !important;
-    padding: 10px 0 10px 0 !important;
+    padding: 10px 0 0px 0 !important;
 }
 
 .menu-title, .submenu-title{

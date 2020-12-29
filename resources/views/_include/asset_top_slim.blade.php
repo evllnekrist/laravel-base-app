@@ -1,3 +1,6 @@
+    <?php
+        $version = "?var=".date("Ymd");
+    ?>
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/toastr.css') }}">
@@ -7,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap-extended.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/colors.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/components.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/components.css').$version }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/custom.css') }}">
     <!-- END: Theme CSS-->
     <!-- BEGIN: Page CSS-->
@@ -18,7 +21,7 @@
     @yield('style')
     <!-- END: Page CSS-->
     <!-- BEGIN: Global CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}?var=00004">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css').$version }}">
     <!-- END: Global CSS-->
     
     @if(env('APP_ENV') == 'local' || env('APP_ENV') == 'development')

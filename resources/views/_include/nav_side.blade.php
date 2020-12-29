@@ -26,10 +26,10 @@
                 @if(is_array($value) || is_object($value))
                     @if(!isset($value['detail']->name))
                     <!-- IF : W/ PARENT -->
-                        <div class="nav-item" style="padding-top:15px">
+                        <div class="nav-item" style="{{$nav_item_type!= 2?'padding-top:15px':''}}">
                             <a data-toggle="collapse" data-target="#nav-collapse-{{$key}}" class="nav-item-custom">
-                                <i class="feather icon-chevrons-down nav-i-custom chevron-down" style="display:none"></i>
-                                <i class="feather icon-chevrons-up nav-i-custom chevron-up"></i>
+                                <i class="feather icon-chevrons-down chevron-down nav-i-custom" style="display:none"></i>
+                                <i class="feather icon-chevrons-up chevron-up nav-i-custom"></i>
                                 <span class="menu-title" data-i18n="{{ $value['title'] }}" style="display: none;">{{ $value['title'] }}</span>
                             </a>
                             <ul class="collapse nav-item-collapse-custom bg-dark" id="nav-collapse-{{$key}}">
@@ -44,7 +44,8 @@
                                     </li>
                                 @endforeach
                             </ul>
-                        </div>
+                        </div><br>
+                        <?php $nav_item_type = 2; ?>
                     @else
                     <!-- IF : NO PARENT -->
                         <li class="nav-item {{ (request()->segment(1) == url($value['detail']->slug)) ? 'active' : '' }}">
@@ -55,6 +56,7 @@
                                 </span>
                             </a>
                         </li>
+                        <?php $nav_item_type = 1; ?>
                     @endif
                 @endif
                 @endforeach
