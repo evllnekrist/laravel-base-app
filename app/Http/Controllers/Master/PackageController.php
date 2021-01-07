@@ -31,6 +31,7 @@ class PackageController extends Controller
             2 =>'name',
             3 =>'active',
             4 =>'site_name',
+            5 =>'duration',
         );
         $limit = $request->input('length');
         $start = $request->input('start');
@@ -39,7 +40,7 @@ class PackageController extends Controller
 
         // DB::enableQueryLog(); // Enable query log
         $models =  DB::table('ms_package as p')
-                        ->select('p.id', 'p.code','p.name', 'p.site_code', 'p.active', 's.name as site_name')
+                        ->select('p.id', 'p.code','p.name', 'p.site_code', 'p.active', 's.name as site_name', 'duration')
                         ->leftJoin('ms_site as s', 'p.site_code', '=', 's.code');
                         // ->where('u.active','=',1);
         if(!empty($request->input('search.value')))
@@ -48,6 +49,7 @@ class PackageController extends Controller
             $models = $models->where(function($query) use ($search){
                         $query->where('name','LIKE',"%{$search}%")
                                 ->orWhere('site_code','LIKE',"%{$search}%")
+                                ->orWhere('duration','LIKE',"%{$search}%")
                                 ->orWhere('site_name', 'LIKE',"%{$search}%");
                     });
         }
@@ -70,6 +72,7 @@ class PackageController extends Controller
                 $nestedData[] = $model->name;
                 $nestedData[] = ($model->active? '<i class="feather icon-check ft-blue-band"></i>':'');
                 $nestedData[] = $model->site_name; 
+                $nestedData[] = $model->duration." Hari";
                 $action= "
                     <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
                         <i class='feather icon-edit'></i>

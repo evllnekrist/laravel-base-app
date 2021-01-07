@@ -162,6 +162,7 @@
                     $("#"+action+"-id").val(hash); 
                     $("#"+action+"-code").val(data.detail.code); 
                     $("#"+action+"-name").val(data.detail.name); 
+                    $("#"+action+"-duration").val(data.detail.duration); 
                     $("#"+action+"-active").prop('checked', (data.detail.active == 1) ? true : false);
                    
                     // BEGIN : options
@@ -432,6 +433,10 @@
                                 <label for="'+action+'-site"><b>Site</b></label>\
                                 <select class="form-control" id="'+action+'-site"></select>\
                             </div>\
+                            <div class="form-group">\
+                                <label for="'+action+'-duration"><b>Package Duration (Day)</b></label>\
+                                <input type="number" class="form-control" id="'+action+'-duration" required>\
+                            </div>\
                             <div class="form-check col-xs-10 col-sm-4" title="check">\
                                 <label for="'+action+'-active"><b>Active</b></label><br>\
                                 <input type="checkbox" class="form-check-input" id="'+action+'-active" value=1>\
@@ -447,6 +452,7 @@
                 code            : $('#'+action+'-code').val(),
                 name            : $('#'+action+'-name').val(),
                 site_code       : $('#'+action+'-site').val(),
+                duration       : $('#'+action+'-duration').val(),
                 active          : $('#'+action+'-active').is(":checked") ? 1 : 0,
             };
 

@@ -54,6 +54,7 @@
                                     <th>NAME</th>
                                     <th>ACTIVE</th>
                                     <th>SITE</th>
+                                    <th>DURATION PACKAGE</th>
                                     <th class="no-sort">ACTION</th>
                                 </tr>
                             </thead> 
