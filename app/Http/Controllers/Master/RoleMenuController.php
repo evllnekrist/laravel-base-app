@@ -55,13 +55,18 @@ class RoleMenuController extends Controller
         $data = array();
         if(!empty($models)) {
             
+            if($this->data['authorize']['edit']==1){
+                $icon_edit = 'feather icon-edit';
+            }else{
+                $icon_edit = 'feather icon-eye';
+            }
+
             foreach ($models as $model) {
                 $nestedData=array();
                 $nestedData[] = null;
                 $nestedData[] = $model->name;
-                $action = '';
-                $action .=   "   <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
-                                    <i class='feather icon-edit'></i>
+                $action =   "   <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
+                                    <i class='".$icon_edit."'></i>
                                 </span>";
                 $nestedData[] = $action;
                 $data[] = $nestedData;
