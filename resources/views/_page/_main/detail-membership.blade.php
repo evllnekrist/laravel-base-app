@@ -144,8 +144,12 @@
                 <span class="font-weight-bold"></span><br>
                 <label class="data-info"></label>
                 <div class="data-edit hidden">
-                    <input type="submit" id="button-delete" class="btn btn-dark hidden" value="Delete" data-hash="{{ $hash }}"/>
-                    <input type="submit" id="button-update" class="btn btn-primary hidden" value="Update"/>
+                    @if($authorize['delete']==1)
+                        <input type="submit" id="button-delete" class="btn btn-dark hidden" value="Delete" data-hash="{{ $hash }}"/>
+                    @endif
+                    @if($authorize['edit']==1)
+                        <input type="submit" id="button-update" class="btn btn-primary hidden" value="Update"/>
+                    @endif
                 </div>
             </div>
         </div>

@@ -59,11 +59,10 @@ class RoleMenuController extends Controller
                 $nestedData=array();
                 $nestedData[] = null;
                 $nestedData[] = $model->name;
-                $action= "
-                    <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
-                        <i class='feather icon-edit'></i>
-                    </span>
-                ";
+                $action = '';
+                $action .=   "   <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
+                                    <i class='feather icon-edit'></i>
+                                </span>";
                 $nestedData[] = $action;
                 $data[] = $nestedData;
             }

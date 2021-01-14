@@ -43,17 +43,21 @@
                                                     <a class="dropdown-item">100</a>
                                                     <a class="dropdown-item">150</a>
                                                 </div>
+                                                @if($authorize['create']==1)
                                                 <button id="add-data" class="btn btn-outline-primary p-1 rounded-pill">
-                                                    Add New Administrator
+                                                    Add New Member
                                                 </button>
+                                                @endif
                                             </div>
                                             <div class="ag-btns d-flex flex-wrap">
                                                 <input type="text" class="ag-grid-filter form-control w-50 mr-1 mb-1 mb-sm-0" id="filter-text-box" placeholder="Search...." />
+                                                @if($authorize['execute']==1)
                                                 <div class="btn-export">
                                                     <button class="btn btn-primary ag-grid-export-btn">
                                                         Export as CSV
                                                     </button>
                                                 </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

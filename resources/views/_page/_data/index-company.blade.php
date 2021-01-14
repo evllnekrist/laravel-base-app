@@ -39,7 +39,11 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" id="bulk_delete"><i class="feather icon-trash"></i>Delete</a>
+                                    @if($authorize['delete']==1)
+                                        <a class="dropdown-item" id="bulk_delete"><i class="feather icon-trash"></i>Delete</a>
+                                    @else
+                                        <a class="dropdown-item"><i>no auth</i></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

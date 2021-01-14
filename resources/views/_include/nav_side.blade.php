@@ -4,7 +4,8 @@
             header('Location: '.route('login'));
             die();
         }
-        // dd(Session::get('_user')['_menu']);
+        // dump(Session::get('_user')['_menu']);
+        // dump($authorize);
     ?>
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">

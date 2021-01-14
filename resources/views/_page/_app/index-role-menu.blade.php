@@ -39,7 +39,11 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" id="bulk_delete"><i class="feather icon-trash"></i>Delete</a>
+                                    @if($authorize['delete']==1)
+                                        <a class="dropdown-item" id="bulk_delete"><i class="feather icon-trash"></i>Delete</a>
+                                    @else
+                                        <a class="dropdown-item"><i>no auth</i></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -78,9 +82,11 @@
                                 </div>
                             </div>
                             <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
+                                @if($authorize['edit']==1){
                                 <div class="add-data-btn">
                                     <button class="btn btn-primary" id="update_data">Update Role-Menu Map</button>
                                 </div>
+                                @endif
                                 <div class="cancel-data-btn">
                                     <button class="btn btn-outline-primary">Cancel</button>
                                 </div>

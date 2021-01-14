@@ -20,7 +20,7 @@ class ActivityController extends Controller
     }
     
     public function index(Request $request){
-        $this->data['list_transaction'] = MemberTransaction::where('active','=',1)->get();
+        $this->data['list_transaction'] = MemberTransaction::get();
         return view('_page._main.index-activity', $this->data);
     }
     
@@ -34,7 +34,7 @@ class ActivityController extends Controller
     }
 
     public function detailAdd(){
-        $list_transaction = MemberTransaction::where('active','=',1)->get();
+        $list_transaction = MemberTransaction::get();
 
         $data = array(
             "list_transaction"=>$list_transaction,

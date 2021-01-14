@@ -28,6 +28,21 @@
             });
         });
         
+        var actionButtons = [];
+        <?php if($authorize['create']==1){ ?>
+            actionButtons.push(
+                {
+                    text: "<i class='feather icon-plus'></i> Add New",
+                    action: function() {
+                        $(this).removeClass("btn-secondary")
+                        $(".add-new-data-create").addClass("show")
+                        $(".overlay-bg-create").addClass("show")
+                    },
+                    className: "btn-outline-primary"
+                }
+            );
+        <?php } ?>
+
         var dataListView = $(".data-thumb-view").DataTable({
             processing: true,
             serverSide: true,
@@ -63,17 +78,7 @@
             order: [[1, "asc"]],
             bInfo: false,
             pageLength: 10,
-            buttons: [
-                {
-                    text: "<i class='feather icon-plus'></i> Add New",
-                    action: function() {
-                    $(this).removeClass("btn-secondary")
-                    $(".add-new-data-create").addClass("show")
-                    $(".overlay-bg-create").addClass("show")
-                    },
-                    className: "btn-outline-primary"
-                }
-            ],
+            buttons: actionButtons,
             initComplete: function(settings, json) {
             $(".dt-buttons .btn").removeClass("btn-secondary")
             }

@@ -73,14 +73,17 @@ class PackageController extends Controller
                 $nestedData[] = ($model->active? '<i class="feather icon-check ft-blue-band"></i>':'');
                 $nestedData[] = $model->site_name; 
                 $nestedData[] = $model->duration." Hari";
-                $action= "
-                    <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
-                        <i class='feather icon-edit'></i>
-                    </span>
-                    <span class='action-delete' data-hash='".md5($model->id)."' data-title=''>
-                        <i class='feather icon-trash'></i>
-                    </span>
-                ";
+                $action = '';
+                if($this->data['authorize']['edit']==1){
+                    $action .=   "   <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
+                                        <i class='feather icon-edit'></i>
+                                    </span>";
+                }
+                if($this->data['authorize']['delete']==1){
+                    $action .=   "   <span class='action-delete' data-hash='".md5($model->id)."' data-title=''>
+                                        <i class='feather icon-trash'></i>
+                                    </span>";
+                }
                 $nestedData[] = $action;
                 $data[] = $nestedData;
             }

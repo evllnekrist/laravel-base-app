@@ -20,7 +20,7 @@ class MembershipController extends Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->data['header_data']['js'] = array('.membership');
+        $this->data['header_data']['js'] = array('.membership');
     }
     
     public function index(Request $request){
@@ -84,20 +84,13 @@ class MembershipController extends Controller
     }
 
     public function detailEdit($id){
-        $item = Member::where('id','=',$id)->with('status')->with('gender')->with('role')->first();
-        $list_role = MemberRole::where('active','=',1)->get();
-        $list_status = MemberStatus::where('active','=',1)->get();
-        $list_gender = Gender::where('active','=',1)->get();
-
-        $data = array(
-            "hash" => md5($id),
-            "selected_data"=>$item,
-            "list_role"=>$list_role,
-            "list_status"=>$list_status,
-            "list_gender"=>$list_gender,
-        );
+        $this->data['selected_data'] = Member::where('id','=',$id)->with('status')->with('gender')->with('role')->first();
+        $this->data['list_role'] = MemberRole::where('active','=',1)->get();
+        $this->data['list_status'] = MemberStatus::where('active','=',1)->get();
+        $this->data['list_gender'] = Gender::where('active','=',1)->get();
+        $this->data['hash'] =  md5($id);
         
-        return View::make('_page._main.detail-membership', $data);
+        return View::make('_page._main.detail-membership', $this->data);
     }
 
     public function doEdit(Request $request){

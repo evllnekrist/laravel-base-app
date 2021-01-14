@@ -18,9 +18,7 @@ Route::get('/', 'Auth\LoginController@index');
 Route::get('/login', 'Auth\LoginController@index')->name('login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::post('/login/do', 'Auth\LoginController@ajax_doLogin')->name('doLogin');
-Route::get('/home', function () {
-    return view('_page._main.dashboard');
-});
+Route::get('/home', 'Main\DashboardController@index');
 
 /*--------------------------------------------------------------------------START--*/ 
 
