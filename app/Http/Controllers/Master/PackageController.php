@@ -72,7 +72,7 @@ class PackageController extends Controller
                 $nestedData[] = $model->name;
                 $nestedData[] = ($model->active? '<i class="feather icon-check ft-blue-band"></i>':'');
                 $nestedData[] = $model->site_name; 
-                $nestedData[] = $model->duration." Hari";
+                $nestedData[] = $model->duration." Month";
                 $action = '';
                 if($this->data['authorize']['edit']==1){
                     $action .=   "   <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>

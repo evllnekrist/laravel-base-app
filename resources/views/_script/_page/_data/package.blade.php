@@ -439,7 +439,7 @@
                                 <select class="form-control" id="'+action+'-site"></select>\
                             </div>\
                             <div class="form-group">\
-                                <label for="'+action+'-duration"><b>Package Duration (Day)</b></label>\
+                                <label for="'+action+'-duration"><b>Package Duration (Month)</b></label>\
                                 <input type="number" class="form-control" id="'+action+'-duration" required>\
                             </div>\
                             <div class="form-check col-xs-10 col-sm-4" title="check">\

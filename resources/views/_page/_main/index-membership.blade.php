@@ -188,6 +188,7 @@
                             </div>
                             <div class="modal-body" id="admin-details-modal-body"></div>
                             <div class="modal-footer">
+                                <div id="pdf"></div>
                                 <button type="button" id="button-edit" class="btn btn-outline-primary">Edit</button>
                                 <button type="button" id="button-cancel" class="btn btn-outline-primary hidden">Cancel</button>
                                 <button type="button" id="button-close" class="btn btn-primary" data-dismiss="modal">Close</button>

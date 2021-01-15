@@ -32,6 +32,7 @@ Route::get('/home', 'Main\DashboardController@index');
         Route::delete('{id}/delete','Main\MembershipController@delete');
         Route::get('detailAdd','Main\MembershipController@detailAdd');
         Route::get('{id}/detailEdit','Main\MembershipController@detailEdit');
+        Route::get('{id}/pdf','Main\MembershipController@pdf');
     });
     // ACTIVITY
     Route::group(['prefix' => 'activity'], function()
