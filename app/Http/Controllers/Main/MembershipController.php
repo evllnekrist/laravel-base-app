@@ -150,6 +150,12 @@ class MembershipController extends Controller
         // $pdf->SetXY(0,5); 
         $pdf->setfillcolor(175,175,175);
         $pdf->Rect(0, 8, 90, 15, 'F');
+        // $pdf->Rect(0, 8, 90, 1, 'F');
+        // $pdf->Rect(0, 9, 5, 14, 'F');
+        // $pdf->Rect(85, 9, 5, 14, 'F');
+        // $pdf->Rect(0, 19, 90, 1, 'F');
+        $pdf->setfillcolor(0,0,0);
+        $pdf->Code128(5,9,$item['card_id'],80,10);
         $pdf->Image(asset('app-assets/images/card/Membership-01.png'),0, 20, 90, 35,'PNG');
         // $pdf->Cell(5,0,'hgfhjsdfg jhgfdjhsfgd hgdfhjas mjgdfjskadfg jhdsfgjhasd mhsdfgjhasf hjsdafjha jhdsfj');
         // $pdf->SetXY(0,10);
