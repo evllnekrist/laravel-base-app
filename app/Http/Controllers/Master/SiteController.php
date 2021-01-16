@@ -42,7 +42,7 @@ class SiteController extends Controller
 
         // DB::enableQueryLog(); // Enable query log
         $models =  DB::table('ms_site as s')
-                        ->select('s.code','s.name', 's.company_code', 's.email', 's.phone', 's.address', 's.active', 's.manager',
+                        ->select('s.id','s.code','s.name', 's.company_code', 's.email', 's.phone', 's.address', 's.active', 's.manager',
                         'c.name as company_name')
                         ->leftJoin('ms_company as c', 's.company_code', '=', 'c.code');
                         // ->where('u.active','=',1);
@@ -57,15 +57,11 @@ class SiteController extends Controller
                                 ->orWhere('company_name', 'LIKE',"%{$search}%");
                     });
         }
-        $models = $models->offset($start)
-                    ->limit($limit)
-                    ->orderBy($order,$dir)
-                    ->get();
         // dd(DB::getQueryLog()); // Show results of log
-
-        $recordsFiltered = count(get_object_vars($models));        
+        $recordsFiltered = $models->orderBy($order,$dir)->get()->count();        
         $recordsTotal = Site::count(); // where('active','=',1)
 
+        $models = $models->offset($start)->limit($limit)->orderBy($order,$dir)->get();
         $data = array();
         if(!empty($models)) {
             

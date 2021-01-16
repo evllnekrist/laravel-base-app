@@ -43,15 +43,11 @@ class RoleMenuController extends Controller
                         $query->where('name','LIKE',"%{$search}%");
                     });
         }
-        $models = $models->offset($start)
-                    ->limit($limit)
-                    ->orderBy($order,$dir)
-                    ->get();
         // dd(DB::getQueryLog()); // Show results of log
-
-        $recordsFiltered = count(get_object_vars($models));        
+        $recordsFiltered = $models->orderBy($order,$dir)->get()->count();        
         $recordsTotal = Role::where('active','=',1)->count();
 
+        $models = $models->offset($start)->limit($limit)->orderBy($order,$dir)->get();
         $data = array();
         if(!empty($models)) {
             

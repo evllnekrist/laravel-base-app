@@ -48,14 +48,10 @@ class MenuController extends Controller
                                 ->orWhere('icon', 'LIKE',"%{$search}%");
                     });
         }
-        $models = $models->offset($start)
-                    ->limit($limit)
-                    ->orderBy($order,$dir)
-                    ->get();
-
-        $recordsFiltered = count(get_object_vars($models));        
+        $recordsFiltered = $models->orderBy($order,$dir)->get()->count(); 
         $recordsTotal = Menu::where('active','=',1)->count();
 
+        $models = $models->offset($start)->limit($limit)->orderBy($order,$dir)->get();
         $data = array();
         if(!empty($models)) {
 
@@ -67,7 +63,7 @@ class MenuController extends Controller
                 $nestedData[] = $model->icon;
                 $nestedData[] = $model->type;
                 $nestedData[] = $model->parent;
-                $nestedData[] = $model->need_auth;
+                $nestedData[] = ($model->need_auth? '<i class="feather icon-check ft-blue-band"></i>':'');
                 $action = '';
                 if($this->data['authorize']['edit']==1){
                     $action .=   "   <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
