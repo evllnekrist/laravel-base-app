@@ -49,6 +49,8 @@ Route::get('/home', 'Main\DashboardController@index');
     Route::group(['prefix' => 'scan'], function()
     {
         Route::get('/','Main\ScanController@index');
+        Route::get('get','Main\ScanController@get');
+        Route::post('doAdd','Main\ScanController@doAdd');
     });
     // MASTER
     Route::group(['prefix' => 'master'], function()

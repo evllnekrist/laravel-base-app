@@ -66,28 +66,28 @@
             }
         };
 
-        function detailEdit(data){
-            $("#button-edit,#button-close").removeClass("hidden");
-            $("#button-update,#button-delete,#button-cancel,#button-edit").addClass("hidden");
-            $("#admin-details-modal").modal('show');
-            $("#admin-details-modal-title").text(data.card_id.toString()+' - '+data.first_name.toString()+'  '+data.last_name.toString());
-            $("#admin-details-modal-body").html($("#loading").html());
-            $.ajax({
-                url: 'activity/' + data.id + '/detailEdit',
-                type: "GET",
-                success: (function (view) {
-                    $("#admin-details-modal-body").html(view);
-                    $("#button-edit").removeClass("hidden");
-                    $("#role_add_selector,#status_add_selector,#gender_add_selector").select2({
-                        minimumResultsForSearch: -1,
-                        tokenSeparators: [',', ' ', '.', '/', '\\','[',']',';','\'','{','}','_','+','=','|','"',":"]
-                    });
+        // function detailEdit(data){
+        //     $("#button-edit,#button-close").removeClass("hidden");
+        //     $("#button-update,#button-delete,#button-cancel,#button-edit").addClass("hidden");
+        //     $("#admin-details-modal").modal('show');
+        //     $("#admin-details-modal-title").text(data.card_id.toString()+' - '+data.first_name.toString()+'  '+data.last_name.toString());
+        //     $("#admin-details-modal-body").html($("#loading").html());
+        //     $.ajax({
+        //         url: 'scan/' + data.id + '/detailEdit',
+        //         type: "GET",
+        //         success: (function (view) {
+        //             $("#admin-details-modal-body").html(view);
+        //             $("#button-edit").removeClass("hidden");
+        //             $("#role_add_selector,#status_add_selector,#gender_add_selector").select2({
+        //                 minimumResultsForSearch: -1,
+        //                 tokenSeparators: [',', ' ', '.', '/', '\\','[',']',';','\'','{','}','_','+','=','|','"',":"]
+        //             });
 
-                }),error:function(xhr,status,error) {
-                    showSweetAlert('error','',xhr.responseText);
-                }
-            })
-        }
+        //         }),error:function(xhr,status,error) {
+        //             showSweetAlert('error','',xhr.responseText);
+        //         }
+        //     })
+        // }
 
         function getSelectedRows() {
             const selectedNodes = gridOptions.api.getSelectedNodes();
@@ -157,7 +157,7 @@
         /*** GET TABLE DATA FROM URL ***/
 
         agGrid
-            .simpleHttpRequest({ url: "{{ url('activity/get') }}" })
+            .simpleHttpRequest({ url: "{{ url('scan/get') }}" })
             .then(function(data) {
                 gridOptions.api.setRowData(data.list_data);
                 $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
@@ -190,20 +190,13 @@
                 let date_str = date.getFullYear()+'_'+date.getMonth()+'_'+date.getDate()+'_'+date.getHours()+'_'+date.getMinutes()+'_'+date.getSeconds();
                 gridOptions.api.exportDataAsCsv({
                     columnKeys: [
-                        'first_name',
-                        'last_name',
-                        'email',
-                        'phone',
-                        'dob',
-                        'gender',
-                        'address',
-                        'city',
-                        'province',
-                        'post_code'
+                        'created_at',
+                        'card_id',
+                        'transaction.name',
                     ],
                     onlySelected: true,
                     allColumns: false,
-                    fileName: 'export_member__at__'+date_str+'.csv',
+                    fileName: 'export_activity__at__'+date_str+'.csv',
                     skipHeader: false,
                     // customHeader: 'admin List' + '\n',
                     // customFooter: '\n \n Total No.Of admins :' + gridOptions.api.getModel().getRowCount() + ' \n'
@@ -251,7 +244,7 @@
             if($("#addForm")[0].checkValidity()) {
                 $("#button-add-save").val("Loading...");
                 $("#addForm").ajaxSubmit({
-                    url: 'activity/doAdd',
+                    url: 'scan/doAdd',
                     headers: {
                         'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
                     },
@@ -260,7 +253,7 @@
                         if(data.status){
                             $("#admin-add-modal").modal("hide");
                             agGrid
-                                .simpleHttpRequest({ url: "{{ url('activity/get') }}" })
+                                .simpleHttpRequest({ url: "{{ url('scan/get') }}" })
                                 .then(function(data) {
                                     gridOptions.api.setRowData(data.list_data);
                                     $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
@@ -284,7 +277,7 @@
             if($("#updateForm")[0].checkValidity()) {
                 $("#button-update").val("Updating...");
                 $("#updateForm").ajaxSubmit({
-                    url: 'activity/doEdit',
+                    url: 'scan/doEdit',
                     headers: {
                         'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
                     },
@@ -293,7 +286,7 @@
                         if(data.status){
                             $("#admin-details-modal").modal("hide");
                             agGrid
-                                .simpleHttpRequest({ url: "{{ url('activity/get') }}" })
+                                .simpleHttpRequest({ url: "{{ url('scan/get') }}" })
                                 .then(function(data) {
                                     gridOptions.api.setRowData(data.list_data);
                                     $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
@@ -319,7 +312,7 @@
                 let hash = $(this).data("hash");
                 $("#button-delete").val("Deleting...");
                 $("#updateForm").ajaxSubmit({
-                    url: 'activity/'+hash+'/delete',
+                    url: 'scan/'+hash+'/delete',
                     headers: {
                         'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
                     },
@@ -328,7 +321,7 @@
                         if(data.status){
                             $("#admin-details-modal").modal("hide");
                             agGrid
-                                .simpleHttpRequest({ url: "{{ url('activity/get') }}" })
+                                .simpleHttpRequest({ url: "{{ url('scan/get') }}" })
                                 .then(function(data) {
                                     gridOptions.api.setRowData(data.list_data);
                                     $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
@@ -371,5 +364,62 @@
                 });
             }
         }
+
+        // ----------------------------------------- custom ----------------------
+        $('[name="card_id"]').on('input', function() {
+            let card_id = this.value;        
+
+            $('#addForm_info').removeClass("ft-warn");
+            $('#addForm_info').html("");
+            if(card_id.length >= 12){
+                if(card_id.length > 12){ 
+                    $('#addForm_info').addClass("ft-warn");
+                    $('#addForm_info').html("* Card Id should not be more than 12 digits long<br>");
+                }else{
+                    console.log("detecting card_id >> ",card_id);
+                    
+                    $("#addForm").ajaxSubmit({
+                        url: 'scan/doAdd',
+                        headers: {
+                            'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                        type: 'post',
+                        success:function(data){
+                            $('#addDetail').show();
+                            if(data.status){
+                                console.log(data.detail);
+                                if(data.detail){
+                                    $('#attende_card_id').html(data.detail.card_id);
+                                    $('#attende_name').html(data.detail.first_name+" "+data.detail.last_name);
+                                    $('#attende_role').html(data.detail.role.name);
+                                    $('#attende_role_color').css("background-color", data.detail.role.color_sign);
+                                    $('#attende_status').html(data.detail.status.name);
+                                    $('#attende_status_color').css("background-color", data.detail.status.color_sign);
+                                    $('#attende_package').html('-');
+                                    $('#attende_package_end_date').html('-');
+                                }
+                                agGrid
+                                    .simpleHttpRequest({ url: "{{ url('scan/get') }}" })
+                                    .then(function(data) {
+                                        gridOptions.api.setRowData(data.list_data);
+                                        $(".filter-btn").text("1 - " + gridOptions.api.paginationGetPageSize()  + " of "+gridOptions.api.getModel().getRowCount());
+                                    });
+                                $('[name="card_id"]').val('');
+                            }else{
+                                $('[name="card_id"]').val('');
+                                showSweetAlert('error','',data.message);
+                                return false;
+                            }
+                        },
+                        error:function(xhr, status, error){
+                            $('[name="card_id"]').val('');
+                            showSweetAlert('error','',xhr.responseText);
+                        }
+                    });
+                }
+            }
+        });
+        // ----------------------------------------- custom --- end --------------
+
     });
 </script>

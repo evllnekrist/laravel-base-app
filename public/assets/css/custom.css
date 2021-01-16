@@ -1,47 +1,56 @@
 .ft-blue-band{
-    color: #1b70de;
+    color:#1b70de;
 }
-
+.ft-warn{
+    color:yellow;
+}
+.ft-grey{
+    color:grey;
+}
+.ft-white{
+    color:white;
+}
 .ft-sm{
-    font-size: smaller;
+    font-size:smaller;
 }
-
 .bg-dark-flat{
-    background-color: #1d1e22;
+    background-color:#1d1e22;
 }
-
 .nav-item-custom .nav-i-custom{
-    margin-left: 2.1rem;
-    margin-right: 1rem;
-    float: left;
+    margin-left:2.1rem;
+    margin-right:1rem;
+    float:left;
     font-size:1.3rem;
 }
-
 .expanded .nav-item-custom span{ /* expanded is class that added when hover on nav */
-    display: block !important;
+    display:block !important;
 }
-
 .nav-item-custom.collapsed .chevron-up{
-    display: none !important;
+    display:none !important;
 }
-
 .nav-item-custom.collapsed .chevron-down{
-    display: block !important;
+    display:block !important;
 }
-
 .nav-item-collapse-custom{
     font-weight:600;
-    margin-top: 15px !important;
-    padding: 10px 0 0px 0 !important;
+    margin-top:15px !important;
+    padding:10px 0 0px 0 !important;
 }
-
 .menu-title, .submenu-title{
-    font-size: 1rem !important;
+    font-size:1rem !important;
 }
-
 .col-fit-right-sm{
     width:5px;
-    /* overflow-x: scroll; */
-    white-space: nowrap;
-    text-align: right !important;
+    /* overflow-x:scroll; */
+    white-space:nowrap;
+    text-align:right !important;
+}
+.pad-top-1_5{
+    padding-top:1.5rem;
+}
+.pad-top-5{
+    padding-top:5rem;
+}
+.pad-top-10{
+    padding-top:10em;
 }

@@ -1224,6 +1224,12 @@ body.fixed-footer .main-menu.menu-fixed {
     display: flex;
     justify-content: center;
     align-items: center; }
+    .avatar .avatar-content-md {
+      width: 0.35rem;
+      height: 0.35rem;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
     .avatar .avatar-content .avatar-icon {
       font-size: 1.2rem; }
   .avatar [class*="avatar-status-"] {

@@ -1,5 +1,5 @@
     <?php
-        $version = "?var=".date("Ymd");
+        $version = "?var=".date("Ymd")."003";
     ?>
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors.min.css') }}">
