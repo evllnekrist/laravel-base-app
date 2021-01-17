@@ -46,7 +46,7 @@
                     </div>
                     <!-- dataTable starts -->
                     <div class="table-responsive">
-                        <table class="table data-thumb-view">
+                        <table class="table data-thumb-view dataex-html5-selectors">
                             <thead>
                             <tr>
                                 <th></th>

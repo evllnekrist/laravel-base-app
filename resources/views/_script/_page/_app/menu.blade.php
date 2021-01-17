@@ -29,30 +29,72 @@
         });
         
         var actionButtons = [];
+        <?php if($authorize['execute']==1){ ?>
+            actionButtons.push(
+                
+                {
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [ 0, ':visible' ]
+                    },
+                    className: 'btn-primary btn-datatable-action disabled'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    className: 'btn-primary btn-datatable-action disabled'
+                },
+                {
+                    extend: 'csvHtml5',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    className: 'btn-primary btn-datatable-action disabled'
+                },
+                {
+                    text: 'JSON',
+                    action: function ( e, dt, button, config ) {
+                        var data = dt.buttons.exportData();
+
+                        $.fn.dataTable.fileSave(
+                            new Blob( [ JSON.stringify( data ) ] ),
+                            'Export.json'
+                        );
+                    },
+                    className: 'btn-primary btn-datatable-action disabled'
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    className: 'btn-primary btn-datatable-action disabled'
+                },
+            );
+        <?php } ?>
         <?php if($authorize['create']==1){ ?>
             actionButtons.push(
                 {
                     text: "<i class='feather icon-plus'></i> Add New",
-                    action: function() {
-                        $(this).removeClass("btn-secondary")
+                    action: function ( e, dt, button, config ) {
                         $(".add-new-data-create").addClass("show")
                         $(".overlay-bg-create").addClass("show")
                     },
-                    className: "btn-outline-primary"
+                    className: 'btn-outline-primary btn-datatable-action disabled'
                 }
             );
         <?php } ?>
 
-        var dataListView = $(".data-thumb-view").DataTable({
+        var dataListView = $('.dataex-html5-selectors').DataTable( {
             processing: true,
             serverSide: true,
             responsive: false,
             ajax: {
-            url: "{{ url('master/app/menu/get') }}",
-            type: 'GET',
-                error:function(xhr, status, error){
-
-                }
+                url: "{{ url('master/app/menu/get') }}",
+                type: 'GET',
+                error:function(xhr, status, error){}
             },
             columnDefs: [
                 {
@@ -65,7 +107,8 @@
                     orderable: false,
                 }
             ],
-            dom: '<"top"<"actions action-btns"B><"action-filters"lf>><"clear">rt<"bottom"<"actions">p>',
+            dom:
+                '<"top"<"actions action-btns"B><"action-filters"lf>><"clear">rt<"bottom"<"actions">p>',
             oLanguage: {
                 sLengthMenu: "_MENU_",
                 sSearch: "",
@@ -75,14 +118,14 @@
             select: {
                 style: "multi"
             },
-            order: [[0, "asc"]],
+            order: [[1, "asc"]],
             bInfo: false,
             pageLength: 10,
             buttons: actionButtons,
             initComplete: function(settings, json) {
-            $(".dt-buttons .btn").removeClass("btn-secondary")
+                $(".btn-datatable-action").removeClass("btn-secondary disabled");
             }
-        })
+        });
 
         dataListView.on('draw.dt', function(){
             setTimeout(function(){
@@ -461,7 +504,7 @@
                             <div class="col-xs-2 col-sm-1"></div>\
                             <div class="form-check col-xs-10 col-sm-4" title="check >> for requiring user login and role mapping to access this menu">\
                                 <label for="'+action+'-need_auth"><b>Need Auth</b></label><br>\
-                                <input type="checkbox" class="form-check-input" id="'+action+'-need_auth" value=1>\
+                                <input type="checkbox" class="form-check-input" id="'+action+'-need_auth" value=1 checked>\
                                 yes\
                             </div>\
                         </div>\
