@@ -32,7 +32,10 @@ Route::get('/home', 'Main\DashboardController@index');
         Route::delete('{id}/delete','Main\MembershipController@delete');
         Route::get('detailAdd','Main\MembershipController@detailAdd');
         Route::get('{id}/detailEdit','Main\MembershipController@detailEdit');
-        Route::get('{id}/pdf','Main\MembershipController@pdf');
+    });
+    // CARD
+    Route::group(['prefix' => 'card'], function(){
+        Route::get('{id}/pdf','Main\CardController@pdf');
     });
     // ACTIVITY
     Route::group(['prefix' => 'activity'], function()
