@@ -173,7 +173,7 @@
                 success: (function (view) {
                     $("#admin-details-modal-body").html(view);
                     $("#button-edit").removeClass("hidden");
-                    $("#pdf").html('<a href="membership/' + data.id + '/pdf" target="_blank" type="button" id="button-edit" class="btn btn-outline-dark">Print</button>')
+                    $("#pdf").html('<a href="card/' + data.id + '/pdf" target="_blank" type="button" id="button-edit" class="btn btn-outline-dark">Print</button>')
                     $("#role_add_selector,#status_add_selector,#gender_add_selector").select2({
                         minimumResultsForSearch: -1,
                         tokenSeparators: [',', ' ', '.', '/', '\\','[',']',';','\'','{','}','_','+','=','|','"',":"]

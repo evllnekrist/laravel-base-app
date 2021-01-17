@@ -427,7 +427,7 @@
                                 <input type="text" class="form-control" id="'+action+'-id">\
                             </div>\
                             <div class="form-group">\
-                                <label for="'+action+'-username"><b>Package Code</b></label>\
+                                <label for="'+action+'-code"><b>Package Code</b></label>\
                                 <input type="text" class="form-control no-space" id="'+action+'-code" style="text-transform: lowercase" required>\
                             </div>\
                             <div class="form-group">\
