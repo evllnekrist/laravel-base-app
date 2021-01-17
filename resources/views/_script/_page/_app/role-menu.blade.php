@@ -28,16 +28,76 @@
             });
         });
         
-        var dataListView = $(".data-thumb-view").DataTable({
+        var actionButtons = [];
+        <?php if($authorize['execute']==1){ ?>
+            actionButtons.push(
+                
+                {
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [ 0, ':visible' ]
+                    },
+                    className: 'btn-primary btn-datatable-action disabled'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: ':visible',
+                        pageSize: 'A5',
+                        pageOrientation: 'landscape',
+                        pageMargins: [ 40, 60, 40, 60 ],
+                    },
+                    className: 'btn-primary btn-datatable-action disabled'
+                },
+                {
+                    extend: 'csvHtml5',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    className: 'btn-primary btn-datatable-action disabled'
+                },
+                {
+                    text: 'JSON',
+                    action: function ( e, dt, button, config ) {
+                        var data = dt.buttons.exportData();
+
+                        $.fn.dataTable.fileSave(
+                            new Blob( [ JSON.stringify( data ) ] ),
+                            'Export.json'
+                        );
+                    },
+                    className: 'btn-primary btn-datatable-action disabled'
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    className: 'btn-primary btn-datatable-action disabled'
+                },
+            );
+        <?php } ?>
+        <?php // if($authorize['create']==1){ ?>
+            // actionButtons.push(
+            //     {
+            //         text: "<i class='feather icon-plus'></i> Add New",
+            //         action: function ( e, dt, button, config ) {
+            //             $(".add-new-data-create").addClass("show")
+            //             $(".overlay-bg-create").addClass("show")
+            //         },
+            //         className: 'btn-outline-primary btn-datatable-action disabled'
+            //     }
+            // );
+        <?php // } ?>
+
+        var dataListView = $('.dataex-html5-selectors').DataTable( {
             processing: true,
             serverSide: true,
             responsive: false,
             ajax: {
-            url: "{{ url('master/app/role-menu/get') }}",
-            type: 'GET',
-                error:function(xhr, status, error){
-
-                }
+                url: "{{ url('master/app/role-menu/get') }}",
+                type: 'GET',
+                error:function(xhr, status, error){}
             },
             columnDefs: [
                 {
@@ -50,7 +110,7 @@
                     orderable: false,
                 }
             ],
-            // dom: '<"top"<"actions action-btns"B><"action-filters"lf>><"clear">rt<"bottom"<"actions">p>', // disable bulk delete
+            dom: '<"top"<"actions action-btns"B><"action-filters"lf>><"clear">rt<"bottom"<"actions">p>',
             oLanguage: {
                 sLengthMenu: "_MENU_",
                 sSearch: "",
@@ -63,21 +123,11 @@
             order: [[1, "asc"]],
             bInfo: false,
             pageLength: 10,
-            buttons: [
-                {
-                    // text: "<i class='feather icon-plus'></i> Add New", // disable add new
-                    // action: function() {
-                    // $(this).removeClass("btn-secondary")
-                    // $(".add-new-data-create").addClass("show")
-                    // $(".overlay-bg-create").addClass("show")
-                    // },
-                    // className: "btn-outline-primary"
-                }
-            ],
+            buttons: actionButtons,
             initComplete: function(settings, json) {
-            $(".dt-buttons .btn").removeClass("btn-secondary")
+                $(".btn-datatable-action").removeClass("btn-secondary disabled");
             }
-        })
+        });
 
         dataListView.on('draw.dt', function(){
             setTimeout(function(){

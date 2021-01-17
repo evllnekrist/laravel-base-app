@@ -50,7 +50,7 @@
                     </div>
                     <!-- dataTable starts -->
                     <div class="table-responsive">
-                        <table class="table data-thumb-view">
+                        <table class="table data-thumb-view dataex-html5-selectors">
                             <thead>
                                 <tr>    
                                     <th></th>
@@ -148,6 +148,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/animate/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/dragula.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/katex.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/monokai-sublime.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/quill.snow.css') }}">
 @endsection
 @section('style')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/file-uploaders/dropzone.css') }}">
@@ -168,6 +171,15 @@
     <script src="{{ asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/polyfill.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/dragula.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/quill/katex.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/quill/highlight.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/quill/quill.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/jquery.steps.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/validation/jquery.validate.min.js') }}"></script>
 @endsection
 @section('script')
     <script src="{{ asset('app-assets/js/core/libraries/jquery-ui.min.js') }}"></script>

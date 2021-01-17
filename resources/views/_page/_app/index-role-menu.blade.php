@@ -32,25 +32,25 @@
             <div class="content-body">
                 <!-- Data list view starts -->
                 <section id="data-thumb-view" class="data-thumb-view-header">
-                    <div class="action-btns d-none">
+                    <!-- <div class="action-btns d-none">
                         <div class="btn-dropdown mr-1 mb-1">
                             <div class="btn-group dropdown actions-dropodown">
                                 <button type="button" class="btn btn-white px-1 py-1 dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Actions
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    @if($authorize['delete']==1)
-                                        <a class="dropdown-item" id="bulk_delete"><i class="feather icon-trash"></i>Delete</a>
-                                    @else
-                                        <a class="dropdown-item"><i>no auth</i></a>
-                                    @endif
-                                </div>
-                            </div>
+                                </button> -->
+                                <!-- <div class="dropdown-menu dropdown-menu-right"> -->
+                                    <!-- if($authorize['delete']==1) -->
+                                        <!-- <a class="dropdown-item" id="bulk_delete"><i class="feather icon-trash"></i>Delete</a> -->
+                                    <!-- else -->
+                                        <!-- <a class="dropdown-item"><i>no auth</i></a> -->
+                                    <!-- endif -->
+                                <!-- </div> -->
+                            <!-- </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- dataTable starts -->
                     <div class="table-responsive">
-                        <table class="table data-thumb-view">
+                        <table class="table data-thumb-view dataex-html5-selectors">
                             <thead>
                                 <tr>    
                                     <th></th>
@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                             <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
-                                @if($authorize['edit']==1){
+                                @if($authorize['edit']==1)
                                 <div class="add-data-btn">
                                     <button class="btn btn-primary" id="update_data">Update Role-Menu Map</button>
                                 </div>
@@ -112,6 +112,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/animate/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/dragula.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/katex.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/monokai-sublime.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/quill.snow.css') }}">
 @endsection
 @section('style')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/file-uploaders/dropzone.css') }}">
@@ -132,6 +135,15 @@
     <script src="{{ asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/polyfill.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/dragula.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/quill/katex.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/quill/highlight.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/quill/quill.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/jquery.steps.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/validation/jquery.validate.min.js') }}"></script>
 @endsection
 @section('script')
     <script src="{{ asset('app-assets/js/core/libraries/jquery-ui.min.js') }}"></script>
