@@ -133,6 +133,43 @@ Route::get('/home', 'Main\DashboardController@index');
                 Route::get('detailAdd','Master\MemberRoleController@detailAdd');
                 Route::get('{id}/detailEdit','Master\MemberRoleController@detailEdit');
             });
+            Route::prefix('province')->group(function(){
+                Route::get('/','Master\ProvinceController@index')->name('master-province');
+                Route::get('get','Master\ProvinceController@get');
+                Route::post('doAdd','Master\ProvinceController@doAdd');
+                Route::post('doEdit','Master\ProvinceController@doEdit');
+                Route::delete('{id}/delete','Master\ProvinceController@delete');
+                Route::get('detailAdd','Master\ProvinceController@detailAdd');
+                Route::get('{id}/detailEdit','Master\ProvinceController@detailEdit');
+            });
+            Route::prefix('regency')->group(function(){
+                Route::get('/','Master\RegencyController@index')->name('master-regency');
+                Route::get('get','Master\RegencyController@get');
+                Route::post('doAdd','Master\RegencyController@doAdd');
+                Route::post('doEdit','Master\RegencyController@doEdit');
+                Route::delete('{id}/delete','Master\RegencyController@delete');
+                Route::get('detailAdd','Master\RegencyController@detailAdd');
+                Route::get('{id}/detailEdit','Master\RegencyController@detailEdit');
+                Route::get('{id}/detailRegency','Master\RegencyController@detailRegency');
+            });
+            Route::prefix('district')->group(function(){
+                Route::get('/','Master\DistrictController@index')->name('master-district');
+                Route::get('get','Master\DistrictController@get');
+                Route::post('doAdd','Master\DistrictController@doAdd');
+                Route::post('doEdit','Master\DistrictController@doEdit');
+                Route::delete('{id}/delete','Master\DistrictController@delete');
+                Route::get('detailAdd','Master\DistrictController@detailAdd');
+                Route::get('{id}/detailEdit','Master\DistrictController@detailEdit');
+            });
+            Route::prefix('village')->group(function(){
+                Route::get('/','Master\VillageController@index')->name('master-village');
+                Route::get('get','Master\VillageController@get');
+                Route::post('doAdd','Master\VillageController@doAdd');
+                Route::post('doEdit','Master\VillageController@doEdit');
+                Route::delete('{id}/delete','Master\VillageController@delete');
+                Route::get('detailAdd','Master\VillageController@detailAdd');
+                Route::get('{id}/detailEdit','Master\VillageController@detailEdit');
+            });
         });
     });
     
