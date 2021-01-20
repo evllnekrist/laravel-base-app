@@ -12,6 +12,10 @@ use App\Http\Models\MemberStatus;
 use App\Http\Models\Gender;
 use App\Http\Models\Package;
 use App\Http\Models\Active;
+use App\Http\Models\AB_Province;
+use App\Http\Models\AB_Regency;
+use App\Http\Models\AB_District;
+use App\Http\Models\AB_Village;
 use Illuminate\Support\Facades\View;
 use Anouar\Fpdf\Fpdf;
 use DB;
@@ -28,13 +32,14 @@ class MembershipController extends Controller
         $this->data['list_role'] = MemberRole::where('active','=',1)->get();
         $this->data['list_status'] = MemberStatus::where('active','=',1)->get();
         $this->data['list_gender'] = Gender::where('active','=',1)->get();
+        $this->data['list_province'] = AB_Province::orderBy('name', 'ASC')->get();
         return view('_page._main.index-membership', $this->data);
     }
     
     public function get(Request $request){
         // DB::enableQueryLog();
         // dd(DB::getQueryLog());
-        $data = Member::with('status')->with('gender')->with('role')->get();
+        $data = Member::with('status')->with('gender')->with('role')->with('province')->with('regency')->with('district')->with('village')->get();
         return array(
             "list_data" => $data,
         );
@@ -85,11 +90,25 @@ class MembershipController extends Controller
     }
 
     public function detailEdit($id){
-        $this->data['selected_data'] = Member::where('id','=',$id)->with('status')->with('gender')->with('role')->first();
+        $this->data['selected_data'] = Member::where('id','=',$id)->with('status')->with('gender')->with('role')->with('province')->with('regency')->with('district')->with('village')->first();
         $this->data['list_role'] = MemberRole::where('active','=',1)->get();
         $this->data['list_status'] = MemberStatus::where('active','=',1)->get();
         $this->data['list_gender'] = Gender::where('active','=',1)->get();
         $this->data['hash'] =  md5($id);
+
+        $this->data['list_province'] = AB_Province::orderBy('name', 'ASC')->get();
+        $this->data['list_regency'] = [];
+        $this->data['list_district'] = [];
+        $this->data['list_village'] = [];
+        if($this->data['selected_data']['province_id']){
+            $this->data['list_regency'] = AB_Regency::where('province_id','=',$this->data['selected_data']['province_id'])->orderBy('name', 'ASC')->get();
+        }
+        if($this->data['selected_data']['regency_id']){
+            $this->data['list_district'] = AB_District::where('regency_id','=',$this->data['selected_data']['regency_id'])->orderBy('name', 'ASC')->get();
+        }
+        if($this->data['selected_data']['district_id']){
+            $this->data['list_village'] = AB_Village::where('district_id','=',$this->data['selected_data']['district_id'])->orderBy('name', 'ASC')->get();
+        }
         
         return View::make('_page._main.detail-membership', $this->data);
     }

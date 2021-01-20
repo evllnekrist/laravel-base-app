@@ -77,102 +77,154 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form id="addForm" onsubmit="return false;">
-                                <div class="modal-body" id="admin-add-modal-body">
-                                    <div class="col-md-12 col-12 page-users-view">
-                                        <div class="row">
-                                            <div class="col-md-5 col-12 mt-1">
-                                                <span class="font-weight-bold">First Name</span>
-                                                <input type="text" class="form-control" placeholder="Enter First Name" name="first_name" maxlength="50" required>
-                                            </div>
-                                            <div class="col-md-7 col-12 mt-1">
-                                                <span class="font-weight-bold">Last Name</span>
-                                                <input type="text" class="form-control" placeholder="Enter Last Name" name="last_name" maxlength="50" required>
+                            <div class="modal-body" id="admin-add-modal-body">
+                                <form id="addForm" onsubmit="return false;">
+                                <section class="users-edit">
+                                    <ul class="nav nav-tabs mb-3" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link d-flex align-items-center active" id="personal-data-tab" data-toggle="tab" href="#personal-data" aria-controls="personal-data" role="tab" aria-selected="true">
+                                                <div class="avatar bg-primary mr-1"><div class="avatar-content">1.</div></div>
+                                                <span class="d-none d-sm-block">Personal Data</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link d-flex align-items-center" id="subscription-tab" data-toggle="tab" href="#subscription" aria-controls="subscription" role="tab" aria-selected="false">
+                                                <div class="avatar bg-primary mr-1"><div class="avatar-content">2.</div></div>
+                                                <span class="d-none d-sm-block">Subscription</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link d-flex align-items-center" id="membership-card-tab" data-toggle="tab" href="#membership-card" aria-controls="membership-card" role="tab" aria-selected="false">
+                                                <div class="avatar bg-primary mr-1"><div class="avatar-content">3.</div></div>
+                                                <span class="d-none d-sm-block">Membership Card</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="personal-data" aria-labelledby="personal-data-tab" role="tabpanel">
+                                            <div class="col-md-12 col-12 page-users-view">
+                                                <div class="row">
+                                                    <div class="col-md-5 col-12 mt-1">
+                                                        <span class="font-weight-bold">First Name</span>
+                                                        <input type="text" class="form-control" placeholder="Enter First Name" name="first_name" maxlength="50" required>
+                                                    </div>
+                                                    <div class="col-md-7 col-12 mt-1">
+                                                        <span class="font-weight-bold">Last Name</span>
+                                                        <input type="text" class="form-control" placeholder="Enter Last Name" name="last_name" maxlength="50" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-5 col-12 mt-1">
+                                                        <span class="font-weight-bold">Role</span>
+                                                        <select id="role_add_selector" name="member_role_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" required>
+                                                            @foreach($list_role as $role)
+                                                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-7 col-12 mt-1">
+                                                        <span class="font-weight-bold">Status</span>
+                                                        <select id="status_add_selector" name="status_code" class="select2 js-example-placeholder-single form-control" style="width: 100%" required>
+                                                            @foreach($list_status as $status)
+                                                                <option value="{{$status->code}}">{{$status->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-5 col-12 mt-1">
+                                                        <span class="font-weight-bold">KTP Number</span>
+                                                        <input type="text" class="form-control" placeholder="Enter KTP Number" name="ktp_number" maxlength="16" required>
+                                                    </div>
+                                                    <div class="col-md-7 col-12 mt-1">
+                                                        <span class="font-weight-bold">Gender</span>
+                                                        <select id="gender_add_selector" name="gender_code" class="select2 js-example-placeholder-single form-control" style="width: 100%" required>
+                                                            @foreach($list_gender as $gender)
+                                                                <option value="{{$gender->code}}">{{$gender->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <!-- <br><input type="file" class="form-control" placeholder="Enter KTP File" name="ktp_file" style="border:none;" required> -->
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-5 col-12 mt-1">
+                                                        <span class="font-weight-bold">Place of Birth</span>
+                                                        <input type="text" class="form-control" placeholder="Enter PoB" name="pob" maxlength="20" required>
+                                                    </div>
+                                                    <div class="col-md-7 col-12 mt-1">
+                                                        <span class="font-weight-bold">Date of Birth</span>
+                                                        <input type="date" class="form-control" placeholder="Enter DoB" name="dob" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-5 col-12 mt-1">
+                                                        <span class="font-weight-bold">Email</span>
+                                                        <input type="email" class="form-control" placeholder="Enter Email" name="email" maxlength="50" required>
+                                                    </div>
+                                                    <div class="col-md-7 col-12 mt-1">
+                                                        <span class="font-weight-bold">Phone Number</span>
+                                                        <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone" maxlength="20" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-5 col-12 mt-1">
+                                                        <span class="font-weight-bold">Province</span>
+                                                        <select id="province_add_selector" name="province_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>                                                    
+                                                            @foreach($list_province as $province)
+                                                                <option value="{{$province->id}}">{{$province->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-7 col-12 mt-1">
+                                                        <span class="font-weight-bold">Regency/City</span>
+                                                        <select id="regency_add_selector" name="regency_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-5 col-12 mt-1">
+                                                        <span class="font-weight-bold">Districts</span>
+                                                        <select id="district_add_selector" name="district_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-7 col-12 mt-1">
+                                                        <span class="font-weight-bold">Sub-Districts/Village</span>
+                                                        <select id="village_add_selector" name="village_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-5 col-12 mt-1">
+                                                        <span class="font-weight-bold">Post Code</span>
+                                                        <input type="text" class="form-control" placeholder="Enter Post Code" name="post_code" maxlength="5" required>
+                                                    </div>
+                                                    <div class="col-md-7 col-12 mt-1">
+                                                        <span class="font-weight-bold">Address</span>
+                                                        <textarea rows="4" class="form-control" placeholder="Enter Address" name="address" maxlength="200" required></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 col-12 mt-1">
+                                                        <input type="submit" id="button-add-save" class="btn btn-outline-primary" value="Save"/>
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-5 col-12 mt-1">
-                                                <span class="font-weight-bold">Role</span>
-                                                <select id="role_add_selector" name="member_role_id" class="select2 form-control" style="width: 100%" required>
-                                                    @foreach($list_role as $role)
-                                                        <option value="{{$role->id}}">{{$role->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-7 col-12 mt-1">
-                                                <span class="font-weight-bold">Status</span>
-                                                <select id="status_add_selector" name="status_code" class="select2 form-control" style="width: 100%" required>
-                                                    @foreach($list_status as $status)
-                                                        <option value="{{$status->code}}">{{$status->name}}</option>
-                                                    @endforeach
-                                                </select>
+                                        <div class="tab-pane active" id="subscription" aria-labelledby="subscription-tab" role="tabpanel">
+                                            <div class="col-md-12 col-12 page-users-view">
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-5 col-12 mt-1">
-                                                <span class="font-weight-bold">KTP Number</span>
-                                                <input type="text" class="form-control" placeholder="Enter KTP Number" name="ktp_number" maxlength="16" required>
-                                            </div>
-                                            <div class="col-md-7 col-12 mt-1">
-                                                <br>
-                                                <input type="file" class="form-control" placeholder="Enter KTP File" name="ktp_file" style="border:none;" required>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-5 col-12 mt-1">
-                                                <span class="font-weight-bold">Place of Birth</span>
-                                                <input type="text" class="form-control" placeholder="Enter PoB" name="pob" maxlength="20" required>
-                                            </div>
-                                            <div class="col-md-7 col-12 mt-1">
-                                                <span class="font-weight-bold">Date of Birth</span>
-                                                <input type="date" class="form-control" placeholder="Enter DoB" name="dob" required>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-5 col-12 mt-1">
-                                                <span class="font-weight-bold">Email</span>
-                                                <input type="email" class="form-control" placeholder="Enter Email" name="email" maxlength="50" required>
-                                            </div>
-                                            <div class="col-md-4 col-12 mt-1">
-                                                <span class="font-weight-bold">Phone Number</span>
-                                                <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone" maxlength="20" required>
-                                            </div>
-                                            <div class="col-md-3 col-12 mt-1">
-                                                <span class="font-weight-bold">Gender</span>
-                                                <select id="gender_add_selector" name="gender_code" class="select2 form-control" style="width: 100%" required>
-                                                    @foreach($list_gender as $gender)
-                                                        <option value="{{$gender->code}}">{{$gender->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-5 col-12 mt-1">
-                                                <span class="font-weight-bold">Province</span>
-                                                <input type="text" class="form-control" placeholder="Enter Province" name="province" maxlength="30" required>
-                                            </div>
-                                            <div class="col-md-4 col-12 mt-1">
-                                                <span class="font-weight-bold">City</span>
-                                                <input type="text" class="form-control" placeholder="Enter City" name="city" maxlength="30" required>
-                                            </div>
-                                            <div class="col-md-3 col-12 mt-1">
-                                                <span class="font-weight-bold">Post Code</span>
-                                                <input type="text" class="form-control" placeholder="Enter Post Code" name="post_code" maxlength="5" required>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12 col-12 mt-1">
-                                                <span class="font-weight-bold">Address</span>
-                                                <textarea rows="4" class="form-control" placeholder="Enter Address" name="address" maxlength="200" required></textarea>
+                                        <div class="tab-pane active" id="membership-card" aria-labelledby="membership-card-tab" role="tabpanel">
+                                            <div class="col-md-12 col-12 page-users-view">
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="submit" id="button-add-save" class="btn btn-outline-primary" value="Save"/>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                </div>
-                            </form>
+                                </section>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -189,7 +241,9 @@
                             <div class="modal-body" id="admin-details-modal-body"></div>
                             <div class="modal-footer">
                                 <div id="pdf"></div>
+                                @if($authorize['edit']==1)
                                 <button type="button" id="button-edit" class="btn btn-outline-primary">Edit</button>
+                                @endif
                                 <button type="button" id="button-cancel" class="btn btn-outline-primary hidden">Cancel</button>
                                 <button type="button" id="button-close" class="btn btn-primary" data-dismiss="modal">Close</button>
                             </div>

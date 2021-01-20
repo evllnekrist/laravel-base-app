@@ -1,5 +1,97 @@
 <script type="text/javascript">
     $(document).ready(function() {
+        $('.js-example-placeholder-single').select2({
+            placeholder: 'Select an option',
+            allowClear: true
+        });
+        $('#province_add_selector,#province_edit_selector').on('change', function() {
+            let item = this.value;
+            let fellow_id = "regency"+$(this).attr("data-fellow");
+            $.ajax({
+                url: 'selection/regency',
+                headers: {
+                    'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
+                },
+                type: 'POST',
+                data: JSON.stringify({
+                    id: item
+                }),
+                contentType: 'application/json; charset=utf-8',
+                success: (function (data) {
+                    if(data.status){
+                        let fellow_el = $('#'+fellow_id+'');
+                        fellow_el.empty();
+                        for (var i = 0; i < data.detail.length; i++) {
+                            fellow_el.append('<option value='+data.detail[i].id+'>'+data.detail[i].name+'</option>');
+                        }
+                    }else{
+                        showSweetAlert('error','',data.message);
+                        return false;
+                    }
+                }),error:function(xhr,status,error) {
+                    showSweetAlert('error','',xhr.responseText);
+                }
+            });
+        });
+        $('#regency_add_selector,#regency_edit_selector').on('change', function() {
+            let item = this.value;
+            let fellow_id = "district"+$(this).attr("data-fellow");
+            $.ajax({
+                url: 'selection/district',
+                headers: {
+                    'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
+                },
+                type: 'POST',
+                data: JSON.stringify({
+                    id: item
+                }),
+                contentType: 'application/json; charset=utf-8',
+                success: (function (data) {
+                    if(data.status){
+                        let fellow_el = $('#'+fellow_id+'');
+                        fellow_el.empty();
+                        for (var i = 0; i < data.detail.length; i++) {
+                            fellow_el.append('<option value='+data.detail[i].id+'>'+data.detail[i].name+'</option>');
+                        }
+                    }else{
+                        showSweetAlert('error','',data.message);
+                        return false;
+                    }
+                }),error:function(xhr,status,error) {
+                    showSweetAlert('error','',xhr.responseText);
+                }
+            });
+        });
+        $('#district_add_selector,#district_edit_selector').on('change', function() {
+            let item = this.value;
+            let fellow_id = "village"+$(this).attr("data-fellow");
+            $.ajax({
+                url: 'selection/village',
+                headers: {
+                    'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
+                },
+                type: 'POST',
+                data: JSON.stringify({
+                    id: item
+                }),
+                contentType: 'application/json; charset=utf-8',
+                success: (function (data) {
+                    if(data.status){
+                        let fellow_el = $('#'+fellow_id+'');
+                        fellow_el.empty();
+                        for (var i = 0; i < data.detail.length; i++) {
+                            fellow_el.append('<option value='+data.detail[i].id+'>'+data.detail[i].name+'</option>');
+                        }
+                    }else{
+                        showSweetAlert('error','',data.message);
+                        return false;
+                    }
+                }),error:function(xhr,status,error) {
+                    showSweetAlert('error','',xhr.responseText);
+                }
+            });
+        });
+
         /*** COLUMN DEFINE ***/
         var columnDefs = [
             {
@@ -62,24 +154,40 @@
                 width: 250
             },
             {
+                headerName: "Province",
+                field: "province.name",
+                editable: false,
+                sortable: true,
+                filter: true,
+                width: 325
+            },
+            {
+                headerName: "Regency/City",
+                field: "regency.name",
+                editable: false,
+                sortable: true,
+                filter: true,
+                width: 325
+            },
+            {
+                headerName: "District",
+                field: "district.name",
+                editable: false,
+                sortable: true,
+                filter: true,
+                width: 325
+            },
+            {
+                headerName: "Sub-District/Village",
+                field: "village.name",
+                editable: false,
+                sortable: true,
+                filter: true,
+                width: 325
+            },
+            {
                 headerName: "Address",
                 field: "address",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 325
-            },
-            {
-                headerName: "City",
-                field: "city",
-                editable: false,
-                sortable: true,
-                filter: true,
-                width: 325
-            },
-            {
-                headerName: "Province",
-                field: "province",
                 editable: false,
                 sortable: true,
                 filter: true,
@@ -163,7 +271,7 @@
 
         function detailEdit(data){
             $("#button-edit,#button-close").removeClass("hidden");
-            $("#button-update,#button-delete,#button-cancel,#button-edit").addClass("hidden");
+            $("#button-update,#button-delete,#button-cancel").addClass("hidden");
             $("#admin-details-modal").modal('show');
             $("#admin-details-modal-title").text(data.card_id.toString()+' - '+data.first_name.toString()+'  '+data.last_name.toString());
             $("#admin-details-modal-body").html($("#loading").html());
@@ -173,9 +281,11 @@
                 success: (function (view) {
                     $("#admin-details-modal-body").html(view);
                     $("#button-edit").removeClass("hidden");
-                    $("#pdf").html('<a href="card/' + data.id + '/pdf" target="_blank" type="button" id="button-edit" class="btn btn-outline-dark">Print</button>')
-                    $("#role_add_selector,#status_add_selector,#gender_add_selector").select2({
-                        minimumResultsForSearch: -1,
+                    <?php if($authorize['execute']==1){ ?>
+                        $("#pdf").html('<a href="card/' + data.id + '/pdf" target="_blank" type="button" id="button-edit" class="btn btn-outline-dark"><b>Print Card</b></button>');
+                    <?php } ?>
+                    $("#role_edit_selector,#status_edit_selector,#gender_edit_selector,#province_edit_selector,#regency_edit_selector,#district_edit_selector,#village_edit_selector").select2({
+                        minimumResultsForSearch: 0,
                         tokenSeparators: [',', ' ', '.', '/', '\\','[',']',';','\'','{','}','_','+','=','|','"',":"]
                     });
 
@@ -333,8 +443,8 @@
 
         $(document).on("click","#add-data",function(){
             $("#admin-add-modal").modal('show');
-            $("#role_add_selector,#status_add_selector,#gender_add_selector").select2({
-                minimumResultsForSearch: -1,
+            $("#role_add_selector,#status_add_selector,#gender_add_selector,#province_add_selector,#regency_add_selector,#district_add_selector,#village_add_selector").select2({
+                minimumResultsForSearch: 0,
                 tokenSeparators: [',', ' ', '.', '/', '\\','[',']',';','\'','{','}','_','+','=','|','"',":"]
             });
         }).on("click","#button-edit",function(){
@@ -351,7 +461,7 @@
                     headers: {
                         'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
                     },
-                    type: 'post',
+                    type: 'POST',
                     success:function(data){
                         if(data.status){
                             $("#admin-add-modal").modal("hide");
@@ -384,7 +494,7 @@
                     headers: {
                         'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
                     },
-                    type: 'post',
+                    type: 'POST',
                     success:function(data){
                         if(data.status){
                             $("#admin-details-modal").modal("hide");
