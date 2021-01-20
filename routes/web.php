@@ -160,6 +160,8 @@ Route::get('/home', 'Main\DashboardController@index');
                 Route::delete('{id}/delete','Master\DistrictController@delete');
                 Route::get('detailAdd','Master\DistrictController@detailAdd');
                 Route::get('{id}/detailEdit','Master\DistrictController@detailEdit');
+                Route::get('{id}/detailRegency','Master\DistrictController@detailRegency');
+                Route::get('{id}/detailDistrict','Master\DistrictController@detailDistrict');
             });
             Route::prefix('village')->group(function(){
                 Route::get('/','Master\VillageController@index')->name('master-village');
