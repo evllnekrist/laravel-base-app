@@ -95,7 +95,7 @@
                     $("#admin-details-modal-body").html(view);
                     $("#button-edit").removeClass("hidden");
                     $("#role_add_selector,#status_add_selector,#gender_add_selector").select2({
-                        minimumResultsForSearch: -1,
+                        minimumResultsForSearch: 0,
                         tokenSeparators: [',', ' ', '.', '/', '\\','[',']',';','\'','{','}','_','+','=','|','"',":"]
                     });
 
@@ -254,7 +254,7 @@
         $(document).on("click","#add-data",function(){
             $("#admin-add-modal").modal('show');
             $("#role_add_selector,#status_add_selector,#gender_add_selector").select2({
-                minimumResultsForSearch: -1,
+                minimumResultsForSearch: 0,
                 tokenSeparators: [',', ' ', '.', '/', '\\','[',']',';','\'','{','}','_','+','=','|','"',":"]
             });
         }).on("click","#button-edit",function(){

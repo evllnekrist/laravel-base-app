@@ -37,4 +37,16 @@ class Member extends Model
     public function role(){
         return $this->hasOne('App\Http\Models\MemberRole','id','member_role_id');
     }
+    public function province(){
+        return $this->hasOne('App\Http\Models\AB_Province','id','province_id');
+    }
+    public function regency(){
+        return $this->hasOne('App\Http\Models\AB_Regency','id','regency_id');
+    }
+    public function district(){
+        return $this->hasOne('App\Http\Models\AB_District','id','district_id');
+    }
+    public function village(){
+        return $this->hasOne('App\Http\Models\AB_Village','id','village_id');
+    }
 }

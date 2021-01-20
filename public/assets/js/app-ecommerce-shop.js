@@ -102,7 +102,7 @@ $(document).ready(function () {
     // for select in ecommerce header
     if (priceFilter.length > 0) {
         priceFilter.select2({
-            minimumResultsForSearch: -1,
+            minimumResultsForSearch: 0,
             dropdownAutoWidth: true,
             width: '100%'
         });

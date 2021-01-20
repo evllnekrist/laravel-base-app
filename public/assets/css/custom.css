@@ -10,6 +10,12 @@
 .ft-white{
     color:white;
 }
+.ft-white{
+    color:white;
+}
+.ft-dark{
+    color:#1d1e22;
+}
 .ft-sm{
     font-size:smaller;
 }
@@ -53,4 +59,8 @@
 }
 .pad-top-10{
     padding-top:10em;
+}
+.data-info{
+    margin-top: 0.2rem !important;
+    margin-bottom: -0.5rem !important;
 }

@@ -172,7 +172,14 @@ Route::get('/home', 'Main\DashboardController@index');
             });
         });
     });
-    
+    // SCAN
+    Route::group(['prefix' => 'selection'], function()
+    {
+        Route::post('regency','Main\SelectionController@getList_Regency');
+        Route::post('district','Main\SelectionController@getList_District');
+        Route::post('village','Main\SelectionController@getList_Village');
+    });
+
     Route::group(['prefix' => 'statistics'], function(){});
 
     Route::group(['prefix' => 'sample'], function()
