@@ -24,14 +24,14 @@
         <div class="tab-pane active" id="personal-data" aria-labelledby="personal-data-tab" role="tabpanel">
             <div class="col-md-12 col-12 page-users-view">
                 <div class="row">
-                    <div class="col-md-5 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">First Name</span><br>
                         <label class="data-info">{{ $selected_data->first_name }}</label>
                         <div class="data-edit hidden">
                             <input type="text" value="{{ $selected_data->first_name }}" class="form-control" placeholder="Enter First Name" name="first_name" maxlength="50" required>
                         </div>
                     </div>
-                    <div class="col-md-7 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Last Name</span><br>
                         <label class="data-info">{{ $selected_data->last_name }}</label>
                         <div class="data-edit hidden">
@@ -40,7 +40,7 @@
                     </div>
                 </div><hr class="data-info">
                 <div class="row">
-                    <div class="col-md-5 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Role</span><br>
                         <label class="data-info">{{ $selected_data->role->name }}</label>
                         <div class="data-edit hidden">
@@ -51,7 +51,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-7 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Status</span><br>
                         <label class="data-info">{{ $selected_data->status->name }}</label>
                         <div class="data-edit hidden">
@@ -64,14 +64,14 @@
                     </div>
                 </div><hr class="data-info">
                 <div class="row">
-                    <div class="col-md-5 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">KTP Number</span><br>
                         <label class="data-info">{{ $selected_data->ktp_number }}</label>
                         <div class="data-edit hidden">
                             <input type="text" value="{{ $selected_data->ktp_number }}" class="form-control" placeholder="Enter KTP Number" name="ktp_number" maxlength="16" required>
                         </div>
                     </div>
-                    <div class="col-md-7 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Gender</span><br>
                         <label class="data-info">{{ $selected_data->gender->name }}</label>
                         <div class="data-edit hidden">
@@ -95,14 +95,14 @@
                     </div>
                 </div><hr class="data-info">
                 <div class="row">
-                    <div class="col-md-5 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Place of Birth</span><br>
                         <label class="data-info">{{ $selected_data->pob }}</label>
                         <div class="data-edit hidden">
                             <input type="text" value="{{ $selected_data->pob }}" class="form-control" placeholder="Enter PoB" name="pob" maxlength="20" required>
                         </div>
                     </div>
-                    <div class="col-md-7 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Date of Birth</span><br>
                         <label class="data-info">{{ $selected_data->dob }}</label>
                         <div class="data-edit hidden">
@@ -111,14 +111,14 @@
                     </div>
                 </div><hr class="data-info">
                 <div class="row">
-                    <div class="col-md-5 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Email</span><br>
                         <label class="data-info">{{ $selected_data->email }}</label>
                         <div class="data-edit hidden">
                             <input type="text" value="{{ $selected_data->email }}" class="form-control" placeholder="Enter Email" name="email" maxlength="50" required>
                         </div>
                     </div>
-                    <div class="col-md-7 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Phone Number</span><br>
                         <label class="data-info">{{ $selected_data->phone }}</label>
                         <div class="data-edit hidden">
@@ -127,7 +127,7 @@
                     </div>
                 </div><hr class="data-info">
                 <div class="row">
-                    <div class="col-md-5 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Province</span><br>
                         <label class="data-info">{{ $selected_data->province?$selected_data->province->name:'' }}</label>
                         <div class="data-edit hidden">
@@ -138,7 +138,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-7 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Regency/City</span><br>
                         <label class="data-info">{{$selected_data->regency?$selected_data->regency->name:'' }}</label>
                         <div class="data-edit hidden">
@@ -151,7 +151,7 @@
                     </div>
                 </div><hr class="data-info">
                 <div class="row">
-                    <div class="col-md-5 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Districts</span><br>
                         <label class="data-info">{{ $selected_data->district?$selected_data->district->name:'' }}</label>
                         <div class="data-edit hidden">
@@ -162,7 +162,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-7 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Sub-Districts/Village</span><br>
                         <label class="data-info">{{ $selected_data->village?$selected_data->village->name:'' }}</label>
                         <div class="data-edit hidden">
@@ -175,14 +175,14 @@
                     </div>
                 </div><hr class="data-info">
                 <div class="row">
-                    <div class="col-md-5 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Post Code</span><br>
                         <label class="data-info">{{ $selected_data->post_code }}</label>
                         <div class="data-edit hidden">
                             <input type="text" value="{{ $selected_data->post_code }}" class="form-control" placeholder="Enter Post Code" name="post_code" maxlength="5" required>
                         </div>
                     </div>
-                    <div class="col-md-7 col-12 mt-1">
+                    <div class="col-md-6 col-12 mt-1">
                         <span class="font-weight-bold">Address</span><br>
                         <label class="data-info">{{ $selected_data->address }}</label>
                         <div class="data-edit hidden">

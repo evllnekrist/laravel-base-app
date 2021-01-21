@@ -33,6 +33,7 @@ class MembershipController extends Controller
         $this->data['list_status'] = MemberStatus::where('active','=',1)->get();
         $this->data['list_gender'] = Gender::where('active','=',1)->get();
         $this->data['list_province'] = AB_Province::orderBy('name', 'ASC')->get();
+        $this->data['list_package'] = Package::where('active','=',1)->get();
         return view('_page._main.index-membership', $this->data);
     }
     

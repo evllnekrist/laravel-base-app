@@ -68,6 +68,7 @@
                     </div>
                 </section>
                 <!-- // Basic example section end -->
+                <form id="addForm" onsubmit="return false;">
                 <div class="modal fade text-left" id="admin-add-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                         <div class="modal-content">
@@ -78,7 +79,6 @@
                                 </button>
                             </div>
                             <div class="modal-body" id="admin-add-modal-body">
-                                <form id="addForm" onsubmit="return false;">
                                 <section class="users-edit">
                                     <ul class="nav nav-tabs mb-3" role="tablist">
                                         <li class="nav-item">
@@ -104,17 +104,17 @@
                                         <div class="tab-pane active" id="personal-data" aria-labelledby="personal-data-tab" role="tabpanel">
                                             <div class="col-md-12 col-12 page-users-view">
                                                 <div class="row">
-                                                    <div class="col-md-5 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">First Name</span>
                                                         <input type="text" class="form-control" placeholder="Enter First Name" name="first_name" maxlength="50" required>
                                                     </div>
-                                                    <div class="col-md-7 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Last Name</span>
                                                         <input type="text" class="form-control" placeholder="Enter Last Name" name="last_name" maxlength="50" required>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-5 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Role</span>
                                                         <select id="role_add_selector" name="member_role_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" required>
                                                             @foreach($list_role as $role)
@@ -122,7 +122,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-7 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Status</span>
                                                         <select id="status_add_selector" name="status_code" class="select2 js-example-placeholder-single form-control" style="width: 100%" required>
                                                             @foreach($list_status as $status)
@@ -132,11 +132,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-5 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">KTP Number</span>
                                                         <input type="text" class="form-control" placeholder="Enter KTP Number" name="ktp_number" maxlength="16" required>
                                                     </div>
-                                                    <div class="col-md-7 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Gender</span>
                                                         <select id="gender_add_selector" name="gender_code" class="select2 js-example-placeholder-single form-control" style="width: 100%" required>
                                                             @foreach($list_gender as $gender)
@@ -147,27 +147,27 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-5 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Place of Birth</span>
                                                         <input type="text" class="form-control" placeholder="Enter PoB" name="pob" maxlength="20" required>
                                                     </div>
-                                                    <div class="col-md-7 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Date of Birth</span>
                                                         <input type="date" class="form-control" placeholder="Enter DoB" name="dob" required>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-5 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Email</span>
                                                         <input type="email" class="form-control" placeholder="Enter Email" name="email" maxlength="50" required>
                                                     </div>
-                                                    <div class="col-md-7 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Phone Number</span>
                                                         <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone" maxlength="20" required>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-5 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Province</span>
                                                         <select id="province_add_selector" name="province_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>                                                    
                                                             @foreach($list_province as $province)
@@ -175,59 +175,83 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-7 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Regency/City</span>
                                                         <select id="regency_add_selector" name="regency_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-5 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Districts</span>
                                                         <select id="district_add_selector" name="district_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-7 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Sub-Districts/Village</span>
                                                         <select id="village_add_selector" name="village_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-5 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Post Code</span>
                                                         <input type="text" class="form-control" placeholder="Enter Post Code" name="post_code" maxlength="5" required>
                                                     </div>
-                                                    <div class="col-md-7 col-12 mt-1">
+                                                    <div class="col-md-6 col-12 mt-1">
                                                         <span class="font-weight-bold">Address</span>
                                                         <textarea rows="4" class="form-control" placeholder="Enter Address" name="address" maxlength="200" required></textarea>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="subscription" aria-labelledby="subscription-tab" role="tabpanel">
+                                            <div class="col-md-12 col-12 page-users-view">
                                                 <div class="row">
-                                                    <div class="col-md-12 col-12 mt-1">
-                                                        <input type="submit" id="button-add-save" class="btn btn-outline-primary" value="Save"/>
-                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                    <div class="col-md-6 col-12 mt-1">
+                                                        <span class="font-weight-bold">Package</span>
+                                                        <select id="package_add_selector" name="package_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" required>
+                                                            @foreach($list_package as $package)
+                                                                <option value="{{$package->id}}" data-site="{{$package->site_code}}" data-duration="{{$package->duration}}">{{$package->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6 col-12 mt-1">
+                                                        <span class="font-weight-bold">Site</span>
+                                                        <input type="text" class="form-control" placeholder="Enter Site Code" name="site_code" readonly required>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-12 mt-1">
+                                                        <span class="font-weight-bold">Start At</span>
+                                                        <input type="date" class="form-control" placeholder="Enter Package Start At" name="start_at" required>
+                                                    </div>
+                                                    <div class="col-md-6 col-12 mt-1">
+                                                        <span class="font-weight-bold">End At</span>
+                                                        <input type="date" class="form-control" placeholder="Enter Package End At" name="end_at" readonly required>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane active" id="subscription" aria-labelledby="subscription-tab" role="tabpanel">
-                                            <div class="col-md-12 col-12 page-users-view">
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane active" id="membership-card" aria-labelledby="membership-card-tab" role="tabpanel">
+                                        <div class="tab-pane" id="membership-card" aria-labelledby="membership-card-tab" role="tabpanel">
                                             <div class="col-md-12 col-12 page-users-view">
                                             </div>
                                         </div>
                                     </div>
                                 </section>
-                                </form>
                             </div>
                             <div class="modal-footer">
+                                <div class="row">
+                                    <div class="col-md-12 col-12 mt-1">
+                                        <input type="submit" id="button-add-save" class="btn btn-outline-primary" value="Save"/>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                </form>
 
                 <div class="modal fade text-left" id="admin-details-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
