@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\AppLog;
-use App\Http\Models\Province;
+use App\Http\Models\AB_Province;
 use App\Http\Models\Active;
 use DB;
 
@@ -44,7 +44,7 @@ class ProvinceController extends Controller
         }
         // dd(DB::getQueryLog()); // Show results of log
         $recordsFiltered = $models->orderBy($order,$dir)->get()->count();        
-        $recordsTotal = Province::count(); // where('active','=',1)
+        $recordsTotal = AB_Province::count(); // where('active','=',1)
 
         $models = $models->offset($start)->limit($limit)->orderBy($order,$dir)->get();
         $data = array();
@@ -82,7 +82,7 @@ class ProvinceController extends Controller
     }
 
     public function detailAdd(){
-        $cek_province = Province::orderBy('id','DESC')->first();
+        $cek_province = AB_Province::orderBy('id','DESC')->first();
 
         $data = array(
             "cek_province"=>$cek_province,
@@ -98,7 +98,7 @@ class ProvinceController extends Controller
         $msg = 'to add province <b>'.$item['name'].'</b>';
         
         try{
-            Province::insert($item);
+            AB_Province::insert($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
@@ -109,7 +109,7 @@ class ProvinceController extends Controller
     }
 
     public function detailEdit($id){
-        $item = Province::where(DB::raw('md5(id)'),'=',$id)->first();
+        $item = AB_Province::where(DB::raw('md5(id)'),'=',$id)->first();
 
         $data = array(
             "detail"=>$item,
@@ -128,7 +128,7 @@ class ProvinceController extends Controller
         $msg = 'to edit province <b>'.$item['name'].'</b>';
 
         try{
-            Province::where(DB::raw('md5(id)'),'=',$id)->update($item);
+            AB_Province::where(DB::raw('md5(id)'),'=',$id)->update($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
@@ -145,7 +145,7 @@ class ProvinceController extends Controller
         
         try{
             foreach ($array_id as $id) {
-                Province::where(DB::raw('md5(id)'),'=',$id)->delete();
+                AB_Province::where(DB::raw('md5(id)'),'=',$id)->delete();
                 $deletedRows++;
             }
             

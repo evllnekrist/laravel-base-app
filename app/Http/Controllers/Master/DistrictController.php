@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 // use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Models\AppLog;
-use App\Http\Models\Province;
-use App\Http\Models\Regency;
-use App\Http\Models\District;
+use App\Http\Models\AB_Province;
+use App\Http\Models\AB_Regency;
+use App\Http\Models\AB_District;
 use App\Http\Models\Active;
 use DB;
 
@@ -54,7 +54,7 @@ class DistrictController extends Controller
         }
         // dd(DB::getQueryLog()); // Show results of log
         $recordsFiltered = $models->orderBy($order,$dir)->get()->count();        
-        $recordsTotal = District::count(); // where('active','=',1)
+        $recordsTotal = AB_District::count(); // where('active','=',1)
 
         $models = $models->offset($start)->limit($limit)->orderBy($order,$dir)->get();
         $data = array();
@@ -94,7 +94,7 @@ class DistrictController extends Controller
     }
 
     public function detailAdd(){
-        $list_province = Province::get();
+        $list_province = AB_Province::get();
 
         $data = array(
             "list_province"=>$list_province,
@@ -111,7 +111,7 @@ class DistrictController extends Controller
         $msg = 'to add district <b>'.$item['name'].'</b>';
         
         try{
-            District::insert($item);
+            AB_District::insert($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
@@ -122,9 +122,9 @@ class DistrictController extends Controller
     }
 
     public function detailEdit($id){
-        $item = District::where(DB::raw('md5(id)'),'=',$id)->first();
-        $list_province = Province::get();
-        $list_regency = Regency::get();
+        $item = AB_District::where(DB::raw('md5(id)'),'=',$id)->first();
+        $list_province = AB_Province::get();
+        $list_regency = AB_Regency::get();
 
         $data = array(
             "detail"=>$item,
@@ -136,7 +136,7 @@ class DistrictController extends Controller
     }
 
     public function detailRegency($id){
-        $item = Regency::where('province_id','=',$id)->get();
+        $item = AB_Regency::where('province_id','=',$id)->get();
 
         $data = array(
             "detail"=>$item,
@@ -146,7 +146,7 @@ class DistrictController extends Controller
     }
 
     public function detailDistrict($id){
-        $item = District::where('regency_id','=',$id)->orderBy('id','DESC')->first();
+        $item = AB_District::where('regency_id','=',$id)->orderBy('id','DESC')->first();
 
         $data = array(
             "detail"=>$item,
@@ -165,7 +165,7 @@ class DistrictController extends Controller
         $msg = 'to edit district <b>'.$item['name'].'</b>';
 
         try{
-            District::where(DB::raw('md5(id)'),'=',$id)->update($item);
+            AB_District::where(DB::raw('md5(id)'),'=',$id)->update($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
@@ -182,7 +182,7 @@ class DistrictController extends Controller
         
         try{
             foreach ($array_id as $id) {
-                District::where(DB::raw('md5(id)'),'=',$id)->delete();
+                AB_District::where(DB::raw('md5(id)'),'=',$id)->delete();
                 $deletedRows++;
             }
             

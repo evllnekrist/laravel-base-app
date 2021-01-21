@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 // use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Models\AppLog;
-use App\Http\Models\Province;
-use App\Http\Models\Regency;
+use App\Http\Models\AB_Province;
+use App\Http\Models\AB_Regency;
 use App\Http\Models\Active;
 use DB;
 
@@ -50,7 +50,7 @@ class RegencyController extends Controller
         }
         // dd(DB::getQueryLog()); // Show results of log
         $recordsFiltered = $models->orderBy($order,$dir)->get()->count();        
-        $recordsTotal = Regency::count(); // where('active','=',1)
+        $recordsTotal = AB_Regency::count(); // where('active','=',1)
 
         $models = $models->offset($start)->limit($limit)->orderBy($order,$dir)->get();
         $data = array();
@@ -89,7 +89,7 @@ class RegencyController extends Controller
     }
 
     public function detailAdd(){
-        $list_province = Province::get();
+        $list_province = AB_Province::get();
 
         $data = array(
             "list_province"=>$list_province,
@@ -106,7 +106,7 @@ class RegencyController extends Controller
         $msg = 'to add regency <b>'.$item['name'].'</b>';
         
         try{
-            Regency::insert($item);
+            AB_Regency::insert($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
@@ -117,8 +117,8 @@ class RegencyController extends Controller
     }
 
     public function detailEdit($id){
-        $item = Regency::where(DB::raw('md5(id)'),'=',$id)->first();
-        $list_province = Province::get();
+        $item = AB_Regency::where(DB::raw('md5(id)'),'=',$id)->first();
+        $list_province = AB_Province::get();
 
         $data = array(
             "detail"=>$item,
@@ -129,7 +129,7 @@ class RegencyController extends Controller
     }
 
     public function detailRegency($id){
-        $item = Regency::where('province_id','=',$id)->orderBy('id','DESC')->first();
+        $item = AB_Regency::where('province_id','=',$id)->orderBy('id','DESC')->first();
 
         $data = array(
             "detail"=>$item,
@@ -148,7 +148,7 @@ class RegencyController extends Controller
         $msg = 'to edit regency <b>'.$item['name'].'</b>';
 
         try{
-            Regency::where(DB::raw('md5(id)'),'=',$id)->update($item);
+            AB_Regency::where(DB::raw('md5(id)'),'=',$id)->update($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
@@ -165,7 +165,7 @@ class RegencyController extends Controller
         
         try{
             foreach ($array_id as $id) {
-                Regency::where(DB::raw('md5(id)'),'=',$id)->delete();
+                AB_Regency::where(DB::raw('md5(id)'),'=',$id)->delete();
                 $deletedRows++;
             }
             
