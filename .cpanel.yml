@@ -1,0 +1,6 @@
+---
+ 
+deployment:
+ tasks:
+ - export DEPLOYPATH=/home/vbn3z9xrq97b/public_html/membership
+ - /bin/cp -R * $DEPLOYPATH
