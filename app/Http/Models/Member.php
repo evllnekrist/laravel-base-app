@@ -22,8 +22,10 @@ class Member extends Model
                             'email',
                             'phone',
                             'address',
-                            'province',
-                            'city',
+                            'province_id',
+                            'regency_id',
+                            'district_id',
+                            'village_id',
                             'post_code',
                             'active'
                         ];

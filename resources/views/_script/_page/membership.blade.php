@@ -178,7 +178,6 @@
         function onChange_StartAt(el){
             let fellow_suffix = $(el).attr("data-fellow");
             let duration = $('#package'+fellow_suffix).find(':selected').attr('data-duration');
-
             if(duration){
                 let date_after = setPackageEndDate($(el).val(), duration);
                 $('#end_at'+fellow_suffix+'_date').val(date_after);
@@ -195,23 +194,27 @@
             let d_after_slice = d_after.split('/');
             let d_before_slice = current_date.split('-');
 
-            console.log(current_date, duration);
-            console.log(d_after_slice[2],'||',parseInt(d_before_slice[0])+Math.round(duration/12)+1);
+            console.log('\n\nsetPackageEndDate ::', current_date, duration);
+            console.log(d_after_slice[2],'||',parseInt(d_before_slice[0])+Math.round(duration/12));
             if(d_after_slice[2]>(parseInt(d_before_slice[0])+Math.round(duration/12))){ // in case of LEAP DAY   
                 console.log('LEAP DAY');     
                 let c = new Date(current_date);
-                    c.setDate(c.getDate() - 1);
+                    if(d_after_slice[0] > 28){
+                        c.setDate(c.getDate() - 1);
+                    }
                 let c_after = c.toLocaleDateString();
                 let c_after_slice = c_after.split('/');
-                    c_after =   c_after_slice[2]+'-'+
+                    c_after =   (parseInt(c_after_slice[2])+Math.round(duration/12))+'-'+
                                 (c_after_slice[1]>9?c_after_slice[1]:'0'+c_after_slice[1])+'-'+
                                 (c_after_slice[0]>9?c_after_slice[0]:'0'+c_after_slice[0]);
+                console.log('LEAP DAY [2] :: ',c_after);
                 return c_after
             }else{  
                 console.log('NORMAL DAY');     
                 d_after =   d_after_slice[2]+'-'+
                             (d_after_slice[1]>9?d_after_slice[1]:'0'+d_after_slice[1])+'-'+
                             (d_after_slice[0]>9?d_after_slice[0]:'0'+d_after_slice[0]);
+                console.log('NORMAL DAY [2] :: ',d_after);
                 return d_after;
             }
             
@@ -459,6 +462,7 @@
                 success: (function (view) {
                     $("#admin-details-modal-body").html(view);
                     $("#button-edit").removeClass("hidden");
+                    onChange_Role(document.getElementById('role_edit_selector'));
                     <?php if($authorize['execute']==1){ ?>
                         $("#pdf").html('<a href="card/' + data.id + '/pdf" target="_blank" type="button" id="button-edit" class="btn btn-outline-dark"><b>Print Card</b></button>');
                     <?php } ?>

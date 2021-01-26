@@ -159,9 +159,12 @@
                                 <span class="font-weight-bold">Sub-Districts/Village</span><br>
                                 <label class="data-info">{{ $selected_data->village?$selected_data->village->name:'' }}</label>
                                 <div class="data-edit hidden">
+                                    <?php
+                                        dump($list_village);
+                                    ?>
                                     <select id="village_edit_selector" name="village_id" class="select2 form-control" style="width: 100%" data-fellow="_edit_selector" required>
                                         @foreach($list_village as $village)
-                                            <option @if($selected_data->village_id==$village->id) selected @endif value="{{$village->id}}">{{$village->id}} - {{$village->name}}</option>
+                                            <option @if($selected_data->village_id==$village->id) selected @endif value="{{strval($village->id)}}">{{$village->id}} {{$village->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -211,7 +214,7 @@
                                 <select id="package_edit_selector" name="package_id" class="select2 form-control" style="width: 100%" data-fellow="_edit_selector" required>
                                     @foreach($list_package as $package)
                                         <option @if(((isset($selected_data_subs))?$selected_data_subs->package_id:'')==$package->id) selected @endif 
-                                                value="{{$package->id}}">{{$package->name}}</option>
+                                                value="{{$package->id}}" data-duration="{{$package->duration}}">{{$package->name}}</option>
                                     @endforeach
                                 </select>
                             @else

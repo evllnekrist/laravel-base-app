@@ -160,7 +160,7 @@ class MembershipController extends Controller
         $id = $item['id'];
         unset($item['id']);
         $msg = 'to edit member '.$item['first_name'].' '.$item['last_name'];
-        // dd($item);
+        // dump($item);
         try{
             if($item['member_role_id'] == 1){ // member
                 
@@ -188,6 +188,7 @@ class MembershipController extends Controller
                 if($subsActivity){
                     $itemPackage = array_merge(
                         $itemPackage, array(
+                            "card_id" => $item['card_id'],
                             "package_id" => $item['package_id'],
                             "start_at" => $item['start_at'],
                             "end_at" => $item['end_at'],
@@ -201,15 +202,18 @@ class MembershipController extends Controller
                     );
                     $idActivity = MemberActivity::insertGetId($itemActivity);
                     $itemPackage['activity_id'] = $idActivity;
+                    // DB::enableQueryLog();
                     $idPackage = MemberPackage::updateOrCreate(array("card_id" => $item['card_id']),$itemPackage);
+                    // dd(DB::getQueryLog());
                 }
-                unset($item['site_code']);
-                unset($item['package_id']);
-                unset($item['start_at']);
-                unset($item['end_at']);
-                unset($item['card_id']);
             }
+            unset($item['site_code']);
+            unset($item['package_id']);
+            unset($item['start_at']);
+            unset($item['end_at']);
+            unset($item['card_id']);
             Member::where(DB::raw('md5(id)'),'=',$id)->update($item);
+            
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e);

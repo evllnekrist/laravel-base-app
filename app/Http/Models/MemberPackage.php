@@ -8,6 +8,12 @@ class MemberPackage extends Model
 {
     protected $table = 'ms_member_package';
     protected $fillable = [
+                            'card_id',
+                            'package_id',
+                            'activity_id',
+                            'start_at',
+                            'end_at',
+                            'created_by',
                             'updated_by'
                         ];
 
