@@ -24,14 +24,16 @@
                         <a class="nav-link text-bold-700">@lang('app.name')</a>
                     </div>
                     <ul class="nav navbar-nav float-right">
-                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                        <li class="dropdown dropdown-user nav-item">
+                            <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                                 <div class="user-nav d-sm-flex d-none">
                                     <span class="user-name text-bold-600">{{ Session::get('_user')['_fullname'] }}</span>
-                                    <span class="user-status">{{ Session::get('_user')['_role_name'] }}</span></div><span>
-                                    <div class="avatar bg-primary mr-1">
-                                        <div class="avatar-content">{{ Session::get('_user')['_initial'] }}</div>
-                                        <span class="avatar-status-online"></span>
-                                    </div>
+                                    <span class="user-status">{{ Session::get('_user')['_role_name'] }}</span>
+                                </div>
+                                <div class="avatar bg-primary mr-1">
+                                    <div class="avatar-content">{{ Session::get('_user')['_initial'] }}</div>
+                                    <span class="avatar-status-online"></span>
+                                </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="{{ url('profile') }}"><i class="feather icon-user"></i> Edit Profile</a>

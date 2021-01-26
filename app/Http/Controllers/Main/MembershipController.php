@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Main;
 use App\Http\Controllers\Controller;
 // use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Http\Models\AppLog;
 use App\Http\Models\Member;
+use App\Http\Models\MemberActivity;
+use App\Http\Models\MemberPackage;
 use App\Http\Models\MemberRole;
 use App\Http\Models\MemberStatus;
-use App\Http\Models\Gender;
 use App\Http\Models\Package;
+use App\Http\Models\Gender;
+use App\Http\Models\Site;
 use App\Http\Models\Active;
 use App\Http\Models\AB_Province;
 use App\Http\Models\AB_Regency;
@@ -33,14 +37,14 @@ class MembershipController extends Controller
         $this->data['list_status'] = MemberStatus::where('active','=',1)->get();
         $this->data['list_gender'] = Gender::where('active','=',1)->get();
         $this->data['list_province'] = AB_Province::orderBy('name', 'ASC')->get();
-        $this->data['list_package'] = Package::where('active','=',1)->get();
+        $this->data['list_site'] = Site::where('active','=',1)->get();
         return view('_page._main.index-membership', $this->data);
     }
     
     public function get(Request $request){
         // DB::enableQueryLog();
         // dd(DB::getQueryLog());
-        $data = Member::with('status')->with('gender')->with('role')->with('province')->with('regency')->with('district')->with('village')->get();
+        $data = Member::with('status')->orderBy('created_at','DESC')->with('gender')->with('role')->with('province')->with('regency')->with('district')->with('village')->get();
         return array(
             "list_data" => $data,
         );
@@ -76,10 +80,41 @@ class MembershipController extends Controller
                 $output = array('status'=>false, 'message'=>'Phone Number <b><u>'.$item['phone'].'</u></b> has been used '.$msg, 'detail'=>$detail);
             }else{
                 try{
+                    $item['card_id'] = Session::get('_user')['_company'].($item['member_role_id']>9?$item['member_role_id']:'0'.$item['member_role_id']).date("y").date("m");
+                    $latestMember = Member::where('card_id', 'like', $item['card_id'].'%')->first();
+                    if($latestMember){
+                        $item['card_id'] = $latestMember->card_id + 1;
+                    }else{
+                        $item['card_id'] = $item['card_id'].'0001';
+                    }
+                    
+                    if($item['member_role_id'] == 1){ // member
+
+                        $itemPackage = array(
+                            "card_id" => $item['card_id'],
+                            "package_id" => $item['package_id'],
+                            "start_at" => $item['start_at'],
+                            "end_at" => $item['end_at'],
+                            "created_by" => $item['created_by'],
+                        );
+                        unset($item['site_code']);
+                        unset($item['package_id']);
+                        unset($item['start_at']);
+                        unset($item['end_at']);
+                        $itemActivity = array(
+                            "card_id" => $item['card_id'],
+                            "transaction_code" => 'subs_new',
+                            "detail" => json_encode($itemPackage),
+                            "created_by" => Session::get('_user')['_id'],
+                        );
+                        $idActivity = MemberActivity::insertGetId($itemActivity);
+                        $itemPackage['activity_id'] = $idActivity;
+                        $idPackage = MemberPackage::insertGetId($itemPackage);
+                    }
                     $id = Member::insertGetId($item);
                     $output = array('status'=>true, 'message'=>'Success '.$msg, 'detail'=>$id);
                 }catch(\Exception $e){
-                    $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+                    $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e);
                 }
             }
         }else{
@@ -95,12 +130,11 @@ class MembershipController extends Controller
         $this->data['list_role'] = MemberRole::where('active','=',1)->get();
         $this->data['list_status'] = MemberStatus::where('active','=',1)->get();
         $this->data['list_gender'] = Gender::where('active','=',1)->get();
+        $this->data['list_site'] = Site::where('active','=',1)->get();
         $this->data['hash'] =  md5($id);
 
         $this->data['list_province'] = AB_Province::orderBy('name', 'ASC')->get();
-        $this->data['list_regency'] = [];
-        $this->data['list_district'] = [];
-        $this->data['list_village'] = [];
+        $this->data['list_regency'] = []; $this->data['list_district'] = []; $this->data['list_village'] = [];
         if($this->data['selected_data']['province_id']){
             $this->data['list_regency'] = AB_Regency::where('province_id','=',$this->data['selected_data']['province_id'])->orderBy('name', 'ASC')->get();
         }
@@ -109,6 +143,12 @@ class MembershipController extends Controller
         }
         if($this->data['selected_data']['district_id']){
             $this->data['list_village'] = AB_Village::where('district_id','=',$this->data['selected_data']['district_id'])->orderBy('name', 'ASC')->get();
+        }
+
+        if($this->data['selected_data']['member_role_id'] == 1){ // member
+            $this->data['selected_data_subs'] = MemberPackage::where('card_id','=',$this->data['selected_data']['card_id'])->with('package')->first();  
+            $subsPackageDetail = Package::where('active','=',1)->where('id','=',$this->data['selected_data_subs']['package_id'])->first();      
+            $this->data['list_package'] = Package::where('active','=',1)->where('site_code','=',$subsPackageDetail['site_code'])->get();
         }
         
         return View::make('_page._main.detail-membership', $this->data);
@@ -120,12 +160,59 @@ class MembershipController extends Controller
         $id = $item['id'];
         unset($item['id']);
         $msg = 'to edit member '.$item['first_name'].' '.$item['last_name'];
-
+        // dd($item);
         try{
+            if($item['member_role_id'] == 1){ // member
+                
+                $subsActivity = true;
+                $itemPackage = array();
+                $lastPackage = MemberPackage::where('card_id','=',$item['card_id'])->first(); 
+                
+                if(!$lastPackage){ // new
+                    $transactionCode = 'subs_new';
+                    $itemPackage['created_by'] = $item['updated_by'];
+                }else{ // exist
+                    $prevStartAt = explode(" ",$lastPackage->start_at);
+                    $prevEndAt = explode(" ",$lastPackage->end_at);
+                    if($prevStartAt[0] == $item['start_at'] && $lastPackage->package_id == $item['package_id']){ // nothing change
+                        $subsActivity = false;
+                    }else if($prevEndAt[0] == $item['start_at'] && $lastPackage->package_id == $item['package_id']){ // same package, extend date
+                        $transactionCode = 'subs_ext';
+                    }else{
+                        $transactionCode = 'subs_new';
+                    }
+                    // dump($lastPackage->start_at,$item['start_at'],$lastPackage->package_id,$item['package_id'],$lastPackage->end_at,$item['end_at']);
+                    $itemPackage['updated_by'] = $item['updated_by'];
+                }
+                
+                if($subsActivity){
+                    $itemPackage = array_merge(
+                        $itemPackage, array(
+                            "package_id" => $item['package_id'],
+                            "start_at" => $item['start_at'],
+                            "end_at" => $item['end_at'],
+                        )
+                    );
+                    $itemActivity = array(
+                        "card_id" => $item['card_id'],
+                        "transaction_code" => $transactionCode,
+                        "detail" => json_encode($itemPackage),
+                        "created_by" => Session::get('_user')['_id'],
+                    );
+                    $idActivity = MemberActivity::insertGetId($itemActivity);
+                    $itemPackage['activity_id'] = $idActivity;
+                    $idPackage = MemberPackage::updateOrCreate(array("card_id" => $item['card_id']),$itemPackage);
+                }
+                unset($item['site_code']);
+                unset($item['package_id']);
+                unset($item['start_at']);
+                unset($item['end_at']);
+                unset($item['card_id']);
+            }
             Member::where(DB::raw('md5(id)'),'=',$id)->update($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e);
         }
 
         AppLog::createLog('edit member',$item,$output);

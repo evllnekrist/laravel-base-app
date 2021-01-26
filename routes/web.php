@@ -32,6 +32,7 @@ Route::get('/home', 'Main\DashboardController@index');
         Route::delete('{id}/delete','Main\MembershipController@delete');
         Route::get('detailAdd','Main\MembershipController@detailAdd');
         Route::get('{id}/detailEdit','Main\MembershipController@detailEdit');
+        Route::get('genCardId','Main\MembershipController@generateCardId');
     });
     // CARD
     Route::group(['prefix' => 'card'], function(){
@@ -174,12 +175,13 @@ Route::get('/home', 'Main\DashboardController@index');
             });
         });
     });
-    // SCAN
+    // SELECTION
     Route::group(['prefix' => 'selection'], function()
     {
         Route::post('regency','Main\SelectionController@getList_Regency');
         Route::post('district','Main\SelectionController@getList_District');
         Route::post('village','Main\SelectionController@getList_Village');
+        Route::post('package','Main\SelectionController@getList_Package');
     });
 
     Route::group(['prefix' => 'statistics'], function(){});

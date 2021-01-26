@@ -217,7 +217,7 @@
                     // BEGIN : options
                     let prop ='', str = '<option value=""></option>';
                     for (let i = 0; i < (data.list_company).length; ++i) {
-                        prop = (data.detail.company_code == data.list_company[i].code) ? 'selected="selected"' : '';
+                        prop = (data.detail.company_id == data.list_company[i].code) ? 'selected="selected"' : '';
                         str += '<option value="'+data.list_company[i].code+'" '+prop+'>'+data.list_company[i].name+'</option>';
                     }
                     $("#"+action+"-company").html(str);
@@ -508,7 +508,7 @@
             let data = {
                 code            : $('#'+action+'-code').val(),
                 name            : $('#'+action+'-name').val(),
-                company_code    : $('#'+action+'-company').val(),
+                company_id    : $('#'+action+'-company').val(),
                 email           : $('#'+action+'-email').val(),
                 address         : $('#'+action+'-address').val(),
                 phone           : $('#'+action+'-phone').val(),

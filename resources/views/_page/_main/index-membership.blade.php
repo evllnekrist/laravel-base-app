@@ -70,7 +70,7 @@
                 <!-- // Basic example section end -->
                 <form id="addForm" onsubmit="return false;">
                 <div class="modal fade text-left" id="admin-add-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title text-capitalize" id="admin-add-modal-title">Add New Member</h4>
@@ -80,170 +80,178 @@
                             </div>
                             <div class="modal-body" id="admin-add-modal-body">
                                 <section class="users-edit">
-                                    <ul class="nav nav-tabs mb-3" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link d-flex align-items-center active" id="personal-data-tab" data-toggle="tab" href="#personal-data" aria-controls="personal-data" role="tab" aria-selected="true">
-                                                <div class="avatar bg-primary mr-1"><div class="avatar-content">1.</div></div>
-                                                <span class="d-none d-sm-block">Personal Data</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link d-flex align-items-center" id="subscription-tab" data-toggle="tab" href="#subscription" aria-controls="subscription" role="tab" aria-selected="false">
-                                                <div class="avatar bg-primary mr-1"><div class="avatar-content">2.</div></div>
-                                                <span class="d-none d-sm-block">Subscription</span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link d-flex align-items-center" id="membership-card-tab" data-toggle="tab" href="#membership-card" aria-controls="membership-card" role="tab" aria-selected="false">
-                                                <div class="avatar bg-primary mr-1"><div class="avatar-content">3.</div></div>
-                                                <span class="d-none d-sm-block">Membership Card</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="personal-data" aria-labelledby="personal-data-tab" role="tabpanel">
-                                            <div class="col-md-12 col-12 page-users-view">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">First Name</span>
-                                                        <input type="text" class="form-control" placeholder="Enter First Name" name="first_name" maxlength="50" required>
-                                                    </div>
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Last Name</span>
-                                                        <input type="text" class="form-control" placeholder="Enter Last Name" name="last_name" maxlength="50" required>
+                                    <div class="row mt-1">
+                                        <div class="col">
+                                            <div class="avatar bg-primary mr-1"><div class="avatar-content">1.</div></div>
+                                            <strong class="ft-red">Personal Data</strong><hr> 
+                                        </div>
+                                    </div> 
+                                    <div class="row">
+                                        <div class="col-md-2 col-12"></div>
+                                        <div class="col-md-10 col-12 page-users-view">
+                                            <div class="row">
+                                                <div class="col-md-5 col-12 mt-1">
+                                                    <span class="font-weight-bold">First Name</span>
+                                                    <input type="text" class="form-control" placeholder="Enter First Name" name="first_name" maxlength="50" required>
+                                                </div>
+                                                <div class="col-md-7 col-12 mt-1">
+                                                    <span class="font-weight-bold">Last Name</span>
+                                                    <input type="text" class="form-control" placeholder="Enter Last Name" name="last_name" maxlength="50" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5 col-12 mt-1">
+                                                    <span class="font-weight-bold">Email</span>
+                                                    <input type="email" class="form-control" placeholder="Enter Email" name="email" maxlength="50" required>
+                                                </div>
+                                                <div class="col-md-7 col-12 mt-1">
+                                                    <span class="font-weight-bold">Phone Number</span>
+                                                    <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone" maxlength="20" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5 col-12 mt-1">
+                                                    <span class="font-weight-bold">KTP Number</span>
+                                                    <input type="text" class="form-control" placeholder="Enter KTP Number" name="ktp_number" maxlength="16" required>
+                                                </div>
+                                                <div class="col-md-7 col-12 mt-1">
+                                                    <div class="row row-br-rewind">
+                                                        <div class="col-md-6 col-12 mt-1">
+                                                            <span class="font-weight-bold">Role</span>
+                                                            <select id="role_add_selector" name="member_role_id" class="select2 form-control" style="width: 100%" data-fellow="_add_selector" required>                                                        
+                                                                <option value="" disabled selected>----- select an option -----</option>
+                                                                @foreach($list_role as $role)
+                                                                    <option value="{{$role->id}}">{{$role->name}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 col-12 mt-1">
+                                                            <span class="font-weight-bold">Status</span>
+                                                            <select id="status_add_selector" name="status_code" class="select2 form-control" style="width: 100%" required>
+                                                                <option value="" disabled selected>----- select an option -----</option>
+                                                                @foreach($list_status as $status)
+                                                                    <option value="{{$status->code}}">{{$status->name}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Role</span>
-                                                        <select id="role_add_selector" name="member_role_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" required>
-                                                            @foreach($list_role as $role)
-                                                                <option value="{{$role->id}}">{{$role->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Status</span>
-                                                        <select id="status_add_selector" name="status_code" class="select2 js-example-placeholder-single form-control" style="width: 100%" required>
-                                                            @foreach($list_status as $status)
-                                                                <option value="{{$status->code}}">{{$status->name}}</option>
-                                                            @endforeach
-                                                        </select>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5 col-12 mt-1">
+                                                    <span class="font-weight-bold">Place of Birth</span>
+                                                    <input type="text" class="form-control" placeholder="Enter PoB" name="pob" maxlength="20" required>
+                                                </div>
+                                                <div class="col-md-7 col-12 mt-1">
+                                                    <div class="row row-br-rewind">
+                                                        <div class="col-md-6 col-12 mt-1">
+                                                            <span class="font-weight-bold">Date of Birth</span>
+                                                            <input type="date" class="form-control" placeholder="Enter DoB" name="dob" required>
+                                                        </div>
+                                                        <div class="col-md-6 col-12 mt-1">
+                                                            <span class="font-weight-bold">Gender</span>
+                                                            <select id="gender_add_selector" name="gender_code" class="select2 form-control" style="width: 100%" required>
+                                                                <option value="" disabled selected>----- select an option -----</option>
+                                                                @foreach($list_gender as $gender)
+                                                                    <option value="{{$gender->code}}">{{$gender->name}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            <!-- <br><input type="file" class="form-control" placeholder="Enter KTP File" name="ktp_file" style="border:none;" required> -->
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">KTP Number</span>
-                                                        <input type="text" class="form-control" placeholder="Enter KTP Number" name="ktp_number" maxlength="16" required>
-                                                    </div>
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Gender</span>
-                                                        <select id="gender_add_selector" name="gender_code" class="select2 js-example-placeholder-single form-control" style="width: 100%" required>
-                                                            @foreach($list_gender as $gender)
-                                                                <option value="{{$gender->code}}">{{$gender->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <!-- <br><input type="file" class="form-control" placeholder="Enter KTP File" name="ktp_file" style="border:none;" required> -->
-                                                    </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5 col-12 mt-1">
+                                                    <span class="font-weight-bold">Address</span>
+                                                    <textarea rows="4" class="form-control" placeholder="Enter Address" name="address" maxlength="200" required></textarea>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Place of Birth</span>
-                                                        <input type="text" class="form-control" placeholder="Enter PoB" name="pob" maxlength="20" required>
-                                                    </div>
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Date of Birth</span>
-                                                        <input type="date" class="form-control" placeholder="Enter DoB" name="dob" required>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Email</span>
-                                                        <input type="email" class="form-control" placeholder="Enter Email" name="email" maxlength="50" required>
-                                                    </div>
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Phone Number</span>
-                                                        <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone" maxlength="20" required>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Province</span>
-                                                        <select id="province_add_selector" name="province_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>                                                    
-                                                            @foreach($list_province as $province)
-                                                                <option value="{{$province->id}}">{{$province->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Regency/City</span>
-                                                        <select id="regency_add_selector" name="regency_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Districts</span>
-                                                        <select id="district_add_selector" name="district_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Sub-Districts/Village</span>
-                                                        <select id="village_add_selector" name="village_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" data-fellow="_add_selector" required>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Post Code</span>
-                                                        <input type="text" class="form-control" placeholder="Enter Post Code" name="post_code" maxlength="5" required>
-                                                    </div>
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Address</span>
-                                                        <textarea rows="4" class="form-control" placeholder="Enter Address" name="address" maxlength="200" required></textarea>
+                                                <div class="col-md-7 col-12 mt-1">
+                                                    <div class="row row-br-rewind">
+                                                        <div class="col-md-6 col-12 mt-1">
+                                                            <span class="font-weight-bold">Province</span>
+                                                            <select id="province_add_selector" name="province_id" class="select2 form-control" style="width: 100%" data-fellow="_add_selector" required>                                                    
+                                                                <option value="" disabled selected>----- select an option -----</option>
+                                                                @foreach($list_province as $province)
+                                                                    <option value="{{$province->id}}">{{$province->name}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 col-12 mt-1">
+                                                            <span class="font-weight-bold">Regency/City</span>
+                                                            <select id="regency_add_selector" name="regency_id" class="select2 form-control" style="width: 100%" data-fellow="_add_selector" required>
+                                                                <option value="" disabled selected>----- select province first -----</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 col-12 mt-1">
+                                                            <span class="font-weight-bold">Districts</span>
+                                                            <select id="district_add_selector" name="district_id" class="select2 form-control" style="width: 100%" data-fellow="_add_selector" required>
+                                                                <option value="" disabled selected>----- select regency/city first -----</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 col-12 mt-1">
+                                                            <span class="font-weight-bold">Sub-Districts/Village</span>
+                                                            <select id="village_add_selector" name="village_id" class="select2 form-control" style="width: 100%" data-fellow="_add_selector" required>
+                                                                <option value="" disabled selected>----- select district/village first -----</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 col-12 mt-1">
+                                                            <span class="font-weight-bold">Post Code</span>
+                                                            <input type="text" class="form-control" placeholder="Enter Post Code" name="post_code" maxlength="5" required>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="subscription" aria-labelledby="subscription-tab" role="tabpanel">
-                                            <div class="col-md-12 col-12 page-users-view">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Package</span>
-                                                        <select id="package_add_selector" name="package_id" class="select2 js-example-placeholder-single form-control" style="width: 100%" required>
-                                                            @foreach($list_package as $package)
-                                                                <option value="{{$package->id}}" data-site="{{$package->site_code}}" data-duration="{{$package->duration}}">{{$package->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Site</span>
-                                                        <input type="text" class="form-control" placeholder="Enter Site Code" name="site_code" readonly required>
-                                                    </div>
+                                    </div>
+
+                                    <div class="row mt-1" id="subscription_title_add_selector">
+                                        <div class="col">
+                                            <div class="avatar bg-primary mr-1"><div class="avatar-content">2.</div></div>
+                                            <strong class="ft-red">Subscription</strong><hr> 
+                                        </div>
+                                    </div>
+                                    <div class="row" id="subscription_content_add_selector">
+                                        <div class="col-md-2 col-12"></div>
+                                        <div class="col-md-10 col-12 page-users-view">
+                                            <div class="row">
+                                                <div class="col-md-5 col-12 mt-1">
+                                                    <span class="font-weight-bold">Site</span>
+                                                    <select id="site_add_selector" name="site_code" class="select2 form-control" style="width: 100%" data-fellow="_add_selector" required>                                                    
+                                                        <option value="" disabled selected>----- select an option -----</option>
+                                                        @foreach($list_site as $site)
+                                                            <option value="{{$site->code}}">{{$site->name}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">Start At</span>
-                                                        <input type="date" class="form-control" placeholder="Enter Package Start At" name="start_at" required>
-                                                    </div>
-                                                    <div class="col-md-6 col-12 mt-1">
-                                                        <span class="font-weight-bold">End At</span>
-                                                        <input type="date" class="form-control" placeholder="Enter Package End At" name="end_at" readonly required>
-                                                    </div>
+                                                <div class="col-md-7 col-12 mt-1">
+                                                    <span class="font-weight-bold">Package</span>
+                                                    <select id="package_add_selector" name="package_id" class="select2 form-control" style="width: 100%" data-fellow="_add_selector" required>
+                                                        <option value="" disabled selected>----- select site first -----</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="tab-pane" id="membership-card" aria-labelledby="membership-card-tab" role="tabpanel">
-                                            <div class="col-md-12 col-12 page-users-view">
+                                            <div class="row">
+                                                <div class="col-md-5 col-12 mt-1">
+                                                    <span class="font-weight-bold">Start At</span>
+                                                    <input type="date" class="form-control" id="start_at_add_selector_date" placeholder="Enter Package Start At" name="start_at" data-fellow="_add_selector" required>
+                                                </div>
+                                                <div class="col-md-7 col-12 mt-1">
+                                                    <span class="font-weight-bold">End At</span>
+                                                    <input type="date" class="form-control" id="end_at_add_selector_date" placeholder="Enter Package End At" name="end_at" readonly required>
+                                                </div>
                                             </div>
-                                        </div>
                                     </div>
                                 </section>
                             </div>
                             <div class="modal-footer">
                                 <div class="row">
                                     <div class="col-md-12 col-12 mt-1">
-                                        <input type="submit" id="button-add-save" class="btn btn-outline-primary" value="Save"/>
+                                        <!-- <input type="text" id="tab-progress" value="1" style="display:none"> -->
+                                        <!-- <button type="button" id="button-add-prev" class="btn btn-secondary tab-controll" data-aim="prev" style="display:none">Previous</button> -->
+                                        <!-- <button type="button" id="button-add-next" class="btn btn-success tab-controll" data-aim="next">Next</button> -->
+                                        <button type="submit" id="button-add-save" class="btn btn-outline-primary">Save</button>
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
@@ -254,7 +262,7 @@
                 </form>
 
                 <div class="modal fade text-left" id="admin-details-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title text-capitalize" id="admin-details-modal-title">Membership Detail</h4>

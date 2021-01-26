@@ -19,8 +19,21 @@
 .ft-sm{
     font-size:smaller;
 }
+.ft-red{
+    color:#c00;
+}
 .bg-dark-flat{
     background-color:#1d1e22;
+}
+.row-br-rewind{
+    margin: -15px;
+}
+.big-ban{
+    padding: 16px;
+    font-size: 16px;
+    color: white !important;
+    background-color: #c00;
+    border-style:none;
 }
 .nav-item-custom .nav-i-custom{
     margin-left:2.1rem;
