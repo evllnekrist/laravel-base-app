@@ -9,16 +9,16 @@ use App\Http\Models\AB_Province;
 use App\Http\Models\Active;
 use DB;
 
-class ProvinceController extends Controller
+class AB_ProvinceController extends Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->data['header_data']['js'] = array('._data.province');
+		$this->data['header_data']['js'] = array('._data.ab_province');
     }
     
     public function index(Request $request){
-        return view('_page._data.index-province',$this->data);
+        return view('_page._data.index-ab_province',$this->data);
     }
     
     public function get(Request $request){

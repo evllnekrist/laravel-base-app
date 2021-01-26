@@ -9,14 +9,14 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-left mb-0">Regency</h2>
+                            <h2 class="content-header-title float-left mb-0">Village</h2>
                             <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
-                                        Master Regency
+                                        Master Village
                                     </li>
                                     <li class="breadcrumb-item">
-                                        <a href="{{ route('master-regency') }}">Regency</a>
+                                        <a href="{{ route('master-village') }}">Village</a>
                                     </li>
                                 </ol>
                             </div>
@@ -58,6 +58,7 @@
                                     <th>PROVINCE NAME</th>
                                     <th>REGENCY NAME</th>
                                     <th>DISTRICT NAME</th>
+                                    <th>VILLAGE NAME</th>
                                     <th class="no-sort">ACTION</th>
                                 </tr>
                             </thead> 
@@ -71,7 +72,7 @@
                         <div class="add-new-data add-new-data-create">
                             <div class="div mt-2 px-2 d-flex new-data-title justify-content-between">
                                 <div>
-                                    <h4 class="text-uppercase">Add District</h4>
+                                    <h4 class="text-uppercase">Add Village</h4>
                                 </div>
                                 <div class="hide-data-sidebar">
                                     <i class="feather icon-x"></i>
@@ -86,7 +87,7 @@
                             </div>
                             <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
                                 <div class="add-data-btn">
-                                    <button class="btn btn-primary" id="add_data">Add District</button>
+                                    <button class="btn btn-primary" id="add_data">Add Village</button>
                                 </div>
                                 <div class="cancel-data-btn">
                                     <button class="btn btn-outline-primary">Cancel</button>
@@ -102,7 +103,7 @@
                         <div class="add-new-data add-new-data-update">
                             <div class="div mt-2 px-2 d-flex new-data-title justify-content-between">
                                 <div>
-                                    <h4 id="update_title" class="text-uppercase">Update District</h4>
+                                    <h4 id="update_title" class="text-uppercase">Update Village</h4>
                                 </div>
                                 <div class="hide-data-sidebar">
                                     <i class="feather icon-x"></i>
@@ -117,7 +118,7 @@
                             </div>
                             <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
                                 <div class="add-data-btn">
-                                    <button class="btn btn-primary" id="update_data">Update District</button>
+                                    <button class="btn btn-primary" id="update_data">Update Village</button>
                                 </div>
                                 <div class="cancel-data-btn">
                                     <button class="btn btn-outline-primary">Cancel</button>
@@ -147,6 +148,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/katex.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/monokai-sublime.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/quill.snow.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/select/select2.min.css') }}">
 @endsection
 @section('style')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/file-uploaders/dropzone.css') }}">
@@ -176,6 +178,7 @@
     <script src="{{ asset('app-assets/vendors/js/editors/quill/quill.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/jquery.steps.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
 @endsection
 @section('script')
     <script src="{{ asset('app-assets/js/core/libraries/jquery-ui.min.js') }}"></script>

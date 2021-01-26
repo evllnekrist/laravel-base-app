@@ -176,7 +176,7 @@
                     $("#"+action+"-province").html(str);
 
                     let str1 = '<option value=""></option>';
-                    $("#"+action+"-district").html(str1);
+                    $("#"+action+"-regency").html(str1);
                     // END : options
                 }),error:function(xhr,status,error) {
                     Swal.fire({

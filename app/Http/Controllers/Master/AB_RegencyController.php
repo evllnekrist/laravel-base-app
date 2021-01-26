@@ -8,20 +8,19 @@ use Illuminate\Http\Request;
 use App\Http\Models\AppLog;
 use App\Http\Models\AB_Province;
 use App\Http\Models\AB_Regency;
-use App\Http\Models\AB_District;
 use App\Http\Models\Active;
 use DB;
 
-class DistrictController extends Controller
+class AB_RegencyController extends Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->data['header_data']['js'] = array('._data.district');
+		$this->data['header_data']['js'] = array('._data.ab_regency');
     }
     
     public function index(Request $request){
-        return view('_page._data.index-district',$this->data);
+        return view('_page._data.index-ab_regency',$this->data);
     }
     
     public function get(Request $request){
@@ -30,7 +29,6 @@ class DistrictController extends Controller
             0 =>'id',
             1 =>'province_name',
             2 =>'regency_name',
-            3 =>'district_name',
         );
         $limit = $request->input('length');
         $start = $request->input('start');
@@ -38,9 +36,8 @@ class DistrictController extends Controller
         $dir = $request->input('order.0.dir');
 
         // DB::enableQueryLog(); // Enable query log
-        $models =  DB::table('ms_ab_districts as d')
-                        ->select('d.id','d.name as district_name','r.name as regency_name', 'p.name as province_name')
-                        ->leftJoin('ms_ab_regencies as r', 'r.id', '=', 'd.regency_id')
+        $models =  DB::table('ms_ab_regencies as r')
+                        ->select('r.id','r.name as regency_name', 'p.name as province_name')
                         ->leftJoin('ms_ab_provinces as p', 'p.id', '=', 'r.province_id');
                         // ->where('u.active','=',1);
         if(!empty($request->input('search.value')))
@@ -48,13 +45,12 @@ class DistrictController extends Controller
             $search = $request->input('search.value');
             $models = $models->where(function($query) use ($search){
                         $query->where('r.name','LIKE',"%{$search}%")
-                                ->orWhere('d.name','LIKE',"%{$search}%")
                                 ->orWhere('p.name','LIKE',"%{$search}%");
                     });
         }
         // dd(DB::getQueryLog()); // Show results of log
         $recordsFiltered = $models->orderBy($order,$dir)->get()->count();        
-        $recordsTotal = AB_District::count(); // where('active','=',1)
+        $recordsTotal = AB_Regency::count(); // where('active','=',1)
 
         $models = $models->offset($start)->limit($limit)->orderBy($order,$dir)->get();
         $data = array();
@@ -66,7 +62,6 @@ class DistrictController extends Controller
                 $nestedData[] = $model->id;
                 $nestedData[] = $model->province_name; 
                 $nestedData[] = $model->regency_name;
-                $nestedData[] = $model->district_name;
                 $action = '';
                 if($this->data['authorize']['edit']==1){
                     $action .=   "   <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
@@ -108,45 +103,33 @@ class DistrictController extends Controller
         $item = $request->get('params');
         // $item['created_by'] = \Session::get('_user')['_id'];
         unset($item['old_id']);
-        $msg = 'to add district <b>'.$item['name'].'</b>';
+        $msg = 'to add regency <b>'.$item['name'].'</b>';
         
         try{
-            AB_District::insert($item);
+            AB_Regency::insert($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
         }
 
-        AppLog::createLog('add district',$item,$output);
+        AppLog::createLog('add regency',$item,$output);
         return json_encode($output);
     }
 
     public function detailEdit($id){
-        $item = AB_District::where(DB::raw('md5(id)'),'=',$id)->first();
+        $item = AB_Regency::where(DB::raw('md5(id)'),'=',$id)->first();
         $list_province = AB_Province::get();
-        $list_regency = AB_Regency::get();
 
         $data = array(
             "detail"=>$item,
             "list_province"=>$list_province,
-            "list_regency"=>$list_regency,
         );
         
         return response()->json($data);
     }
 
     public function detailRegency($id){
-        $item = AB_Regency::where('province_id','=',$id)->get();
-
-        $data = array(
-            "detail"=>$item,
-        );
-        
-        return response()->json($data);
-    }
-
-    public function detailDistrict($id){
-        $item = AB_District::where('regency_id','=',$id)->orderBy('id','DESC')->first();
+        $item = AB_Regency::where('province_id','=',$id)->orderBy('id','DESC')->first();
 
         $data = array(
             "detail"=>$item,
@@ -158,31 +141,31 @@ class DistrictController extends Controller
     public function doEdit(Request $request){
         unset($request['_token']);
         $item = $request->get('params');
-        // $item['updated_by'] = \Session::get('_user')['_id'];
+        $item['updated_by'] = \Session::get('_user')['_id'];
         $id = $item['old_id'];
         // var_dump($item);exit;
         unset($item['old_id']);
-        $msg = 'to edit district <b>'.$item['name'].'</b>';
+        $msg = 'to edit regency <b>'.$item['name'].'</b>';
 
         try{
-            AB_District::where(DB::raw('md5(id)'),'=',$id)->update($item);
+            AB_Regency::where(DB::raw('md5(id)'),'=',$id)->update($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
         }
 
-        AppLog::createLog('edit district',$item,$output);
+        AppLog::createLog('edit regency',$item,$output);
         return json_encode($output);
     }
 
     public function delete($ids){ // the id in hash 
         $array_id = explode(",",$ids);
-        $msg = 'to delete district';
+        $msg = 'to delete regency';
         $deletedRows = 0;
         
         try{
             foreach ($array_id as $id) {
-                AB_District::where(DB::raw('md5(id)'),'=',$id)->delete();
+                AB_Regency::where(DB::raw('md5(id)'),'=',$id)->delete();
                 $deletedRows++;
             }
             
@@ -196,7 +179,7 @@ class DistrictController extends Controller
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
         }
         
-        AppLog::createLog('delete district',$ids,$output);
+        AppLog::createLog('delete regency',$ids,$output);
         return json_encode($output);
     }
 }
