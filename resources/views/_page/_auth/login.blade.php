@@ -42,7 +42,8 @@
                                                         <label for="user-password">Password</label>
                                                     </fieldset>
                                                     <button type="submit" 
-                                                            class="btn btn-primary float-right">Login</button>
+                                                            class="btn btn-primary float-right">Login</button><br>
+                                                    <a href="{{url('/scan')}}" hidden><strong>enter, absence only</strong></a>
                                                 </form>
                                             </div>
                                         </div>

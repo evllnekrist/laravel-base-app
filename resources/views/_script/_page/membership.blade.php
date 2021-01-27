@@ -152,7 +152,16 @@
                             fellow_el.empty();
                             fellow_el.append('<option value="" disabled selected>----- select an option -----</option>');
                             for (var i = 0; i < data.detail.length; i++) {
-                                fellow_el.append('<option value='+data.detail[i].code+'>'+data.detail[i].name+'</option>');
+                                if(fellow_suffix == '_add_selector'){
+                                    if((item==1&&data.detail[i].code=='sub')||(item!=1&&data.detail[i].code=='set')){
+                                        attr_el = 'selected';
+                                    }else{
+                                        attr_el = '';
+                                    }
+                                }else{
+                                    attr_el = '';
+                                }
+                                fellow_el.append('<option value='+data.detail[i].code+' '+attr_el+'>'+data.detail[i].name+'</option>');
                             }
                         }else{
                             showSweetAlert('error','',data.message);
@@ -220,32 +229,32 @@
         }
         function setPackageEndDate(current_date,duration){
             let d = new Date(current_date);
-                d.setMonth(d.getMonth() + duration);
+                d.setMonth(parseInt(d.getMonth()) + parseInt(duration));
             let d_after = d.toLocaleDateString();
             let d_after_slice = d_after.split('/');
             let d_before_slice = current_date.split('-');
 
-            console.log('\n\nsetPackageEndDate ::', current_date, duration);
+            console.log('\n\nsetPackageEndDate ::',current_date,' | ',duration,' | ',d_after);
             console.log(d_after_slice[2],'||',parseInt(d_before_slice[0])+Math.round(duration/12));
             if(d_after_slice[2]>(parseInt(d_before_slice[0])+Math.round(duration/12))){ // in case of LEAP DAY   
                 console.log('LEAP DAY');     
                 let c = new Date(current_date);
                     if(d_after_slice[0] > 28){
-                        c.setDate(c.getDate() - 1);
+                        c.setDate(parseInt(c.getDate()) - 1);
                     }
                 let c_after = c.toLocaleDateString();
                 let c_after_slice = c_after.split('/');
                     c_after =   (parseInt(c_after_slice[2])+Math.round(duration/12))+'-'+
                                 (c_after_slice[1]>9?c_after_slice[1]:'0'+c_after_slice[1])+'-'+
                                 (c_after_slice[0]>9?c_after_slice[0]:'0'+c_after_slice[0]);
-                console.log('LEAP DAY [2] :: ',c_after);
+                console.log('LEAP DAY [2] :: ',current_date,' into ',c_after);
                 return c_after
             }else{  
                 console.log('NORMAL DAY');     
                 d_after =   d_after_slice[2]+'-'+
                             (d_after_slice[1]>9?d_after_slice[1]:'0'+d_after_slice[1])+'-'+
                             (d_after_slice[0]>9?d_after_slice[0]:'0'+d_after_slice[0]);
-                console.log('NORMAL DAY [2] :: ',d_after);
+                console.log('NORMAL DAY [2] :: ',current_date,' into ',d_after);
                 return d_after;
             }
             
@@ -311,7 +320,7 @@
                 field: "first_name",
                 editable: true,
                 sortable: true,
-                width: 300,
+                width: 220,
                 filter: true,
                 checkboxSelection: true,
                 headerCheckboxSelectionFilteredOnly: true,
@@ -323,7 +332,7 @@
                 editable: true,
                 sortable: true,
                 filter: true,
-                width: 300
+                width: 220
             },
             {
                 headerName: "Status",
@@ -331,7 +340,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 200
+                width: 140
             },
             {
                 headerName: "Gender",
@@ -339,7 +348,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 200
+                width: 140
             },
             {
                 headerName: "Role",
@@ -347,7 +356,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 200
+                width: 180
             },
             {
                 headerName: "Email",
@@ -355,7 +364,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 325
+                width: 220
             },
             {
                 headerName: "Phone",
@@ -363,7 +372,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 250
+                width: 180
             },
             {
                 headerName: "Province",
@@ -371,7 +380,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 325
+                width: 220
             },
             {
                 headerName: "Regency/City",
@@ -379,7 +388,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 325
+                width: 220
             },
             {
                 headerName: "District",
@@ -387,7 +396,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 325
+                width: 220
             },
             {
                 headerName: "Sub-District/Village",
@@ -395,7 +404,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 325
+                width: 220
             },
             {
                 headerName: "Address",
@@ -411,7 +420,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 250,
+                width: 180,
             },
             {
                 headerName: "DOB",
@@ -419,7 +428,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 325,
+                width: 180,
             },
             {
                 headerName: "KTP",
@@ -435,7 +444,39 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 125
+                width: 120
+            },
+            {
+                headerName: "Subs Package",
+                field: "package_name",
+                editable: false,
+                sortable: true,
+                filter: true,
+                width: 200
+            },
+            {
+                headerName: "Subs Site Code",
+                field: "site_code",
+                editable: false,
+                sortable: true,
+                filter: true,
+                width: 180
+            },
+            {
+                headerName: "Subs Start At",
+                field: "start_at",
+                editable: false,
+                sortable: true,
+                filter: true,
+                width: 180
+            },
+            {
+                headerName: "Subs End At",
+                field: "end_at",
+                editable: false,
+                sortable: true,
+                filter: true,
+                width: 180
             },
             {
                 headerName: "Card ID",
@@ -443,7 +484,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 200,
+                width: 180,
                 pinned: "left"
             },
             {

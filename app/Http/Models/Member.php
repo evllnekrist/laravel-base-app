@@ -51,4 +51,7 @@ class Member extends Model
     public function village(){
         return $this->hasOne('App\Http\Models\AB_Village','village_id','village_id');
     }
+    public function member_package(){
+        return $this->hasOne('App\Http\Models\MemberPackage','card_id','card_id');
+    }
 }

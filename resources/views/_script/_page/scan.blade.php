@@ -5,13 +5,26 @@
             {
                 headerName: "Time",
                 field: "created_at",
-                editable: true,
+                editable: false,
                 sortable: true,
-                width: 300,
+                width: 180,
                 filter: true,
-                checkboxSelection: true,
-                headerCheckboxSelectionFilteredOnly: true,
-                headerCheckboxSelection: true
+            },
+            {
+                headerName: "First Name",
+                field: "member.first_name",
+                editable: false,
+                sortable: true,
+                width: 180,
+                filter: true,
+            },
+            {
+                headerName: "Last Name",
+                field: "member.last_name",
+                editable: false,
+                sortable: true,
+                width: 180,
+                filter: true,
             },
             {
                 headerName: "Card ID",
@@ -19,7 +32,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 200,
+                width: 140,
                 pinned: "left"
             },
             {
@@ -28,7 +41,16 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 150,
+                width: 140,
+                pinned: "left"
+            },
+            {
+                headerName: "Status",
+                field: "member.status_code",
+                editable: false,
+                sortable: true,
+                filter: true,
+                width: 140,
                 pinned: "left"
             },
             // {

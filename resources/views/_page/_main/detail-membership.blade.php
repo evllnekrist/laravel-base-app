@@ -51,19 +51,20 @@
                     </div>
                     <div class="col-md-7 col-12 mt-1">
                         <div class="row row-br-rewind">
-                            <div class="col-md-6 col-12 mt-1">
+                            <div class="col-md-6 col-12 mt-1 mb-1">
                                 <span class="font-weight-bold">Role</span><br>
                                 <label class="data-info">{{ $selected_data->role->name }}</label>
                                 <div class="data-edit hidden">
-                                    <select id="role_edit_selector" name="member_role_id" class="select2 form-control" style="width: 100%" data-fellow="_edit_selector" disabled required>
+                                    <select id="role_edit_selector" class="select2 form-control" style="width: 100%" data-fellow="_edit_selector" disabled required>
                                         @foreach($list_role as $role)
                                             <option @if($selected_data->member_role_id==$role->id) selected @endif value="{{$role->id}}">{{$role->name}}</option>
                                         @endforeach
                                     </select>
+                                    <input type="text" value="{{$selected_data->member_role_id}}" name="member_role_id" hidden>
                                     <i class="ft-red">* role cannot be changed once card id created</i>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12 mt-1">
+                            <div class="col-md-6 col-12 mt-1 mb-1">
                                 <span class="font-weight-bold">Status</span><br>
                                 <label class="data-info">{{ $selected_data->status->name }}</label>
                                 <div class="data-edit hidden">

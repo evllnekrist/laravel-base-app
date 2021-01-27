@@ -7,7 +7,7 @@
     </style>
     <!-- BEGIN: Content-->
     <div class="row">
-        <div class="col-md-6 col-12">
+        <div class="col-md-5 col-12">
             <div class="app-content content">
                 <div class="content-wrapper">
                     <div class="content-body"> 
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-12">
+        <div class="col-md-7 col-12">
             <div class="app-content pad-top-10">
                 <div class="content-wrapper">
                     <div class="content-body">

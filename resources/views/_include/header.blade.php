@@ -36,7 +36,7 @@
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="{{ url('profile') }}"><i class="feather icon-user"></i> Edit Profile</a>
+                                <!-- <a class="dropdown-item" href=""><i class="feather icon-user"></i> Edit Profile</a> -->
                                 <div class="dropdown-divider"></div><a class="dropdown-item" href="{{ route('logout') }}"><i class="feather icon-power"></i> Logout</a>
                             </div>
                         </li>

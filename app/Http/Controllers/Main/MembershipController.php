@@ -44,7 +44,11 @@ class MembershipController extends Controller
     public function get(Request $request){
         // DB::enableQueryLog();
         // dd(DB::getQueryLog());
-        $data = Member::with('status')->orderBy('created_at','DESC')->with('gender')->with('role')->with('province')->with('regency')->with('district')->with('village')->get();
+        $data = Member::select('ms_member.*','ms_member_package.start_at','ms_member_package.end_at','ms_package.name as package_name','ms_package.site_code')
+                        ->with('status')->with('gender')->with('role')->with('province')->with('regency')->with('district')->with('village')
+                        ->leftJoin('ms_member_package','ms_member.card_id','=','ms_member_package.card_id')
+                        ->leftJoin('ms_package','ms_member_package.package_id','=','ms_package.id')
+                        ->orderBy('created_at','DESC')->get();
         return array(
             "list_data" => $data,
         );
@@ -81,9 +85,10 @@ class MembershipController extends Controller
             }else{
                 try{
                     $item['card_id'] = Session::get('_user')['_company'].($item['member_role_id']>9?$item['member_role_id']:'0'.$item['member_role_id']).date("y").date("m");
-                    $latestMember = Member::where('card_id', 'like', $item['card_id'].'%')->first();
+                    $latestMember = Member::where('card_id', 'like', $item['card_id'].'%')->max('card_id');
+                    
                     if($latestMember){
-                        $item['card_id'] = $latestMember->card_id + 1;
+                        $item['card_id'] = $latestMember + 1;
                     }else{
                         $item['card_id'] = $item['card_id'].'0001';
                     }
@@ -154,6 +159,7 @@ class MembershipController extends Controller
             $this->data['list_package'] = Package::where('active','=',1)->where('site_code','=',$subsPackageDetail['site_code'])->get();
         }
         
+        // dd($this->data);
         return View::make('_page._main.detail-membership', $this->data);
     }
 

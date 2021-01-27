@@ -48,7 +48,7 @@ Route::get('/home', 'Main\DashboardController@index');
     // SCAN
     Route::group(['prefix' => 'scan'], function()
     {
-        Route::get('/','Main\ScanController@index');
+        Route::get('/','Main\ScanController@index')->name('absence');
         Route::get('get','Main\ScanController@get');
         Route::post('doAdd','Main\ScanController@doAdd');
     });

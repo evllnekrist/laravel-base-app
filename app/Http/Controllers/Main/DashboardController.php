@@ -9,7 +9,6 @@ use App\Http\Models\AppLog;
 use App\Http\Models\Member;
 use App\Http\Models\MemberActivity;
 // use App\Http\Models\MemberPackage;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use DB;
 
@@ -66,7 +65,7 @@ class DashboardController extends Controller
         $this->data['staff']['a_year'] = json_encode(array_replace($staff_a_year_init,$staff_a_year->toArray()));
         // -------------------------------ABSENCE-----------------------------------------------------------------
         $this->data['card']['sum']      = $this->data['member']['sum']+$this->data['pt']['sum']+$this->data['staff']['sum'];
-        $this->data['card']['absence']  = MemberActivity::whereDate('created_at', Carbon::today())
+        $this->data['card']['absence']  = MemberActivity::whereDate('created_at', DB::raw('CURDATE()'))
                                         ->where('transaction_code','like','attend'.'%')
                                         ->count(DB::raw('DISTINCT card_id'));
         // -------------------------------SUBSCRIPTION------------------------------------------------------------
