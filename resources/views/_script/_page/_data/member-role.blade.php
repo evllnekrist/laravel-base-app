@@ -186,6 +186,7 @@
 
                     $("#"+action+"-id").val(hash); 
                     $("#"+action+"-name").val(data.detail.name); 
+                    $("#"+action+"-color_sign").val(data.detail.color_sign);
                     $("#"+action+"-active").prop('checked', (data.detail.active == 1) ? true : false);
                  
                 }),error:function(xhr,status,error) {
@@ -439,6 +440,10 @@
                                 <label for="'+action+'-fullname"><b>Member Role Name</b></label>\
                                 <input type="text" class="form-control" id="'+action+'-name" required>\
                             </div>\
+                            <div class="form-group">\
+                                <label for="'+action+'-color_sign"><b>Member Role Name</b></label>\
+                                <input type="text" class="form-control" id="'+action+'-color_sign" required>\
+                            </div>\
                             <div class="form-check col-xs-10 col-sm-4" title="check >> for requiring user login and role mapping to access this menu">\
                                 <label for="'+action+'-active"><b>Active</b></label><br>\
                                 <input type="checkbox" class="form-check-input" id="'+action+'-active" value=1>\
@@ -451,8 +456,9 @@
 
         function getFormData(action){
             let data = {
-                name    : $('#'+action+'-name').val(),
-                active   : $('#'+action+'-active').is(":checked") ? 1 : 0,
+                name        : $('#'+action+'-name').val(),
+                color_sign  : $('#'+action+'-color_sign').val(),
+                active      : $('#'+action+'-active').is(":checked") ? 1 : 0,
             };
 
             if(action == 'edit'){ 

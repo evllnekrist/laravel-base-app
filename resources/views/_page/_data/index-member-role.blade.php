@@ -55,6 +55,7 @@
                                 <tr>    
                                     <th></th>
                                     <th>NAME</th>
+                                    <th>COLOR SIGN</th>
                                     <th>ACTIVE</th>
                                     <th class="no-sort">ACTION</th>
                                 </tr>
