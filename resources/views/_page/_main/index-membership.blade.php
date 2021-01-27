@@ -127,11 +127,9 @@
                                                         </div>
                                                         <div class="col-md-6 col-12 mt-1">
                                                             <span class="font-weight-bold">Status</span>
+                                                            <input type="text" value="" id="status_selected_add_selector" hidden>
                                                             <select id="status_add_selector" name="status_code" class="select2 form-control" style="width: 100%" required>
-                                                                <option value="" disabled selected>----- select an option -----</option>
-                                                                @foreach($list_status as $status)
-                                                                    <option value="{{$status->code}}">{{$status->name}}</option>
-                                                                @endforeach
+                                                                <option value="" disabled selected>----- select role first -----</option>
                                                             </select>
                                                         </div>
                                                     </div>

@@ -89,7 +89,7 @@ class MembershipController extends Controller
                     }
                     
                     if($item['member_role_id'] == 1){ // member
-
+                        $item['status_code'] = 'sub';
                         $itemPackage = array(
                             "card_id" => $item['card_id'],
                             "package_id" => $item['package_id'],
@@ -97,10 +97,6 @@ class MembershipController extends Controller
                             "end_at" => $item['end_at'],
                             "created_by" => $item['created_by'],
                         );
-                        unset($item['site_code']);
-                        unset($item['package_id']);
-                        unset($item['start_at']);
-                        unset($item['end_at']);
                         $itemActivity = array(
                             "card_id" => $item['card_id'],
                             "transaction_code" => 'subs_new',
@@ -110,7 +106,14 @@ class MembershipController extends Controller
                         $idActivity = MemberActivity::insertGetId($itemActivity);
                         $itemPackage['activity_id'] = $idActivity;
                         $idPackage = MemberPackage::insertGetId($itemPackage);
+                    }else{                    
+                        $item['status_code'] = 'set';
                     }
+                    // unset($item['status_code_selected']);
+                    unset($item['site_code']);
+                    unset($item['package_id']);
+                    unset($item['start_at']);
+                    unset($item['end_at']);
                     $id = Member::insertGetId($item);
                     $output = array('status'=>true, 'message'=>'Success '.$msg, 'detail'=>$id);
                 }catch(\Exception $e){
@@ -127,8 +130,8 @@ class MembershipController extends Controller
 
     public function detailEdit($id){
         $this->data['selected_data'] = Member::where('id','=',$id)->with('status')->with('gender')->with('role')->with('province')->with('regency')->with('district')->with('village')->first();
+        $this->data['list_status'] = MemberStatus::where('active','=',1)->where('role_id','=',$this->data['selected_data']['member_role_id'])->get();
         $this->data['list_role'] = MemberRole::where('active','=',1)->get();
-        $this->data['list_status'] = MemberStatus::where('active','=',1)->get();
         $this->data['list_gender'] = Gender::where('active','=',1)->get();
         $this->data['list_site'] = Site::where('active','=',1)->get();
         $this->data['hash'] =  md5($id);
@@ -183,8 +186,12 @@ class MembershipController extends Controller
                     }
                     // dump($lastPackage->start_at,$item['start_at'],$lastPackage->package_id,$item['package_id'],$lastPackage->end_at,$item['end_at']);
                     $itemPackage['updated_by'] = $item['updated_by'];
+                       
+                    if(strtotime($lastPackage->end_at) < strtotime(date('Y-m-d'))){
+                        $item['status_code'] = 'exp';
+                    }
                 }
-                
+
                 if($subsActivity){
                     $itemPackage = array_merge(
                         $itemPackage, array(
@@ -207,6 +214,7 @@ class MembershipController extends Controller
                     // dd(DB::getQueryLog());
                 }
             }
+            // unset($item['status_code_selected']);
             unset($item['site_code']);
             unset($item['package_id']);
             unset($item['start_at']);

@@ -185,6 +185,7 @@ Route::get('/home', 'Main\DashboardController@index');
         Route::post('district','Main\SelectionController@getList_District');
         Route::post('village','Main\SelectionController@getList_Village');
         Route::post('package','Main\SelectionController@getList_Package');
+        Route::post('status-membership','Main\SelectionController@getList_StatusMembership');
     });
 
     Route::group(['prefix' => 'statistics'], function(){});

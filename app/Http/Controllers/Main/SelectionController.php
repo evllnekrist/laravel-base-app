@@ -10,6 +10,7 @@ use App\Http\Models\AB_Regency;
 use App\Http\Models\AB_District;
 use App\Http\Models\AB_Village;
 use App\Http\Models\Package;
+use App\Http\Models\MemberStatus;
 use Illuminate\Support\Facades\View;
 use DB;
 
@@ -64,6 +65,18 @@ class SelectionController extends Controller
                 $data = Package::where('site_code','=',$request->input('site_code'))->orderBy('name', 'ASC')->get();
             }else{
                 $data = Package::orderBy('name', 'ASC')->get();
+            }
+            return array('status'=>true,'message'=>'Success','detail'=>$data);
+        }catch(\Exception $e){
+            return array('status'=>true,'message'=>'Failed','detail'=>$e->getData());
+        }
+    }
+    public function getList_StatusMembership(Request $request){
+        try{
+            if ($request->has('id')) {
+                $data = MemberStatus::where('role_id','=',$request->input('id'))->orderBy('name', 'ASC')->get();
+            }else{
+                $data = MemberStatus::orderBy('name', 'ASC')->get();
             }
             return array('status'=>true,'message'=>'Success','detail'=>$data);
         }catch(\Exception $e){

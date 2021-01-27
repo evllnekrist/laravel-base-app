@@ -11,7 +11,7 @@
             onChange_District(this); 
         });
         $('#role_add_selector,#role_edit_selector').on('change', function() {
-            onChange_Role(this); 
+            onChange_Role(this,0); 
         });
         $('#start_at_add_selector_date,#start_at_edit_selector_date').change(function() {
             onChange_StartAt(this); 
@@ -113,7 +113,7 @@
                 }
             });
         }
-        function onChange_Role(el){
+        function onChange_Role(el,pass=0){
             let item = el.value;
             let fellow_suffix = $(el).attr("data-fellow");
 
@@ -131,6 +131,37 @@
                 $('[name="end_at"]').removeAttr('required');
                 $('#subscription_title'+fellow_suffix).hide();
                 $('#subscription_content'+fellow_suffix).hide();
+            }
+            
+            if(pass == 0){
+                let fellow_id = "status"+fellow_suffix;
+                $.ajax({
+                    url: 'selection/status-membership',
+                    headers: {
+                        'x-csrf-token': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    type: 'POST',
+                    data: JSON.stringify({
+                        id: item
+                    }),
+                    contentType: 'application/json; charset=utf-8',
+                    success: (function (data) {
+                        if(data.status){
+                            let attr_el = '';
+                            let fellow_el = $('#'+fellow_id+'');
+                            fellow_el.empty();
+                            fellow_el.append('<option value="" disabled selected>----- select an option -----</option>');
+                            for (var i = 0; i < data.detail.length; i++) {
+                                fellow_el.append('<option value='+data.detail[i].code+'>'+data.detail[i].name+'</option>');
+                            }
+                        }else{
+                            showSweetAlert('error','',data.message);
+                            return false;
+                        }
+                    }),error:function(xhr,status,error) {
+                        showSweetAlert('error','',xhr.responseText);
+                    }
+                });
             }
         }
         function onChange_Site(el){
@@ -462,7 +493,7 @@
                 success: (function (view) {
                     $("#admin-details-modal-body").html(view);
                     $("#button-edit").removeClass("hidden");
-                    onChange_Role(document.getElementById('role_edit_selector'));
+                    onChange_Role(document.getElementById('role_edit_selector'),1);
                     <?php if($authorize['execute']==1){ ?>
                         $("#pdf").html('<a href="card/' + data.id + '/pdf" target="_blank" type="button" id="button-edit" class="btn btn-outline-dark"><b>Print Card</b></button>');
                     <?php } ?>
@@ -744,7 +775,7 @@
         }).on('change','#district_edit_selector',function() {
             onChange_District(this); 
         }).on('change','#role_edit_selector',function() {
-            onChange_Role(this); 
+            onChange_Role(this,0); 
         }).on('change','#start_at_edit_selector_date',function() {
             onChange_StartAt(this); 
         }).on('change','#site_edit_selector',function() {

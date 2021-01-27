@@ -71,7 +71,8 @@
                                             <option @if($selected_data->status_code==$status->code) selected @endif value="{{$status->code}}">{{$status->name}}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div>                
+                                <input type="text" value="{{$selected_data->status_code}}" id="status_selected_edit_selector" hidden>
                             </div>
                         </div>
                     </div>
@@ -159,9 +160,6 @@
                                 <span class="font-weight-bold">Sub-Districts/Village</span><br>
                                 <label class="data-info">{{ $selected_data->village?$selected_data->village->name:'' }}</label>
                                 <div class="data-edit hidden">
-                                    <?php
-                                        dump($list_village);
-                                    ?>
                                     <select id="village_edit_selector" name="village_id" class="select2 form-control" style="width: 100%" data-fellow="_edit_selector" required>
                                         @foreach($list_village as $village)
                                             <option @if($selected_data->village_id==$village->village_id) selected @endif value="{{$village->village_id}}">{{$village->name}}</option>
