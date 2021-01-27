@@ -49,6 +49,6 @@ class Member extends Model
         return $this->hasOne('App\Http\Models\AB_District','id','district_id');
     }
     public function village(){
-        return $this->hasOne('App\Http\Models\AB_Village','id','village_id');
+        return $this->hasOne('App\Http\Models\AB_Village','village_id','village_id');
     }
 }

@@ -25,7 +25,7 @@ class SelectionController extends Controller
             if ($request->has('id')) {
                 $data = AB_Regency::where('province_id','=',$request->input('id'))->orderBy('name', 'ASC')->get();
             }else{
-                $data = AB_Regency::orderBy('name', 'ASC')->get();
+                $data = AB_Regency::orderBy('name', 'ASC')->offset(0)->limit(500)->get();
             }
             return array('status'=>true,'message'=>'Success','detail'=>$data);
         }catch(\Exception $e){
@@ -37,7 +37,7 @@ class SelectionController extends Controller
             if ($request->has('id')) {
                 $data = AB_District::where('regency_id','=',$request->input('id'))->orderBy('name', 'ASC')->get();
             }else{
-                $data = AB_District::orderBy('name', 'ASC')->get();
+                $data = AB_District::orderBy('name', 'ASC')->offset(0)->limit(500)->get();
             }
             return array('status'=>true,'message'=>'Success','detail'=>$data);
         }catch(\Exception $e){
@@ -49,7 +49,7 @@ class SelectionController extends Controller
             if ($request->has('id')) {
                 $data = AB_Village::where('district_id','=',$request->input('id'))->orderBy('name', 'ASC')->get();
             }else{
-                $data = AB_Village::orderBy('name', 'ASC')->get();
+                $data = AB_Village::orderBy('name', 'ASC')->offset(0)->limit(500)->get();
             }
             return array('status'=>true,'message'=>'Success','detail'=>$data);
         }catch(\Exception $e){

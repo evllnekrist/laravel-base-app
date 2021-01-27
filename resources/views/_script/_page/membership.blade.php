@@ -102,7 +102,7 @@
                         fellow_el.empty();
                         fellow_el.append('<option value="" disabled selected>----- select an option -----</option>');
                         for (var i = 0; i < data.detail.length; i++) {
-                            fellow_el.append('<option value='+data.detail[i].id+'>'+data.detail[i].name+'</option>');
+                            fellow_el.append('<option value='+data.detail[i].village_id+'>'+data.detail[i].name+'</option>');
                         }
                     }else{
                         showSweetAlert('error','',data.message);

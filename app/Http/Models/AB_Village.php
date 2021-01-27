@@ -8,7 +8,7 @@ class AB_Village extends Model
 {
     protected $table = 'ms_ab_villages';
     protected $fillable = [
-                            'id',
+                            'village_id',
                             'district_id',
                             'name'
                         ];
@@ -17,6 +17,6 @@ class AB_Village extends Model
         return $this->belongsTo('App\Http\Models\AB_District', 'id', 'district_id');
     }
     public function member(){
-        return $this->belongsTo('App\Http\Models\Member', 'village_id', 'id');
+        return $this->belongsTo('App\Http\Models\Member', 'village_id', 'village_id');
     }
 }

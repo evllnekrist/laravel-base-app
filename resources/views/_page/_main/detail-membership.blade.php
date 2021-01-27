@@ -164,7 +164,7 @@
                                     ?>
                                     <select id="village_edit_selector" name="village_id" class="select2 form-control" style="width: 100%" data-fellow="_edit_selector" required>
                                         @foreach($list_village as $village)
-                                            <option @if($selected_data->village_id==$village->id) selected @endif value="{{strval($village->id)}}">{{$village->id}} {{$village->name}}</option>
+                                            <option @if($selected_data->village_id==$village->village_id) selected @endif value="{{$village->village_id}}">{{$village->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
