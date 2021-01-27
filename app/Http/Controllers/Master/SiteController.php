@@ -42,9 +42,9 @@ class SiteController extends Controller
 
         // DB::enableQueryLog(); // Enable query log
         $models =  DB::table('ms_site as s')
-                        ->select('s.id','s.code','s.name', 's.company_id', 's.email', 's.phone', 's.address', 's.active', 's.manager',
+                        ->select('s.code','s.name', 's.company_code', 's.email', 's.phone', 's.address', 's.active', 's.manager',
                         'c.name as company_name')
-                        ->leftJoin('ms_company as c', 's.company_id', '=', 'c.code');
+                        ->leftJoin('ms_company as c', 's.company_code', '=', 'c.code');
                         // ->where('u.active','=',1);
         if(!empty($request->input('search.value')))
         {
@@ -77,12 +77,12 @@ class SiteController extends Controller
                 $nestedData[] = $model->address;
                 $action = '';
                 if($this->data['authorize']['edit']==1){
-                    $action .=   "   <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
+                    $action .=   "   <span class='action-edit' data-hash='".md5($model->code)."' data-title=''>
                                         <i class='feather icon-edit'></i>
                                     </span>";
                 }
                 if($this->data['authorize']['delete']==1){
-                    $action .=   "   <span class='action-delete' data-hash='".md5($model->id)."' data-title=''>
+                    $action .=   "   <span class='action-delete' data-hash='".md5($model->code)."' data-title=''>
                                         <i class='feather icon-trash'></i>
                                     </span>";
                 }
@@ -115,6 +115,7 @@ class SiteController extends Controller
         unset($request['_token']);
         $item = $request->get('params');
         $item['created_by'] = \Session::get('_user')['_id'];
+        unset($item['old_id']);
         $msg = 'to add site <b>'.$item['name'].'</b>';
         
         try{
@@ -144,9 +145,9 @@ class SiteController extends Controller
         unset($request['_token']);
         $item = $request->get('params');
         $item['updated_by'] = \Session::get('_user')['_id'];
-        $id = $item['id'];
+        $id = $item['old_id'];
         // var_dump($item);exit;
-        unset($item['id']);
+        unset($item['old_id']);
         $msg = 'to edit site <b>'.$item['name'].'</b>';
 
         try{

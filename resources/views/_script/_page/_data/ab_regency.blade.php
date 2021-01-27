@@ -508,7 +508,7 @@
                             </div>\
                             <div class="form-group">\
                                 <label for="'+action+'-name"><b>Regency Name</b></label>\
-                                <input type="text" class="form-control" id="'+action+'-name" required>\
+                                <input type="text" class="form-control" id="'+action+'-name" style="text-transform: uppercase" required>\
                             </div>\
                         </div>\
                         <!-- '+action+' form : END   -->';

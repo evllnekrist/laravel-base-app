@@ -217,7 +217,7 @@
                     // BEGIN : options
                     let prop ='', str = '<option value=""></option>';
                     for (let i = 0; i < (data.list_company).length; ++i) {
-                        prop = (data.detail.company_id == data.list_company[i].code) ? 'selected="selected"' : '';
+                        prop = (data.detail.company_code == data.list_company[i].code) ? 'selected="selected"' : '';
                         str += '<option value="'+data.list_company[i].code+'" '+prop+'>'+data.list_company[i].name+'</option>';
                     }
                     $("#"+action+"-company").html(str);
@@ -506,9 +506,10 @@
 
         function getFormData(action){
             let data = {
+                old_id          : $('#'+action+'-id').val(),
                 code            : $('#'+action+'-code').val(),
                 name            : $('#'+action+'-name').val(),
-                company_id    : $('#'+action+'-company').val(),
+                company_code    : $('#'+action+'-company').val(),
                 email           : $('#'+action+'-email').val(),
                 address         : $('#'+action+'-address').val(),
                 phone           : $('#'+action+'-phone').val(),
@@ -516,7 +517,7 @@
             };
 
             if(action == 'edit'){ 
-                data['id'] = $('#'+action+'-id').val();
+                data['old_id'] = $('#'+action+'-id').val();
             }
             
             return data;
