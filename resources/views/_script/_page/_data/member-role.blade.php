@@ -441,7 +441,7 @@
                                 <input type="text" class="form-control" id="'+action+'-name" required>\
                             </div>\
                             <div class="form-group">\
-                                <label for="'+action+'-color_sign"><b>Member Role Name</b></label>\
+                                <label for="'+action+'-color_sign"><b>Color Sign</b></label>\
                                 <input type="text" class="form-control" id="'+action+'-color_sign" required>\
                             </div>\
                             <div class="form-check col-xs-10 col-sm-4" title="check >> for requiring user login and role mapping to access this menu">\

@@ -41,7 +41,8 @@ class PackageController extends Controller
         // DB::enableQueryLog(); // Enable query log
         $models =  DB::table('ms_package as p')
                         ->select('p.id', 'p.code','p.name', 'p.site_code', 'p.active', 's.name as site_name', 'duration')
-                        ->leftJoin('ms_site as s', 'p.site_code', '=', 's.code');
+                        ->leftJoin('ms_site as s', 'p.site_code', '=', 's.code')
+                        ->orderBy('p.created_at','DESC');
                         // ->where('u.active','=',1);
         if(!empty($request->input('search.value')))
         {
@@ -50,7 +51,8 @@ class PackageController extends Controller
                         $query->where('name','LIKE',"%{$search}%")
                                 ->orWhere('site_code','LIKE',"%{$search}%")
                                 ->orWhere('duration','LIKE',"%{$search}%")
-                                ->orWhere('site_name', 'LIKE',"%{$search}%");
+                                ->orWhere('site_name', 'LIKE',"%{$search}%")
+                                ->orderBy('p.created_at','DESC');
                     });
         }
         // dd(DB::getQueryLog()); // Show results of log

@@ -32,12 +32,12 @@ class RoleController extends Controller
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
 
-        $models =  Role::where('active','=',1);
+        $models =  Role::where('active','=',1)->orderBy('created_at','DESC');
         if(!empty($request->input('search.value')))
         {
             $search = $request->input('search.value');
             $models = $models->where(function($query) use ($search){
-                        $query->where('name','LIKE',"%{$search}%");
+                        $query->where('name','LIKE',"%{$search}%")->orderBy('created_at','DESC');
                     });
         }
         $recordsFiltered = $models->orderBy($order,$dir)->get()->count();
