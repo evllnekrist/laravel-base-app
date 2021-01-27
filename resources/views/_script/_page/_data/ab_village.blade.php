@@ -208,13 +208,13 @@
                 url: 'village/'+hash+'/detailEdit',
                 type:"GET",
                 success:(function(data){
-                   console.log(data);
+      
                     let action = 'edit';
                     $("#update_body").html(createForm(action));                   
                     
                     $("#"+action+"-id").val(hash); 
                     $("#"+action+"-name").val(data.detail.name);
-                    $("#"+action+"-code").val(data.detail.id);
+                    $("#"+action+"-code").val(data.detail.village_id);
 
                     // BEGIN : options
                     let prop2 ='', str2 = '<option value=""></option>';
@@ -543,7 +543,8 @@
                 type:"GET",
                 success:(function(data){ 
                     let i = 1;                              
-                    let str = data.detail.id +  i 
+                    let str = parseInt(data.detail.village_id) +  i;
+                
                     $("#"+action+"-code").val(str);
                  
                 }),error:function(xhr,status,error) {
@@ -611,7 +612,7 @@
                             </div>\
                             <div class="form-group">\
                                 <label for="'+action+'-name"><b>Village Name</b></label>\
-                                <input type="text" class="form-control" id="'+action+'-name" required>\
+                                <input type="text" class="form-control" id="'+action+'-name" style="text-transform: uppercase" required>\
                             </div>\
                         </div>\
                         <!-- '+action+' form : END   -->';
@@ -621,9 +622,9 @@
         function getFormData(action){
             let data = {
                 old_id              : $('#'+action+'-id').val(),
-                id                  : $('#'+action+'-code').val(),
+                village_id          : $('#'+action+'-code').val(),
                 name                : $('#'+action+'-name').val(),
-                district_id          : $('#'+action+'-district').val(),
+                district_id         : $('#'+action+'-district').val(),
             };
 
             if(action == 'edit'){ 

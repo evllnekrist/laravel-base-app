@@ -28,7 +28,7 @@ class AB_VillageController extends Controller
     public function get(Request $request){
 
         $columns = array(
-            0 =>'id',
+            0 =>'village_id',
             1 =>'province_name',
             2 =>'regency_name',
             3 =>'district_name',
@@ -41,7 +41,7 @@ class AB_VillageController extends Controller
 
         // DB::enableQueryLog(); // Enable query log
         $models =  DB::table('ms_ab_villages as v')
-                        ->select('v.id','v.name as village_name','d.name as district_name','r.name as regency_name', 'p.name as province_name')
+                        ->select('v.village_id','v.name as village_name','d.name as district_name','r.name as regency_name', 'p.name as province_name')
                         ->leftJoin('ms_ab_districts as d', 'd.id', '=', 'v.district_id')
                         ->leftJoin('ms_ab_regencies as r', 'r.id', '=', 'd.regency_id')
                         ->leftJoin('ms_ab_provinces as p', 'p.id', '=', 'r.province_id');
@@ -67,19 +67,19 @@ class AB_VillageController extends Controller
             foreach ($models as $model) {
                 $nestedData=array();
                 $nestedData[] = null;
-                $nestedData[] = $model->id;
+                $nestedData[] = $model->village_id;
                 $nestedData[] = $model->province_name; 
                 $nestedData[] = $model->regency_name;
                 $nestedData[] = $model->district_name;
                 $nestedData[] = $model->village_name;
                 $action = '';
                 if($this->data['authorize']['edit']==1){
-                    $action .=   "   <span class='action-edit' data-hash='".md5($model->id)."' data-title=''>
+                    $action .=   "   <span class='action-edit' data-hash='".md5($model->village_id)."' data-title=''>
                                         <i class='feather icon-edit'></i>
                                     </span>";
                 }
                 if($this->data['authorize']['delete']==1){
-                    $action .=   "   <span class='action-delete' data-hash='".md5($model->id)."' data-title=''>
+                    $action .=   "   <span class='action-delete' data-hash='".md5($model->village_id)."' data-title=''>
                                         <i class='feather icon-trash'></i>
                                     </span>";
                 }
@@ -111,6 +111,7 @@ class AB_VillageController extends Controller
     public function doAdd(Request $request){
         unset($request['_token']);
         $item = $request->get('params');
+        $item['name'] = strtoupper($item['name']);
         // $item['created_by'] = \Session::get('_user')['_id'];
         unset($item['old_id']);
         $msg = 'to add village <b>'.$item['name'].'</b>';
@@ -127,7 +128,7 @@ class AB_VillageController extends Controller
     }
 
     public function detailEdit($id){
-        $item = AB_Village::where(DB::raw('md5(id)'),'=',$id)->first();
+        $item = AB_Village::where(DB::raw('md5(village_id)'),'=',$id)->first();
         $single_district = AB_District::where('id','=',$item['district_id'])->first();
         $list_district = AB_District::where('regency_id','=',$single_district['regency_id'])->get();
 
@@ -167,7 +168,7 @@ class AB_VillageController extends Controller
     }
 
     public function detailVillage($id){
-        $item = AB_Village::where('district_id','=',$id)->orderBy('id','DESC')->first();
+        $item = AB_Village::where('district_id','=',$id)->orderBy('village_id','DESC')->first();
 
         $data = array(
             "detail"=>$item,
@@ -179,6 +180,7 @@ class AB_VillageController extends Controller
     public function doEdit(Request $request){
         unset($request['_token']);
         $item = $request->get('params');
+        $item['name'] = strtoupper($item['name']);
         // $item['updated_by'] = \Session::get('_user')['_id'];
         $id = $item['old_id'];
         // var_dump($item);exit;
@@ -186,7 +188,7 @@ class AB_VillageController extends Controller
         $msg = 'to edit village <b>'.$item['name'].'</b>';
 
         try{
-            AB_Village::where(DB::raw('md5(id)'),'=',$id)->update($item);
+            AB_Village::where(DB::raw('md5(village_id)'),'=',$id)->update($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
             $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
@@ -203,7 +205,7 @@ class AB_VillageController extends Controller
         
         try{
             foreach ($array_id as $id) {
-                AB_Village::where(DB::raw('md5(id)'),'=',$id)->delete();
+                AB_Village::where(DB::raw('md5(village_id)'),'=',$id)->delete();
                 $deletedRows++;
             }
             

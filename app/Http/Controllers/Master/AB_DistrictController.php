@@ -106,6 +106,7 @@ class AB_DistrictController extends Controller
     public function doAdd(Request $request){
         unset($request['_token']);
         $item = $request->get('params');
+        $item['name'] = strtoupper($item['name']);
         // $item['created_by'] = \Session::get('_user')['_id'];
         unset($item['old_id']);
         $msg = 'to add district <b>'.$item['name'].'</b>';
@@ -159,6 +160,7 @@ class AB_DistrictController extends Controller
     public function doEdit(Request $request){
         unset($request['_token']);
         $item = $request->get('params');
+        $item['name'] = strtoupper($item['name']);
         // $item['updated_by'] = \Session::get('_user')['_id'];
         $id = $item['old_id'];
         // var_dump($item);exit;

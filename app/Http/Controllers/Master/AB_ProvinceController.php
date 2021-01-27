@@ -94,6 +94,7 @@ class AB_ProvinceController extends Controller
     public function doAdd(Request $request){
         unset($request['_token']);
         $item = $request->get('params');
+        $item['name'] = strtoupper($item['name']);
         // $item['created_by'] = \Session::get('_user')['_id'];
         $msg = 'to add province <b>'.$item['name'].'</b>';
         
@@ -121,6 +122,7 @@ class AB_ProvinceController extends Controller
     public function doEdit(Request $request){
         unset($request['_token']);
         $item = $request->get('params');
+        $item['name'] = strtoupper($item['name']);
         // $item['updated_by'] = \Session::get('_user')['_id'];
         $id = $item['id'];
         // var_dump($item);exit;
