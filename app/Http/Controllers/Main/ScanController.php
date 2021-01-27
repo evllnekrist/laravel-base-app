@@ -44,8 +44,11 @@ class ScanController extends Controller
             $detail = Member::where('card_id', $item["card_id"])->with('status')->with('gender')->with('role')->first();
             if ($detail) {
                 try{
-                    $last_activity = MemberActivity::where('card_id','=',$item["card_id"])->orderBy('id', 'DESC')->value('transaction_code');
-                    $item['transaction_code'] = ($last_activity!='attend_in'?'attend_in':'attend_out'); 
+                    // >> in case IN & OUT are necessary
+                    // $last_activity = MemberActivity::where('card_id','=',$item["card_id"])->orderBy('id', 'DESC')->value('transaction_code');
+                    // $item['transaction_code'] = ($last_activity!='attend_in'?'attend_in':'attend_out'); 
+                    // >> other.
+                    $item['transaction_code'] = 'attend';
                     $id = MemberActivity::insertGetId($item);
                     $output = array('status'=>true, 'message'=>'Success '.$msg, 'detail'=>$detail);
                 }catch(\Exception $e){
