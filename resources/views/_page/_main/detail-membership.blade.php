@@ -55,11 +55,12 @@
                                 <span class="font-weight-bold">Role</span><br>
                                 <label class="data-info">{{ $selected_data->role->name }}</label>
                                 <div class="data-edit hidden">
-                                    <select id="role_edit_selector" name="member_role_id" class="select2 form-control" style="width: 100%" data-fellow="_edit_selector" required>
+                                    <select id="role_edit_selector" name="member_role_id" class="select2 form-control" style="width: 100%" data-fellow="_edit_selector" disabled required>
                                         @foreach($list_role as $role)
                                             <option @if($selected_data->member_role_id==$role->id) selected @endif value="{{$role->id}}">{{$role->name}}</option>
                                         @endforeach
                                     </select>
+                                    <i class="ft-red">* role cannot be changed once card id created</i>
                                 </div>
                             </div>
                             <div class="col-md-6 col-12 mt-1">
