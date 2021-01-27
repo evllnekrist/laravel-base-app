@@ -29,7 +29,8 @@ class MemberRoleController extends Controller
         $columns = array(
             0 =>'id',
             1 =>'name',
-            2 =>'active',
+            2 =>'color_sign',
+            3 =>'active',
         );
         $limit = $request->input('length');
         $start = $request->input('start');
@@ -58,6 +59,7 @@ class MemberRoleController extends Controller
                 $nestedData=array();
                 $nestedData[] = null;
                 $nestedData[] = $model->name;
+                $nestedData[] = $model->color_sign;
                 $nestedData[] = ($model->active? '<i class="feather icon-check ft-blue-band"></i>':'');
                 $action = '';
                 if($this->data['authorize']['edit']==1){
