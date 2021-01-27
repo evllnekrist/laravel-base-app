@@ -47,7 +47,8 @@ class UsersController extends Controller
                         ->select('u.id','u.username','u.fullname','u.email','u.phone','u.address','u.active',
                         'r.name as role_name','c.name as company_name')
                         ->leftJoin('ms_role as r', 'u.role_id', '=', 'r.id')
-                        ->leftJoin('ms_company as c', 'u.company_id', '=', 'c.id');
+                        ->leftJoin('ms_company as c', 'u.company_id', '=', 'c.id')
+                        ->orderBy('u.created_at','DESC');
                         // ->where('u.active','=',1);
         if(!empty($request->input('search.value')))
         {
@@ -59,7 +60,8 @@ class UsersController extends Controller
                                 ->orWhere('phone', 'LIKE',"%{$search}%")
                                 ->orWhere('address', 'LIKE',"%{$search}%")
                                 ->orWhere('role_name', 'LIKE',"%{$search}%")
-                                ->orWhere('company_name', 'LIKE',"%{$search}%");
+                                ->orWhere('company_name', 'LIKE',"%{$search}%")
+                                ->orderBy('u.created_at','DESC');
                     });
         }
         // dd(DB::getQueryLog()); // Show results of log

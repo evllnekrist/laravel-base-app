@@ -39,12 +39,12 @@ class MemberRoleController extends Controller
 
         // DB::enableQueryLog(); // Enable query log
         $models =  DB::table('ms_member_role')
-                        ->select('*');
+                        ->select('*')->orderBy('created_at','DESC');
         if(!empty($request->input('search.value')))
         {
             $search = $request->input('search.value');
             $models = $models->where(function($query) use ($search){
-                        $query->where('name','LIKE',"%{$search}%");
+                        $query->where('name','LIKE',"%{$search}%")->orderBy('created_at','DESC');
                     });
         }
         // dd(DB::getQueryLog()); // Show results of log

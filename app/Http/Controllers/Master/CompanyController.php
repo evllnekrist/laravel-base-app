@@ -39,7 +39,7 @@ class CompanyController extends Controller
 
         // DB::enableQueryLog(); // Enable query log
         $models =  DB::table('ms_company')
-                        ->select('*');
+                        ->select('*')->orderBy('created_at','DESC');
                         // ->leftJoin('ms_role as r', 'u.role_id', '=', 'r.id')
                         // ->leftJoin('ms_company as c', 'u.company_id', '=', 'c.id');
                         // ->where('u.active','=',1);
@@ -47,7 +47,7 @@ class CompanyController extends Controller
         {
             $search = $request->input('search.value');
             $models = $models->where(function($query) use ($search){
-                        $query->where('name','LIKE',"%{$search}%");
+                        $query->where('name','LIKE',"%{$search}%")->orderBy('created_at','DESC');
                     });
         }
         // dd(DB::getQueryLog()); // Show results of log
