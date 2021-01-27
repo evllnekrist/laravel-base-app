@@ -43,10 +43,6 @@ Route::get('/home', 'Main\DashboardController@index');
     {
         Route::get('/','Main\ActivityController@index')->name('activity');
         Route::get('get','Main\ActivityController@get');
-        Route::post('doAdd','Main\ActivityController@doAdd');
-        Route::post('doEdit','Main\ActivityController@doEdit');
-        Route::delete('{id}/delete','Main\ActivityController@delete');
-        Route::get('detailAdd','Main\ActivityController@detailAdd');
         Route::get('{id}/detailEdit','Main\ActivityController@detailEdit');
     });
     // SCAN

@@ -253,7 +253,7 @@
             </div>
         </div>
 
-        <div class="row mt-1" id="subscription_title_edit_selector">
+        <div class="row mt-1">
             <div class="col">
                 <input type="text" value="{{ $hash }}" name="id" hidden>
                 <input type="text" value="{{ $selected_data->card_id }}" name="card_id" hidden>

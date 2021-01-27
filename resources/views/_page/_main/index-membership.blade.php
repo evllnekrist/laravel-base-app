@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="content-body">
-                <!-- Basic example section start -->
+                <!-- LIST start -->
                 <section id="basic-examples">
                     <div class="card">
                         <div class="card-content">
@@ -67,7 +67,8 @@
                         </div>
                     </div>
                 </section>
-                <!-- // Basic example section end -->
+                <!-- LIST end -->
+                <!-- FORM-ADD start -->
                 <form id="addForm" onsubmit="return false;">
                 <div class="modal fade text-left" id="admin-add-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
@@ -258,7 +259,8 @@
                     </div>
                 </div>
                 </form>
-
+                <!-- FORM-ADD end -->
+                <!-- FORM-EDIT start -->
                 <div class="modal fade text-left" id="admin-details-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
                         <div class="modal-content">
@@ -280,6 +282,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- FORM-EDIT end -->
 
             </div>
         </div>

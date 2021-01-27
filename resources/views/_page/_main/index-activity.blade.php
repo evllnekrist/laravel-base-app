@@ -24,7 +24,8 @@
                 </div>
             </div>
             <div class="content-body">
-                <!-- Basic example section start -->
+
+                <!-- LIST start -->
                 <section id="basic-examples">
                     <div class="card">
                         <div class="card-content">
@@ -60,7 +61,31 @@
                         </div>
                     </div>
                 </section>
-                <!-- // Basic example section end -->
+                <!-- LIST end -->
+                <!-- FORM-EDIT start -->
+                <div class="modal fade text-left" id="admin-details-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title text-capitalize" id="admin-details-modal-title">Activity Detail</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="admin-details-modal-body"></div>
+                            <div class="modal-footer">
+                                <div id="pdf"></div>
+                                @if($authorize['edit']==1)
+                                <button type="button" id="button-edit" class="btn btn-outline-primary">Edit</button>
+                                @endif
+                                <button type="button" id="button-cancel" class="btn btn-outline-primary hidden">Cancel</button>
+                                <button type="button" id="button-close" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FORM-EDIT end -->
+
             </div>
         </div>
     </div>

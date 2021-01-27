@@ -3,11 +3,33 @@
         /*** COLUMN DEFINE ***/
         var columnDefs = [
             {
+                headerName: "First Name",
+                field: "member.first_name",
+                editable: true,
+                sortable: true,
+                width: 180,
+                filter: true,
+                checkboxSelection: true,
+                headerCheckboxSelectionFilteredOnly: true,
+                headerCheckboxSelection: true
+            },
+            {
+                headerName: "Last Name",
+                field: "member.last_name",
+                editable: true,
+                sortable: true,
+                width: 180,
+                filter: true,
+                checkboxSelection: true,
+                headerCheckboxSelectionFilteredOnly: true,
+                headerCheckboxSelection: true
+            },
+            {
                 headerName: "Time",
                 field: "created_at",
                 editable: true,
                 sortable: true,
-                width: 300,
+                width: 240,
                 filter: true,
                 checkboxSelection: true,
                 headerCheckboxSelectionFilteredOnly: true,
@@ -15,11 +37,11 @@
             },
             {
                 headerName: "PIC",
-                field: "created_by",
+                field: "user.fullname",
                 editable: true,
                 sortable: true,
                 filter: true,
-                width: 300
+                width: 180
             },
             {
                 headerName: "Detail",
@@ -35,7 +57,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 200,
+                width: 180,
                 pinned: "left"
             },
             {
@@ -44,7 +66,7 @@
                 editable: false,
                 sortable: true,
                 filter: true,
-                width: 200,
+                width: 140,
                 pinned: "left"
             },
             {
@@ -86,7 +108,7 @@
             $("#button-edit,#button-close").removeClass("hidden");
             $("#button-update,#button-delete,#button-cancel,#button-edit").addClass("hidden");
             $("#admin-details-modal").modal('show');
-            $("#admin-details-modal-title").text(data.card_id.toString()+' - '+data.first_name.toString()+'  '+data.last_name.toString());
+            $("#admin-details-modal-title").text('Activity'+' - '+data.id.toString());
             $("#admin-details-modal-body").html($("#loading").html());
             $.ajax({
                 url: 'activity/' + data.id + '/detailEdit',
@@ -206,20 +228,17 @@
                 let date_str = date.getFullYear()+'_'+date.getMonth()+'_'+date.getDate()+'_'+date.getHours()+'_'+date.getMinutes()+'_'+date.getSeconds();
                 gridOptions.api.exportDataAsCsv({
                     columnKeys: [
-                        'first_name',
-                        'last_name',
-                        'email',
-                        'phone',
-                        'dob',
-                        'gender',
-                        'address',
-                        'city',
-                        'province',
-                        'post_code'
+                        'created_at',
+                        'card_id',
+                        'transaction_code',
+                        'member.first_name',
+                        'member.last_name',
+                        'detail',
+                        'user.fullname',
                     ],
                     onlySelected: true,
                     allColumns: false,
-                    fileName: 'export_member__at__'+date_str+'.csv',
+                    fileName: 'export_activity__at__'+date_str+'.csv',
                     skipHeader: false,
                     // customHeader: 'admin List' + '\n',
                     // customFooter: '\n \n Total No.Of admins :' + gridOptions.api.getModel().getRowCount() + ' \n'
