@@ -228,7 +228,7 @@
             }
         }
         function setPackageEndDate(current_date,duration){
-            let d = new Date(current_date);
+            let d = new Date(current_date).toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
                 d.setMonth(parseInt(d.getMonth()) + parseInt(duration));
             let d_after = d.toLocaleDateString();
             let d_after_slice = d_after.split('/');
@@ -238,7 +238,7 @@
             console.log(d_after_slice[2],'||',parseInt(d_before_slice[0])+Math.round(duration/12));
             if(d_after_slice[2]>(parseInt(d_before_slice[0])+Math.round(duration/12))){ // in case of LEAP DAY   
                 console.log('LEAP DAY');     
-                let c = new Date(current_date);
+                let c = new Date(current_date).toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
                     if(d_after_slice[0] > 28){
                         c.setDate(parseInt(c.getDate()) - 1);
                     }
@@ -646,7 +646,7 @@
         /*** EXPORT AS CSV BTN ***/
         $(".ag-grid-export-btn").on("click", function(params) {
             if(getSelectedRows().length){
-                let date = new Date();
+                let date = new Date().toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
                 let date_str = date.getFullYear()+'_'+date.getMonth()+'_'+date.getDate()+'_'+date.getHours()+'_'+date.getMinutes()+'_'+date.getSeconds();
                 gridOptions.api.exportDataAsCsv({
                     columnKeys: [

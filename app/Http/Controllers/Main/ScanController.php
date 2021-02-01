@@ -35,7 +35,7 @@ class ScanController extends Controller
     }
 
     public function doAdd(Request $request){
-        
+        date_default_timezone_set('Asia/Jakarta');
         if($request->ajax()) {
             $item = $request->all();
             $item['created_by'] = \Session::get('_user')['_id'];
