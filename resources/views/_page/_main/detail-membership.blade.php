@@ -37,7 +37,7 @@
                         <span class="font-weight-bold">Phone Number</span><br>
                         <label class="data-info">{{ $selected_data->phone }}</label>
                         <div class="data-edit hidden">
-                            <input type="text" value="{{ $selected_data->phone }}" class="form-control" placeholder="Enter Phone Number" name="phone" maxlength="20" required>
+                            <input type="text" value="{{ $selected_data->phone }}" class="form-control" placeholder="Enter Phone Number" name="phone" maxlength="14" required>
                         </div>
                     </div>
                 </div><hr class="data-info">

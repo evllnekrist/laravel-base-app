@@ -107,7 +107,7 @@
                                                 </div>
                                                 <div class="col-md-7 col-12 mt-1">
                                                     <span class="font-weight-bold">Phone Number</span>
-                                                    <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone" maxlength="20" required>
+                                                    <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone" maxlength="14" required>
                                                 </div>
                                             </div>
                                             <div class="row">

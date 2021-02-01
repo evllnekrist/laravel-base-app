@@ -101,9 +101,6 @@
             </div>
         </div>
     </div>
-    <?php
-        dump($sub);
-    ?>
     <!-- END: Content-->
 @endsection
 
