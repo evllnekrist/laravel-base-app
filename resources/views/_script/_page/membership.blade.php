@@ -228,9 +228,9 @@
             }
         }
         function setPackageEndDate(current_date,duration){
-            let d = new Date(current_date).toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
+            let d = new Date(current_date);
                 d.setMonth(parseInt(d.getMonth()) + parseInt(duration));
-            let d_after = d.toLocaleDateString();
+            let d_after = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
             let d_after_slice = d_after.split('/');
             let d_before_slice = current_date.split('-');
 
@@ -238,11 +238,11 @@
             console.log(d_after_slice[2],'||',parseInt(d_before_slice[0])+Math.round(duration/12));
             if(d_after_slice[2]>(parseInt(d_before_slice[0])+Math.round(duration/12))){ // in case of LEAP DAY   
                 console.log('LEAP DAY');     
-                let c = new Date(current_date).toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
+                let c = new Date(current_date);
                     if(d_after_slice[0] > 28){
                         c.setDate(parseInt(c.getDate()) - 1);
                     }
-                let c_after = c.toLocaleDateString();
+                let c_after = c.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
                 let c_after_slice = c_after.split('/');
                     c_after =   (parseInt(c_after_slice[2])+Math.round(duration/12))+'-'+
                                 (c_after_slice[1]>9?c_after_slice[1]:'0'+c_after_slice[1])+'-'+
@@ -646,7 +646,8 @@
         /*** EXPORT AS CSV BTN ***/
         $(".ag-grid-export-btn").on("click", function(params) {
             if(getSelectedRows().length){
-                let date = new Date().toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
+                let date = new Date();
+                    date.toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
                 let date_str = date.getFullYear()+'_'+date.getMonth()+'_'+date.getDate()+'_'+date.getHours()+'_'+date.getMinutes()+'_'+date.getSeconds();
                 gridOptions.api.exportDataAsCsv({
                     columnKeys: [
