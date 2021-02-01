@@ -102,8 +102,8 @@
         </div>
     </div>
     <?php
-        dump('card');
-        dump('sub');
+        dump($card);
+        dump($sub);
     ?>
     <!-- END: Content-->
 @endsection
