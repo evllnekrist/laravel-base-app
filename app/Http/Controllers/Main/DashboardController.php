@@ -75,7 +75,7 @@ class DashboardController extends Controller
                                         ->where('member_role_id','=',1)
                                         ->groupBy('status_code')
                                         ->get()->toArray();
-        $this->data['sub']['sum']       = json_encode(array($sub[0]['sub'],$sub[1]['sub']));
+        $this->data['sub']['sum']       = json_encode(array(intval($sub[0]['sub']),intval($sub[1]['sub'])));
         // -------------------------------------------------------------------------------------------------------||--DONE
 
         // dd($this->data);
