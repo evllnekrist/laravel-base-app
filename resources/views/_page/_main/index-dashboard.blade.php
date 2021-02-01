@@ -101,6 +101,10 @@
             </div>
         </div>
     </div>
+    <?php
+        dump('card');
+        dump('sub');
+    ?>
     <!-- END: Content-->
 @endsection
 
