@@ -245,15 +245,15 @@
                 let c_after = c.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
                 let c_after_slice = c_after.split('/');
                     c_after =   (parseInt(c_after_slice[2])+Math.round(duration/12))+'-'+
-                                (c_after_slice[1]>9?c_after_slice[1]:'0'+c_after_slice[1])+'-'+
-                                (c_after_slice[0]>9?c_after_slice[0]:'0'+c_after_slice[0]);
+                                (c_after_slice[0]>9?c_after_slice[0]:'0'+c_after_slice[0])+'-'+
+                                (c_after_slice[1]>9?c_after_slice[1]:'0'+c_after_slice[1]);
                 console.log('LEAP DAY [2] :: ',current_date,' into ',c_after);
                 return c_after
             }else{  
                 console.log('NORMAL DAY');     
                 d_after =   d_after_slice[2]+'-'+
-                            (d_after_slice[1]>9?d_after_slice[1]:'0'+d_after_slice[1])+'-'+
-                            (d_after_slice[0]>9?d_after_slice[0]:'0'+d_after_slice[0]);
+                            (d_after_slice[0]>9?d_after_slice[0]:'0'+d_after_slice[0])+'-'+
+                            (d_after_slice[1]>9?d_after_slice[1]:'0'+d_after_slice[1]);
                 console.log('NORMAL DAY [2] :: ',current_date,' into ',d_after);
                 return d_after;
             }
