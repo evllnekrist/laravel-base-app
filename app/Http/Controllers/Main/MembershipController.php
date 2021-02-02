@@ -88,7 +88,7 @@ class MembershipController extends Controller
                     $latestMember = Member::where('card_id', 'like', $item['card_id'].'%')->max('card_id');
                     
                     if($latestMember){
-                        $item['card_id'] = $latestMember + 1;
+                        $item['card_id'] = strval($latestMember + 1);
                     }else{
                         $item['card_id'] = $item['card_id'].'0001';
                     }
