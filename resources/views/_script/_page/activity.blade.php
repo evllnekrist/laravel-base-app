@@ -81,6 +81,7 @@
                 },
                 width: 100,
                 pinned: "left",
+                cellClass: "btn-table-detail"
             },
         ];
 
