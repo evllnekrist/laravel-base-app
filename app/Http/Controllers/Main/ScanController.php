@@ -35,7 +35,6 @@ class ScanController extends Controller
     }
 
     public function doAdd(Request $request){
-        date_default_timezone_set('Asia/Jakarta');
         if($request->ajax()) {
             $item = $request->all();
             $item['created_by'] = \Session::get('_user')['_id'];
@@ -48,19 +47,20 @@ class ScanController extends Controller
                             ->where('ms_member.card_id','=',$item['card_id'])->first();
             if ($detail) {
                 try{
-                    
                     if($detail['member_role_id'] == 1){ // member
                         $end_date = strtotime($detail['end_at']);
                         $today_date = strtotime(date('Y-m-d'));
 
                         // dump($detail['status_code'],$detail['end_at'],date("Y-m-d"),($end_date < $today_date));
                         if($detail['status_code'] == 'sub' && $end_date < $today_date){
-                            $status_code = 'exp';
-                            Member::where('card_id','=',$item["card_id"])->update(array('status_code'=>$status_code));
-                            $detail['status_code'] = $status_code;
+                            Member::where('card_id','=',$item["card_id"])->update(array('status_code'=>'exp'));
+                            $detail = Member::select('ms_member.*','ms_member_package.start_at','ms_member_package.end_at','ms_package.name as package_name','ms_package.site_code')
+                                            ->with('status')->with('role')
+                                            ->leftJoin('ms_member_package','ms_member.card_id','=','ms_member_package.card_id')
+                                            ->leftJoin('ms_package','ms_member_package.package_id','=','ms_package.id')
+                                            ->where('ms_member.card_id','=',$item['card_id'])->first();
                         }
                     }
-
                     // >> in case IN & OUT are necessary
                     // $last_activity = MemberActivity::where('card_id','=',$item["card_id"])->orderBy('id', 'DESC')->value('transaction_code');
                     // $item['transaction_code'] = ($last_activity!='attend_in'?'attend_in':'attend_out'); 

@@ -67,7 +67,7 @@ class MembershipController extends Controller
     }
 
     public function doAdd(Request $request){
-        date_default_timezone_set('Asia/Jakarta');
+        
         if($request->ajax()) {
             $item = $request->all();
             $item['created_by'] = \Session::get('_user')['_id'];
@@ -92,9 +92,14 @@ class MembershipController extends Controller
                     }else{
                         $item['card_id'] = $item['card_id'].'0001';
                     }
-                    
+
                     if($item['member_role_id'] == 1){ // member
-                        $item['status_code'] = 'sub';
+                        $end_date = strtotime($item['end_at']);
+                        $today_date = strtotime(date('Y-m-d'));
+                        if($end_date < $today_date){
+                            $item['status_code'] = 'exp';
+                        }
+
                         $itemPackage = array(
                             "card_id" => $item['card_id'],
                             "package_id" => $item['package_id'],
@@ -111,9 +116,8 @@ class MembershipController extends Controller
                         $idActivity = MemberActivity::insertGetId($itemActivity);
                         $itemPackage['activity_id'] = $idActivity;
                         $idPackage = MemberPackage::insertGetId($itemPackage);
-                    }else{                    
-                        $item['status_code'] = 'set';
                     }
+                    
                     // unset($item['status_code_selected']);
                     unset($item['site_code']);
                     unset($item['package_id']);
@@ -176,10 +180,15 @@ class MembershipController extends Controller
                 $subsActivity = true;
                 $itemPackage = array();
                 $lastPackage = MemberPackage::where('card_id','=',$item['card_id'])->first(); 
+                $today_date = strtotime(date('Y-m-d'));
                 
                 if(!$lastPackage){ // new
                     $transactionCode = 'subs_new';
                     $itemPackage['created_by'] = $item['updated_by'];
+                    $end_date = strtotime($item['end_at']);
+                    if($end_date < $today_date){
+                        $item['status_code'] = 'exp';
+                    }
                 }else{ // exist
                     $prevStartAt = explode(" ",$lastPackage->start_at);
                     $prevEndAt = explode(" ",$lastPackage->end_at);
@@ -190,10 +199,12 @@ class MembershipController extends Controller
                     }else{
                         $transactionCode = 'subs_new';
                     }
-                    // dump($lastPackage->start_at,$item['start_at'],$lastPackage->package_id,$item['package_id'],$lastPackage->end_at,$item['end_at']);
                     $itemPackage['updated_by'] = $item['updated_by'];
+                    // dump($lastPackage->start_at,$item['start_at'],$lastPackage->package_id,$item['package_id'],$lastPackage->end_at,$item['end_at']);
                        
-                    if(strtotime($lastPackage->end_at) < strtotime(date('Y-m-d'))){
+                    $end_date = strtotime($lastPackage->end_at);
+                    $today_date = strtotime(date('Y-m-d'));
+                    if($end_date < $today_date){
                         $item['status_code'] = 'exp';
                     }
                 }

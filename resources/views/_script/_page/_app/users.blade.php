@@ -520,7 +520,7 @@
                             </div>\
                             <div class="form-group">\
                                 <label for="'+action+'-phone"><b>Phone</b></label>\
-                                <input type="text" class="form-control" id="'+action+'-phone" required>\
+                                <input type="text" class="form-control" id="'+action+'-phone" maxlength="14" required>\
                             </div>\
                             <div class="form-group">\
                                 <label for="'+action+'-address"><b>Address</b></label>\

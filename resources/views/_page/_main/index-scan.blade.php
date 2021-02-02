@@ -49,11 +49,11 @@
                                                     <td class="avatar" id="attende_status_color"><div class="avatar-content-md"></div></td>
                                                     <td id="attende_status"></td>
                                                 </tr>
-                                                <tr>
+                                                <tr id="attende_package_area" style="display:none">
                                                     <th>Package</th><td>:</td>
                                                     <td colspan="2">
                                                         <div id="attende_package"></div><br>
-                                                        <small id="attende_package_end_date"></small>
+                                                        <strong id="attende_package_end_date"></strong>
                                                     </td>
                                                 </tr>
                                             </tbody>

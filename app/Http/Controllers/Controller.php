@@ -16,6 +16,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
     public function __construct() {
+        date_default_timezone_set('Asia/Jakarta');
         $this->data['authorize'] = array('create'=>0,'edit'=>0,'view'=>0,'delete'=>0,'execute'=>0);
         
         $this->middleware(function ($request, $next) { // supaya bisa ambil session di konstruktor
@@ -23,7 +24,6 @@ class Controller extends BaseController
                 if(session()->get('_user')['_role'] == '7778'){
                     $this->data['authorize'] = array('create'=>1,'edit'=>1,'view'=>1,'delete'=>0,'execute'=>1);
                 }else{
-                    // echo "<br><br><br><br><br><br><br><br>";
                     $menus = Menu::where('active','=',1)->get(); // menu with auth
                     foreach ($menus as $menu) {
                         // echo "/".Request::path()." - ".$menu->slug." --> ".strpos(Request::path(),$menu->slug)."<br>";

@@ -417,8 +417,15 @@
                                     $('#attende_role_color').css("background-color", data.detail.role.color_sign);
                                     $('#attende_status').html(data.detail.status.name);
                                     $('#attende_status_color').css("background-color", data.detail.status.color_sign);
-                                    $('#attende_package').html('-');
-                                    $('#attende_package_end_date').html('-');
+                                    if(data.detail.member_role_id == 1){ // member
+                                        $('#attende_package_area').show();
+                                        $('#attende_package').html(data.detail.package_name);
+                                        if(data.detail.end_at){
+                                            $('#attende_package_end_date').html(data.detail.end_at.split(" ")[0]);
+                                        }
+                                    }else{ // other
+                                        $('#attende_package_area').hide();
+                                    }
                                 }
                                 agGrid
                                     .simpleHttpRequest({ url: "{{ url('scan/get') }}" })
