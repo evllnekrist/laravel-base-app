@@ -228,36 +228,11 @@
             }
         }
         function setPackageEndDate(current_date,duration){
-            let d = new Date(current_date);
-                d.setMonth(parseInt(d.getMonth()) + parseInt(duration));
-            let d_after = d.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-            let d_after_slice = d_after.split('/');
-            let d_before_slice = current_date.split('-');
-
-            console.log('\n\nsetPackageEndDate ::',current_date,' | ',duration,' | ',d_after);
-            console.log(d_after_slice[2],'||',parseInt(d_before_slice[0])+Math.round(duration/12));
-            if(d_after_slice[2]>(parseInt(d_before_slice[0])+Math.round(duration/12))){ // in case of LEAP DAY   
-                console.log('LEAP DAY');     
-                let c = new Date(current_date);
-                    if(d_after_slice[0] > 28){
-                        c.setDate(parseInt(c.getDate()) - 1);
-                    }
-                let c_after = c.toLocaleDateString("en-US", {timeZone: "Asia/Jakarta"});
-                let c_after_slice = c_after.split('/');
-                    c_after =   (parseInt(c_after_slice[2])+Math.round(duration/12))+'-'+
-                                (c_after_slice[0]>9?c_after_slice[0]:'0'+c_after_slice[0])+'-'+
-                                (c_after_slice[1]>9?c_after_slice[1]:'0'+c_after_slice[1]);
-                console.log('LEAP DAY [2] :: ',current_date,' into ',c_after);
-                return c_after
-            }else{  
-                console.log('NORMAL DAY');     
-                d_after =   d_after_slice[2]+'-'+
-                            (d_after_slice[0]>9?d_after_slice[0]:'0'+d_after_slice[0])+'-'+
-                            (d_after_slice[1]>9?d_after_slice[1]:'0'+d_after_slice[1]);
-                console.log('NORMAL DAY [2] :: ',current_date,' into ',d_after);
-                return d_after;
-            }
-            
+            moment().locale("Asia/Jakarta");
+            let after_date = moment(current_date,'YYYY-MM-DD').add(duration, 'M').format();
+            let after_date_slice = after_date.split('T');
+            console.log(current_date,' ---- '+duration+ 'mo ---- ',after_date_slice);
+            return after_date_slice[0];
         }
 
         // function goTabAction(step){

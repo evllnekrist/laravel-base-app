@@ -27,4 +27,5 @@
     <!-- BEGIN: Global JS-->
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script src="{{ asset('assets/js/helper.js') }}?var=00002"></script> <!-- embed to every page -->
+    <script src="{{ asset('app-assets/js/scripts/moment-with-locales.js') }}"></script>
     <!-- END: Global JS-->
