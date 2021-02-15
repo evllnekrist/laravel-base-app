@@ -156,7 +156,7 @@ class SiteController extends Controller
             Site::where(DB::raw('md5(code)'),'=',$id)->update($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
 
         AppLog::createLog('edit site',$item,$output);
@@ -181,7 +181,7 @@ class SiteController extends Controller
                 $output = array('status'=>false, 'message'=>'Selected data unavailable in database', 'detail'=>'');
             }
         }catch(Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
         
         AppLog::createLog('delete site',$ids,$output);

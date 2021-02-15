@@ -92,7 +92,7 @@ class RoleController extends Controller
             Role::insertGetId($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
 
         AppLog::createLog('add role',$item,$output);
@@ -121,7 +121,7 @@ class RoleController extends Controller
             Role::where(DB::raw('md5(id)'),'=',$id)->update($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
 
         AppLog::createLog('edit role',$item,$output);
@@ -146,7 +146,7 @@ class RoleController extends Controller
                 $output = array('status'=>false, 'message'=>'Selected data unavailable in database', 'detail'=>'');
             }
         }catch(Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
         
         AppLog::createLog('delete role',$ids,$output);

@@ -107,12 +107,12 @@ class CompanyController extends Controller
         $item = $request->get('params');
         $item['created_by'] = \Session::get('_user')['_id'];
         $msg = 'to add company <b>'.$item['name'].'</b>';
-
+        
         try{
             Company::insertGetId($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
 
         AppLog::createLog('add company',$item,$output);
@@ -141,7 +141,7 @@ class CompanyController extends Controller
             Company::where(DB::raw('md5(id)'),'=',$id)->update($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
 
         AppLog::createLog('edit company',$item,$output);
@@ -166,7 +166,7 @@ class CompanyController extends Controller
                 $output = array('status'=>false, 'message'=>'Selected data unavailable in database', 'detail'=>'');
             }
         }catch(Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
         
         AppLog::createLog('delete company',$ids,$output);

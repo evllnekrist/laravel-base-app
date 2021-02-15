@@ -266,7 +266,7 @@ class MembershipController extends Controller
                 $output = array('status'=>false, 'message'=>'Selected data unavailable in database', 'detail'=>'');
             }
         }catch(Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
         
         AppLog::createLog('delete user',$ids,$output);

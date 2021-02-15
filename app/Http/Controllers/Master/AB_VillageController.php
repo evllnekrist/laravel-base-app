@@ -120,7 +120,7 @@ class AB_VillageController extends Controller
             AB_Village::insert($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
 
         AppLog::createLog('add village',$item,$output);
@@ -191,7 +191,7 @@ class AB_VillageController extends Controller
             AB_Village::where(DB::raw('md5(village_id)'),'=',$id)->update($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
 
         AppLog::createLog('edit village',$item,$output);
@@ -216,7 +216,7 @@ class AB_VillageController extends Controller
                 $output = array('status'=>false, 'message'=>'Selected data unavailable in database', 'detail'=>'');
             }
         }catch(Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
         
         AppLog::createLog('delete village',$ids,$output);

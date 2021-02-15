@@ -30,7 +30,7 @@ class SelectionController extends Controller
             }
             return array('status'=>true,'message'=>'Success','detail'=>$data);
         }catch(\Exception $e){
-            return array('status'=>true,'message'=>'Failed','detail'=>$e->getData());
+            return array('status'=>true,'message'=>'Failed','detail'=>json_encode($e));
         }
     }
     public function getList_District(Request $request){
@@ -42,7 +42,7 @@ class SelectionController extends Controller
             }
             return array('status'=>true,'message'=>'Success','detail'=>$data);
         }catch(\Exception $e){
-            return array('status'=>true,'message'=>'Failed','detail'=>$e->getData());
+            return array('status'=>true,'message'=>'Failed','detail'=>json_encode($e));
         }
     }
     public function getList_Village(Request $request){
@@ -54,7 +54,7 @@ class SelectionController extends Controller
             }
             return array('status'=>true,'message'=>'Success','detail'=>$data);
         }catch(\Exception $e){
-            return array('status'=>true,'message'=>'Failed','detail'=>$e->getData());
+            return array('status'=>true,'message'=>'Failed','detail'=>json_encode($e));
         }
     }
     
@@ -68,7 +68,7 @@ class SelectionController extends Controller
             }
             return array('status'=>true,'message'=>'Success','detail'=>$data);
         }catch(\Exception $e){
-            return array('status'=>true,'message'=>'Failed','detail'=>$e->getData());
+            return array('status'=>true,'message'=>'Failed','detail'=>json_encode($e));
         }
     }
     public function getList_StatusMembership(Request $request){
@@ -80,7 +80,7 @@ class SelectionController extends Controller
             }
             return array('status'=>true,'message'=>'Success','detail'=>$data);
         }catch(\Exception $e){
-            return array('status'=>true,'message'=>'Failed','detail'=>$e->getData());
+            return array('status'=>true,'message'=>'Failed','detail'=>json_encode($e));
         }
     }
 }

@@ -91,13 +91,17 @@ class DashboardController extends Controller
         // -------------------------------SUBSCRIPTION------------------------------------------------------------
         try{
             $sub                            = Member::selectRaw("
-                                                        count(id) as sub")
+                                                        status_code,
+                                                        count(id) as sum")
                                                     ->where('active','=',1)
                                                     ->where('member_role_id','=',1)
                                                     ->groupBy('status_code')
-                                                    ->get()->toArray();
+                                                    ->get()->groupBy('status_code')->toArray();
             if($sub){
-                $this->data['sub']['sum']       = json_encode(array(intval($sub[0]['sub']),intval($sub[1]['sub'])));
+                $this->data['sub']['sum']       = json_encode(array(
+                                                    array_key_exists('exp',$sub)?intval($sub['exp'][0]['sum']):0,
+                                                    array_key_exists('sub',$sub)?intval($sub['sub'][0]['sum']):0
+                                                ));
             }else{
                 $this->data['sub']['sum']       = null;
             }

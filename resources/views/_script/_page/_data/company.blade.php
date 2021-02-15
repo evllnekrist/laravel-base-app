@@ -446,7 +446,7 @@
                             </div>\
                             <div class="form-check col-xs-10 col-sm-4" title="check >> for requiring user login and role mapping to access this menu">\
                                 <label for="'+action+'-active"><b>Active</b></label><br>\
-                                <input type="checkbox" class="form-check-input" id="'+action+'-active" value=1>\
+                                <input type="checkbox" class="form-check-input" id="'+action+'-active" value=1 checked>\
                                 yes\
                             </div>\
                         </div>\
