@@ -42,9 +42,9 @@ class SiteController extends Controller
 
         // DB::enableQueryLog(); // Enable query log
         $models =  DB::table('ms_site as s')
-                        ->select('s.code','s.name', 's.company_code', 's.email', 's.phone', 's.address', 's.active', 's.manager',
-                        'c.name as company_name')
-                        ->leftJoin('ms_company as c', 's.company_code', '=', 'c.code')
+                        ->select('s.code','s.name','s.company_id','s.email', 
+                                's.phone','s.address','s.active','s.manager','c.name as company_name')
+                        ->leftJoin('ms_company as c', 's.company_id', '=', 'c.code')
                         ->orderBy('s.created_at','DESC');
                         // ->where('u.active','=',1);
         if(!empty($request->input('search.value')))
@@ -119,12 +119,12 @@ class SiteController extends Controller
         $item['created_by'] = \Session::get('_user')['_id'];
         unset($item['old_id']);
         $msg = 'to add site <b>'.$item['name'].'</b>';
-        
+
         try{
             Site::insert($item);
             $output = array('status'=>true, 'message'=>'Success '.$msg);
         }catch(\Exception $e){
-            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>$e->getData());
+            $output = array('status'=>false, 'message'=>'Failed '.$msg, 'detail'=>json_encode($e));
         }
 
         AppLog::createLog('add site',$item,$output);

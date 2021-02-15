@@ -171,7 +171,7 @@
                     // BEGIN : options
                     let prop ='', str = '<option value=""></option>';
                     for (let i = 0; i < (data.list_company).length; ++i) {
-                        str += '<option value="'+data.list_company[i].code+'">'+data.list_company[i].name+'</option>';
+                        str += '<option value="'+data.list_company[i].id+'">'+data.list_company[i].name+'</option>';
                     }
                     $("#"+action+"-company").html(str);
                     // END : options
@@ -217,8 +217,8 @@
                     // BEGIN : options
                     let prop ='', str = '<option value=""></option>';
                     for (let i = 0; i < (data.list_company).length; ++i) {
-                        prop = (data.detail.company_code == data.list_company[i].code) ? 'selected="selected"' : '';
-                        str += '<option value="'+data.list_company[i].code+'" '+prop+'>'+data.list_company[i].name+'</option>';
+                        prop = (data.detail.company_id == data.list_company[i].id) ? 'selected="selected"' : '';
+                        str += '<option value="'+data.list_company[i].id+'" '+prop+'>'+data.list_company[i].name+'</option>';
                     }
                     $("#"+action+"-company").html(str);
                     // END : options
@@ -496,7 +496,7 @@
                             </div>\
                             <div class="form-check col-xs-10 col-sm-4" title="check">\
                                 <label for="'+action+'-active"><b>Active</b></label><br>\
-                                <input type="checkbox" class="form-check-input" id="'+action+'-active" value=1>\
+                                <input type="checkbox" class="form-check-input" id="'+action+'-active" value=1 checked>\
                                 yes\
                             </div>\
                         </div>\
@@ -509,7 +509,7 @@
                 old_id          : $('#'+action+'-id').val(),
                 code            : $('#'+action+'-code').val(),
                 name            : $('#'+action+'-name').val(),
-                company_code    : $('#'+action+'-company').val(),
+                company_id    : $('#'+action+'-company').val(),
                 email           : $('#'+action+'-email').val(),
                 address         : $('#'+action+'-address').val(),
                 phone           : $('#'+action+'-phone').val(),
