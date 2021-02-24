@@ -35,7 +35,6 @@ class ScanController extends Controller
     }
 
     public function doAdd(Request $request){
-        date_default_timezone_set("Asia/Jakarta");
         if($request->ajax()) {
             $item = $request->all();
             $item['created_by'] = \Session::get('_user')['_id'];
@@ -67,6 +66,7 @@ class ScanController extends Controller
                     // $item['transaction_code'] = ($last_activity!='attend_in'?'attend_in':'attend_out'); 
                     // >> other.
                     $item['transaction_code'] = 'attend';
+                    $item['created_at'] = date('Y-m-d h:i:s');
                     $id = MemberActivity::insertGetId($item);
                     $output = array('status'=>true, 'message'=>'Success '.$msg, 'detail'=>$detail);
                 }catch(\Exception $e){
