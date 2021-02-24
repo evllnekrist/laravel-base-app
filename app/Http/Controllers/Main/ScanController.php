@@ -67,6 +67,7 @@ class ScanController extends Controller
                     // $item['transaction_code'] = ($last_activity!='attend_in'?'attend_in':'attend_out'); 
                     // >> other.
                     $item['transaction_code'] = 'attend';
+                    $item['created_at'] = date('Y-m-d h:i:s');
                     $id = MemberActivity::insertGetId($item);
                     $output = array('status'=>true, 'message'=>'Success '.$msg, 'detail'=>$detail);
                 }catch(\Exception $e){
