@@ -107,6 +107,8 @@ class RoleMenuController extends Controller
     }
 
     public function doEdit(Request $request){
+        date_default_timezone_set("Asia/Jakarta");
+        
         $item = $request->get('params');
         $msg = 'to map role <b>'.$item['name'].' with menus</b>';
         // dump($request->get('params'));die;
