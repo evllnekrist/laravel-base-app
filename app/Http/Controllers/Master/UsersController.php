@@ -122,11 +122,10 @@ class UsersController extends Controller
     }
 
     public function doAdd(Request $request){
-        date_default_timezone_set("Asia/Jakarta");
-
         unset($request['_token']);
         $item = $request->get('params');
         $item['created_by'] = \Session::get('_user')['_id'];
+        $item['created_at'] = date('Y-m-d h:i:s');
         $item['password'] = md5(md5($item['password']));
         $msg = 'to add new user <b>'.$item['fullname'].'</b>';
 
@@ -156,11 +155,10 @@ class UsersController extends Controller
     }
 
     public function doEdit(Request $request){
-        date_default_timezone_set("Asia/Jakarta");
-        
         unset($request['_token']);
         $item = $request->get('params');
         $item['updated_by'] = \Session::get('_user')['_id'];
+        $item['updated_at'] = date('Y-m-d h:i:s');
         $id = $item['id'];
         unset($item['id']);
         $msg = 'to edit user <b>'.$item['fullname'].'</b>';

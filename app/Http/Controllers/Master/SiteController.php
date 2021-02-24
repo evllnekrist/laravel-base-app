@@ -114,11 +114,10 @@ class SiteController extends Controller
     }
 
     public function doAdd(Request $request){
-        date_default_timezone_set("Asia/Jakarta");
-
         unset($request['_token']);
         $item = $request->get('params');
         $item['created_by'] = \Session::get('_user')['_id'];
+        $item['created_at'] = date('Y-m-d h:i:s');
         unset($item['old_id']);
         $msg = 'to add site <b>'.$item['name'].'</b>';
 
@@ -146,11 +145,10 @@ class SiteController extends Controller
     }
 
     public function doEdit(Request $request){
-        date_default_timezone_set("Asia/Jakarta");
-        
         unset($request['_token']);
         $item = $request->get('params');
         $item['updated_by'] = \Session::get('_user')['_id'];
+        $item['updated_at'] = date('Y-m-d h:i:s');
         $id = $item['old_id'];
         // var_dump($item);exit;
         unset($item['old_id']);

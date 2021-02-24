@@ -107,8 +107,6 @@ class RoleMenuController extends Controller
     }
 
     public function doEdit(Request $request){
-        date_default_timezone_set("Asia/Jakarta");
-        
         $item = $request->get('params');
         $msg = 'to map role <b>'.$item['name'].' with menus</b>';
         // dump($request->get('params'));die;
@@ -126,7 +124,8 @@ class RoleMenuController extends Controller
                         'edit' => $value['edit'],
                         'delete' => $value['delete'],
                         'execute' => $value['execute'],
-                        'updated_by' => \Session::get('_user')['_id']
+                        'updated_by' => \Session::get('_user')['_id'],
+                        'updated_at' => date('Y-m-d h:i:s')
                     ]
                 );
             }

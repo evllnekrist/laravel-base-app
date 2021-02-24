@@ -72,6 +72,7 @@ class MembershipController extends Controller
         if($request->ajax()) {
             $item = $request->all();
             $item['created_by'] = \Session::get('_user')['_id'];
+            $item['created_at'] = date('Y-m-d h:i:s');
             $msg = 'to add new member';
 
             if (Member::where('ktp_number', $item["ktp_number"])->exists()) {
@@ -107,12 +108,14 @@ class MembershipController extends Controller
                             "start_at" => $item['start_at'],
                             "end_at" => $item['end_at'],
                             "created_by" => $item['created_by'],
+                            "created_at" =>$item['created_at']
                         );
                         $itemActivity = array(
                             "card_id" => $item['card_id'],
                             "transaction_code" => 'subs_new',
                             "detail" => json_encode($itemPackage),
                             "created_by" => Session::get('_user')['_id'],
+                            "created_at" =>$item['created_at']
                         );
                         $idActivity = MemberActivity::insertGetId($itemActivity);
                         $itemPackage['activity_id'] = $idActivity;
@@ -173,6 +176,7 @@ class MembershipController extends Controller
         
         $item = $request->all();
         $item['updated_by'] = \Session::get('_user')['_id'];
+        $item['updated_at'] = date('Y-m-d h:i:s');
         $id = $item['id'];
         unset($item['id']);
         $msg = 'to edit member '.$item['first_name'].' '.$item['last_name'];
@@ -226,6 +230,7 @@ class MembershipController extends Controller
                         "transaction_code" => $transactionCode,
                         "detail" => json_encode($itemPackage),
                         "created_by" => Session::get('_user')['_id'],
+                        "created_at" => date('Y-m-d h:i:s')
                     );
                     $idActivity = MemberActivity::insertGetId($itemActivity);
                     $itemPackage['activity_id'] = $idActivity;
