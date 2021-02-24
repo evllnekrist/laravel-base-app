@@ -122,6 +122,8 @@ class UsersController extends Controller
     }
 
     public function doAdd(Request $request){
+        date_default_timezone_set("Asia/Jakarta");
+
         unset($request['_token']);
         $item = $request->get('params');
         $item['created_by'] = \Session::get('_user')['_id'];
@@ -154,6 +156,8 @@ class UsersController extends Controller
     }
 
     public function doEdit(Request $request){
+        date_default_timezone_set("Asia/Jakarta");
+        
         unset($request['_token']);
         $item = $request->get('params');
         $item['updated_by'] = \Session::get('_user')['_id'];

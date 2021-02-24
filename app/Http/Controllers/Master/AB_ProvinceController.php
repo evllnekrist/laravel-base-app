@@ -92,6 +92,8 @@ class AB_ProvinceController extends Controller
     }
 
     public function doAdd(Request $request){
+        date_default_timezone_set("Asia/Jakarta");
+
         unset($request['_token']);
         $item = $request->get('params');
         $item['name'] = strtoupper($item['name']);
@@ -120,6 +122,8 @@ class AB_ProvinceController extends Controller
     }
 
     public function doEdit(Request $request){
+        date_default_timezone_set("Asia/Jakarta");
+        
         unset($request['_token']);
         $item = $request->get('params');
         $item['name'] = strtoupper($item['name']);
