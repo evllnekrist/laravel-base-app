@@ -16,6 +16,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
     public function __construct() {
+        date_default_timezone_set("Asia/Jakarta");
         $this->data['authorize'] = array('create'=>0,'edit'=>0,'view'=>0,'delete'=>0,'execute'=>0);
         
         $this->middleware(function ($request, $next) { // supaya bisa ambil session di konstruktor
