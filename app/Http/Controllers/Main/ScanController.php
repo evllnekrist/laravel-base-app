@@ -28,6 +28,7 @@ class ScanController extends Controller
         // DB::enableQueryLog();
         // dd(DB::getQueryLog());
         // ->skip(0)->take(50)
+        date_default_timezone_set("Asia/Jakarta");
         $data = MemberActivity::whereDate('created_at', DB::raw('CURDATE()'))->with('transaction')->with('member')->orderBy('id', 'DESC')->get();
         return array(
             "list_data" => $data,

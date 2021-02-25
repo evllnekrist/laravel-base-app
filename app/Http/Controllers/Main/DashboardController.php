@@ -21,6 +21,7 @@ class DashboardController extends Controller
     }
 
     public function index(Request $request){
+        date_default_timezone_set("Asia/Jakarta");
         // -------------------------------COUNT Member-----------------------------------------------------------
         try{
             $this->data['member']['sum']    = Member::where('active','=',1)
