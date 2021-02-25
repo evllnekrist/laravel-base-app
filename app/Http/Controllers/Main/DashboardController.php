@@ -21,7 +21,6 @@ class DashboardController extends Controller
     }
 
     public function index(Request $request){
-        date_default_timezone_set("Asia/Jakarta");
         // -------------------------------COUNT Member-----------------------------------------------------------
         try{
             $this->data['member']['sum']    = Member::where('active','=',1)
@@ -80,9 +79,10 @@ class DashboardController extends Controller
             $this->data['staff']['a_year'] = null;
         }
         // -------------------------------ABSENCE-----------------------------------------------------------------
-        try{
+        try{        
+            $curdate = date('Y-m-d');
             $this->data['card']['sum']      = $this->data['member']['sum']+$this->data['pt']['sum']+$this->data['staff']['sum'];
-            $this->data['card']['absence']  = MemberActivity::whereDate('created_at', DB::raw('CURDATE()'))
+            $this->data['card']['absence']  = MemberActivity::whereDate('created_at', $curdate)
                                             ->where('transaction_code','like','attend'.'%')
                                             ->count(DB::raw('DISTINCT card_id'));
         }catch(Exception $e) {
