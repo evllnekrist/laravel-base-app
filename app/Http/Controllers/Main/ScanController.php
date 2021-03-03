@@ -56,7 +56,7 @@ class ScanController extends Controller
 
                         // dump($detail['status_code'],$detail['end_at'],date("Y-m-d"),($end_date < $today_date));
                         if($detail['status_code'] == 'sub' && $end_date < $today_date){
-                            Member::where('card_id','=',$item["card_id"])->update(array('status_code'=>'exp','update_at'=>date('Y-m-d h:i:s')));
+                            Member::where('card_id','=',$item["card_id"])->update(array('status_code'=>'exp','updated_at'=>date('Y-m-d h:i:s')));
                             $detail = Member::select('ms_member.*','ms_member_package.start_at','ms_member_package.end_at','ms_package.name as package_name','ms_package.site_code')
                                             ->with('status')->with('role')
                                             ->leftJoin('ms_member_package','ms_member.card_id','=','ms_member_package.card_id')
