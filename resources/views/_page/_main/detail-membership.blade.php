@@ -21,7 +21,7 @@
                         <span class="font-weight-bold">Last Name</span><br>
                         <label class="data-info">{{ $selected_data->last_name }}</label>
                         <div class="data-edit hidden">
-                            <input type="text" value="{{ $selected_data->last_name }}" class="form-control" placeholder="Enter Last Name" name="last_name" maxlength="50" required>
+                            <input type="text" value="{{ $selected_data->last_name }}" class="form-control" placeholder="Enter Last Name" name="last_name" maxlength="50">
                         </div>
                     </div>
                 </div><hr class="data-info">

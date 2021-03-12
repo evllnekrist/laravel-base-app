@@ -502,7 +502,7 @@
             $("#button-edit,#button-close").removeClass("hidden");
             $("#button-update,#button-delete,#button-cancel").addClass("hidden");
             $("#admin-details-modal").modal('show');
-            $("#admin-details-modal-title").text(data.card_id.toString()+' - '+data.first_name.toString()+'  '+data.last_name.toString());
+            $("#admin-details-modal-title").text(data.card_id.toString()+' - '+(data.first_name?data.first_name.toString():'')+'  '+(data.last_name?data.last_name.toString():''));
             $("#admin-details-modal-body").html($("#loading").html());
             $.ajax({
                 url: 'membership/' + data.id + '/detailEdit',

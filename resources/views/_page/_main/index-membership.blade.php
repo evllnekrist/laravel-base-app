@@ -97,7 +97,7 @@
                                                 </div>
                                                 <div class="col-md-7 col-12 mt-1">
                                                     <span class="font-weight-bold">Last Name</span>
-                                                    <input type="text" class="form-control" placeholder="Enter Last Name" name="last_name" maxlength="50" required>
+                                                    <input type="text" class="form-control" placeholder="Enter Last Name" name="last_name" maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="row">
