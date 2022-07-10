@@ -762,6 +762,9 @@
                     },
                     type: 'delete',
                     success:function(data){
+                        if(typeof(data) == 'string'){
+                            data = JSON.parse(data);
+                        }
                         if(data.status){
                             $("#admin-details-modal").modal("hide");
                             agGrid

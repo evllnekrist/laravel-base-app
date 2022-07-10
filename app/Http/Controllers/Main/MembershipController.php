@@ -68,10 +68,9 @@ class MembershipController extends Controller
 
     public function doAdd(Request $request){
         date_default_timezone_set("Asia/Jakarta");
-
         if($request->ajax()) {
             $item = $request->all();
-            $item['created_by'] = \Session::get('_user')['_id'];
+            $item['created_by'] = Session::get('_user')['_id'];
             $item['created_at'] = date('Y-m-d h:i:s');
             $msg = 'to add new member';
 
@@ -163,8 +162,12 @@ class MembershipController extends Controller
 
         if($this->data['selected_data']['member_role_id'] == 1){ // member
             $this->data['selected_data_subs'] = MemberPackage::where('card_id','=',$this->data['selected_data']['card_id'])->with('package')->first();  
-            $subsPackageDetail = Package::where('active','=',1)->where('id','=',$this->data['selected_data_subs']['package_id'])->first();      
-            $this->data['list_package'] = Package::where('active','=',1)->where('site_code','=',$subsPackageDetail['site_code'])->get();
+            if($this->data['selected_data_subs']){
+                $subsPackageDetail = Package::where('active','=',1)->where('id','=',$this->data['selected_data_subs']['package_id'])->first();      
+                $this->data['list_package'] = Package::where('active','=',1)->where('site_code','=',$subsPackageDetail['site_code'])->get();
+            }else{
+                $this->data['list_package'] = [];
+            }
         }
         
         // dd($this->data);
@@ -263,7 +266,11 @@ class MembershipController extends Controller
         
         try{
             foreach ($array_id as $id) {
-                Member::where(DB::raw('md5(id)'),'=',$id)->delete();
+                $member = Member::where(DB::raw('md5(id)'),'=',$id)->first();
+                if($member){
+                    Member::where(DB::raw('md5(id)'),'=',$id)->delete();
+                    MemberPackage::where('card_id','=',$member->card_id)->delete();
+                }
                 $deletedRows++;
             }
             
