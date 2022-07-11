@@ -20,24 +20,28 @@ class Controller extends BaseController
         $this->data['authorize'] = array('create'=>0,'edit'=>0,'view'=>0,'delete'=>0,'execute'=>0);
         
         $this->middleware(function ($request, $next) { // supaya bisa ambil session di konstruktor
-            if(session()->get('_user')['_role']){
-                if(session()->get('_user')['_role'] == '7778'){
-                    $this->data['authorize'] = array('create'=>1,'edit'=>1,'view'=>1,'delete'=>0,'execute'=>1);
-                }else{
-                    $menus = Menu::where('active','=',1)->get(); // menu with auth
-                    foreach ($menus as $menu) {
-                        // echo "/".Request::path()." - ".$menu->slug." --> ".strpos(Request::path(),$menu->slug)."<br>";
-                        if (strpos("/".Request::path(),$menu->slug) !== FALSE){
-                            $this->data['authorize'] =  RoleMenu::where('menu_id','=',$menu->id)
-                                                            ->where('role_id','=',session()->get('_user')['_role'])
-                                                            ->first()->toArray();
-                            // if flag view or (if an add page) flag create not 1 then unauthorized 
-                            if(!$this->data['authorize']['view'] || (!$this->data['authorize']['create'] && strpos(Request::path(),$menu->slug.'/add') !== FALSE)){
-                                return redirect('_handle/unautorized');
+            if(session()->get('_user')){
+                if(session()->get('_user')['_role']){
+                    if(session()->get('_user')['_role'] == '7778'){
+                        $this->data['authorize'] = array('create'=>1,'edit'=>1,'view'=>1,'delete'=>0,'execute'=>1);
+                    }else{
+                        $menus = Menu::where('active','=',1)->get(); // menu with auth
+                        foreach ($menus as $menu) {
+                            // echo "/".Request::path()." - ".$menu->slug." --> ".strpos(Request::path(),$menu->slug)."<br>";
+                            if (strpos("/".Request::path(),$menu->slug) !== FALSE){
+                                $this->data['authorize'] =  RoleMenu::where('menu_id','=',$menu->id)
+                                                                ->where('role_id','=',session()->get('_user')['_role'])
+                                                                ->first()->toArray();
+                                // if flag view or (if an add page) flag create not 1 then unauthorized 
+                                if(!$this->data['authorize']['view'] || (!$this->data['authorize']['create'] && strpos(Request::path(),$menu->slug.'/add') !== FALSE)){
+                                    return redirect('_handle/unautorized');
+                                }
                             }
                         }
                     }
                 }
+            }else{
+                return redirect('/');
             }
             return $next($request);
         });
