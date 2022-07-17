@@ -21,7 +21,9 @@ class Controller extends BaseController
         
         $this->middleware(function ($request, $next) { // supaya bisa ambil session di konstruktor
             if(session()->get('_user')){
-                if(session()->get('_user')['_role']){
+                if( session()->get('_user')['_id'] && 
+                    session()->get('_user')['_role'] && 
+                    session()->get('_user')['_company']){
                     if(session()->get('_user')['_role'] == '7778'){
                         $this->data['authorize'] = array('create'=>1,'edit'=>1,'view'=>1,'delete'=>0,'execute'=>1);
                     }else{
